@@ -1,0 +1,222 @@
+<div>
+    <!--div class="panel flex items-center overflow-x-auto whitespace-nowrap p-3 text-primary">
+        <div class="rounded-full bg-primary p-1.5 text-white ring-2 ring-primary/30 ltr:mr-3 rtl:ml-3">
+            <icon-bell />
+        </div>
+        <span class="ltr:mr-3 rtl:ml-3">Documentation: </span>
+        <a href="https://www.npmjs.com/package/@bhplugin/ng-datatable" target="_blank" class="block hover:underline">
+            https://www.npmjs.com/package/@bhplugin/ng-datatable
+        </a>
+    </div-->
+
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 class="text-xl">Créer un nouveau test</h2>
+        <div class="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+            <div class="flex gap-3">
+                <div>
+                    <button type="button" class="btn btn-outline-primary">
+                        <icon-eye class="ltr:mr-2 rtl:ml-2" />
+                        Visualiser test
+                    </button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary">
+                        <icon-save class="ltr:mr-2 rtl:ml-2" />
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Styles -->
+    <div class="panel mt-6">
+        <div class="mb-5 flex items-center justify-between">
+            <h5 class="text-lg font-semibold dark:text-white-light">Informations sur le test</h5>
+        </div>
+        <div class="mb-5">
+            <form class="space-y-5" [formGroup]="form4" (ngSubmit)="submitForm4()" novalidate>
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div [ngClass]="isSubmitForm4 ? form4.controls['firstName'].errors ? 'has-error' : 'has-success' : ''">
+                        <label for="customFname">Nom du test</label>
+                        <input id="customFname" type="text" placeholder="Enter First Name" class="form-input" formControlName="firstName" />
+                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['firstName'].errors">
+                            <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                        </ng-container>
+                        <ng-container *ngIf="isSubmitForm4 && form4.controls['firstName'].errors">
+                            <p class="mt-1 text-danger">Please fill the first name</p>
+                        </ng-container>
+                    </div>
+                    <div [ngClass]="isSubmitForm4 ? form4.controls['lastName'].errors ? 'has-error' : 'has-success' : ''">
+                        <label>Module</label>
+                        <!--input id="customLname" type="text" placeholder="Enter Last Name" class="form-input" formControlName="lastName" /-->
+                        <ng-select
+                            [items]="options"
+                            [(ngModel)]="input1"
+                            [searchable]="false"
+                            [clearable]="false"
+                            class="custom-multiselect"
+                        >
+                        </ng-select>
+                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['lastName'].errors">
+                            <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                        </ng-container>
+                        <ng-container *ngIf="isSubmitForm4 && form4.controls['lastName'].errors">
+                            <p class="mt-1 text-danger">Please fill the last name</p>
+                        </ng-container>
+                    </div>
+                    <!--div [ngClass]="isSubmitForm4 ? form4.controls['userName'].errors ? 'has-error' : 'has-success' : ''">
+                        <label for="customeEmail">Username</label>
+                        <div class="flex">
+                            <div
+                                class="flex items-center justify-center border border-[#e0e6ed] bg-[#eee] px-3 font-semibold ltr:rounded-l-md ltr:border-r-0 rtl:rounded-r-md rtl:border-l-0 dark:border-[#17263c] dark:bg-[#1b2e4b]"
+                            >
+                                @
+                            </div>
+                            <input
+                                id="customeEmail"
+                                type="text"
+                                placeholder="Enter Username"
+                                class="form-input ltr:rounded-l-none rtl:rounded-r-none"
+                                formControlName="userName"
+                            />
+                        </div>
+                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['userName'].errors">
+                            <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                        </ng-container>
+                        <ng-container *ngIf="isSubmitForm4 && form4.controls['userName'].errors">
+                            <p class="mt-1 text-danger">Please choose a userName</p>
+                        </ng-container>
+                    </div-->
+                </div>
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-4">
+                    <div class="md:col-span-2" [ngClass]="isSubmitForm4 ? form4.controls['city'].errors ? 'has-error' : 'has-success' : ''">
+                        <label>Classe</label>
+                        <!--input id="customeCity" type="text" placeholder="Enter City" class="form-input" formControlName="city" /-->
+                        <ng-select
+                            [items]="options2"
+                            [(ngModel)]="input2"
+                            [searchable]="false"
+                            [clearable]="false"
+                            class="custom-multiselect"
+                        >
+                        </ng-select>
+                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['city'].errors">
+                            <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                        </ng-container>
+                        <ng-container *ngIf="isSubmitForm4 && form4.controls['city'].errors">
+                            <p class="mt-1 text-danger">Please provide a valid city</p>
+                        </ng-container>
+                    </div>
+                    <div [ngClass]="isSubmitForm4 ? form4.controls['state'].errors ? 'has-error' : 'has-success' : ''">
+                        <label>Date début</label>
+                        <!--input id="customeState" type="text" placeholder="Enter State" class="form-input" formControlName="state" /-->
+                        <div class="mb-5">
+                            <form [formGroup]="form1">
+                                <ng2-flatpickr [config]="basic" formControlName="date1" addClass="form-input"></ng2-flatpickr>
+                            </form>
+                        </div>
+                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['state'].errors">
+                            <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                        </ng-container>
+                        <ng-container *ngIf="isSubmitForm4 && form4.controls['state'].errors">
+                            <p class="mt-1 text-danger">Please provide a valid state</p>
+                        </ng-container>
+                    </div>
+                    <div [ngClass]="isSubmitForm4 ? form4.controls['zip'].errors ? 'has-error' : 'has-success' : ''">
+                        <label>Date fin</label>
+                        <!--input id="customeZip" type="text" placeholder="Enter Zip" class="form-input" formControlName="zip" /-->
+                        <div class="mb-5">
+                            <form [formGroup]="form1">
+                                <ng2-flatpickr [config]="basic" formControlName="date1" addClass="form-input"></ng2-flatpickr>
+                            </form>
+                        </div>
+                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['zip'].errors">
+                            <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
+                        </ng-container>
+                        <ng-container *ngIf="isSubmitForm4 && form4.controls['zip'].errors">
+                            <p class="mt-1 text-danger">Please provide a valid zip</p>
+                        </ng-container>
+                    </div>
+                </div>
+                <!--div [ngClass]="isSubmitForm4 ? form4.controls['isTerms'].errors ? 'has-error' : 'has-success' : ''">
+                    <label class="mt-1 inline-flex cursor-pointer">
+                        <input type="checkbox" class="form-checkbox" formControlName="isTerms" />
+                        <span class="text-white-dark">Agree to terms and conditions</span>
+                    </label>
+                    <ng-container *ngIf="isSubmitForm4 && form4.controls['isTerms'].errors">
+                        <p class="mt-1 text-danger">You must agree before submitting.</p>
+                    </ng-container>
+                </div>
+                <button type="submit" class="btn btn-primary !mt-6">Submit Form</button-->
+            </form>
+        </div>
+
+        <div class="mb-5 flex items-center justify-between">
+            <h5 class="text-lg font-semibold dark:text-white-light">Ordre des questions</h5>
+        </div>
+        <div class="mb-5">
+            <p>Choisissez l'ordre dans lequel les questions apparaîtront dans le test</p>
+        </div>
+        <div class="mb-5">
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div class="mb-5 flex">
+                    <div class="ltr:mr-4 rtl:ml-4">
+                        <input type="radio" class="form-radio mt-1.5" name="radio" checked />
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-semibold text-primary">Comme saisi</h4>
+                        <p class="media-text">
+                            Conserver l'ordre des questions telles qu'elles sont entrées
+                        </p>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="ltr:mr-4 rtl:ml-4">
+                        <input type="radio" class="form-radio mt-1.5" name="radio" />
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-lg font-semibold text-primary">Aléatoire</h4>
+                        <p class="media-text">
+                            Mélange aléatoirement l'ordre des questions dans le test
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel mt-6">
+        <div class="mb-5 flex items-center justify-between">
+            <h5 class="text-lg font-semibold dark:text-white-light">Liste de questions</h5>
+        </div>
+        <div class="mb-5">
+            <p>Veuillez créer les questions du test. Peu importe le nombre total des questions créées, vous pouvez attribuer un total de 100 points.</p>
+        </div>
+
+        <div class="flex rounded-t-md bg-primary-light p-6">
+            <div class="flex-1 ltr:mr-4 rtl:ml-4">
+                <h4 class="font-semibold text-lg mb-2 text-primary">Règles de redaction des questions</h4>
+                <p class="media-text">
+                    1. Question à choix unique: Utilisez (x) pour la réponse correcte et () pour les réponses incorrectes
+                </p>
+                <p class="media-text">
+                    2. Question à choix multiple: Utilisez [x] pour chaque réponse correcte et [] pour les réponses incorrectes
+                </p>
+                <p class="media-text">
+                    3. Question ouverte: Utilisez R= suivi de la réponse correcte
+                </p>
+                <p class="media-text">
+                    4. Ajoutez simplement (x pt) à la fin de chaque question pour indiquer le nombre de points associé à cette question
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-6 mb-5">
+            <quill-editor [modules]="modules1" placeholder="" [(ngModel)]="content1"></quill-editor>
+        </div>
+
+    </div>
+
+
+</div>
