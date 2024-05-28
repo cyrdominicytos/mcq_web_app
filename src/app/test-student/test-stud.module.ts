@@ -20,20 +20,15 @@ import { AngJson2excelBtnModule } from 'ang-json2excel-btn';
 
 // icon
 import { IconModule } from 'src/app/shared/icon/icon.module';
-
-import { ListTestComponent } from './list-test';
-import { StatMacroComponent } from './statistiques-macro';
+import { ListTestStudComponent } from './list-test-student';
 import {CalendarComponent} from "../apps/calendar";
-import {CreateTestComponent} from "./create-test";
 import {HighlightModule} from "ngx-highlightjs";
 import {Ng2FlatpickrModule} from "ng2-flatpickr";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {QuillEditorComponent} from "ngx-quill";
 
 const routes: Routes = [
-    { path: 'list-test', component: ListTestComponent, title: 'List Test | MCQ App - List Test'},
-    { path: 'create-test', component: CreateTestComponent, title: 'List Test | MCQ App - List Test' },
-    { path: 'statistques-macro', component: StatMacroComponent, title: 'Statistics | MCQ App - Statistics' },
+    { path: 'list-test-student', component: ListTestStudComponent, title: 'List Test Student| MCQ App - List Test Student' },
 ];
 @NgModule({
     imports: [
@@ -53,10 +48,8 @@ const routes: Routes = [
         QuillEditorComponent,
     ],
     declarations: [
-        ListTestComponent,
-        CreateTestComponent,
-        StatMacroComponent,
+        ListTestStudComponent,
     ],
     providers: [],
 })
-export class TestModule {}
+export class TestStudModule {}
