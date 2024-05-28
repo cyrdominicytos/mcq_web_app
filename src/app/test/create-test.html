@@ -213,7 +213,15 @@
         </div>
 
         <div class="mt-6 mb-5">
-            <quill-editor [modules]="modules1" placeholder="" [(ngModel)]="content1"></quill-editor>
+            <!--quill-editor [modules]="modules1" placeholder="" [(ngModel)]="content1"></quill-editor-->
+            <textarea
+                id="description"
+                name="description"
+                rows="20"
+                class="form-textarea min-h-[130px]"
+                placeholder="Veuillez créer les questions du test."
+                formControlName="description"
+            ></textarea>
         </div>
 
     </div>
