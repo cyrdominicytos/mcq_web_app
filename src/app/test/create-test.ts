@@ -96,6 +96,10 @@ export class CreateTestComponent {
             </p>`;
 
 
+    createTest(){
+        this.showMessage('Test was created successfully.');
+    }
+
     showMessage(msg = '', type = 'success') {
         const toast: any = Swal.mixin({
             toast: true,
