@@ -15,7 +15,7 @@ export class StatMacroComponent {
         { field: 'status', title: 'Status' },
         { field: 'start', title: 'Publié le', type: 'date' },
         { field: 'end', title: 'Dernier délai', type: 'date' },
-        { field: 'score', title: 'Note', type: 'number'},
+        { field: 'score', title: 'Note moyenne', type: 'number'},
         { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
     ];
     rows = [
