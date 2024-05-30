@@ -21,6 +21,8 @@ import { AngJson2excelBtnModule } from 'ang-json2excel-btn';
 // icon
 import { IconModule } from 'src/app/shared/icon/icon.module';
 import { ListTestStudComponent } from './list-test-student';
+
+import { TestCorrectComponent } from './test-correct';
 import {CalendarComponent} from "../apps/calendar";
 import {HighlightModule} from "ngx-highlightjs";
 import {Ng2FlatpickrModule} from "ng2-flatpickr";
@@ -29,6 +31,7 @@ import {QuillEditorComponent} from "ngx-quill";
 
 const routes: Routes = [
     { path: 'list-test-student', component: ListTestStudComponent, title: 'List Test Student| MCQ App - List Test Student' },
+    { path: 'test-correct', component: TestCorrectComponent, title: 'Corrected Test Student| MCQ App - Corrected Test Student' },
 ];
 @NgModule({
     imports: [
@@ -49,6 +52,7 @@ const routes: Routes = [
     ],
     declarations: [
         ListTestStudComponent,
+        TestCorrectComponent,
     ],
     providers: [],
 })

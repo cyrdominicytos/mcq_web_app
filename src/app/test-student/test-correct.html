@@ -1,0 +1,131 @@
+<div>
+
+
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 class="text-xl">Bases des structures de données</h2>
+    </div>
+
+    <!-- Custom Styles -->
+    <div class="panel mt-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2">
+            <div class="mb-5 flex items-start justify-between flex-col">
+                <p class="text-white-dark">Nom du test</p>
+                <h5 class="text-lg font-semibold dark:text-white-light">Bases des structures de données</h5>
+            </div>
+            <div class="mb-5 flex items-start justify-between flex-col">
+                <p class="text-white-dark">Module</p>
+                <h5 class="text-lg font-semibold dark:text-white-light">Intro. aux structures de données</h5>
+            </div>
+            <div class="mb-5 flex items-start justify-between flex-col">
+                <p class="text-white-dark">Deadline</p>
+                <h5 class="text-lg font-semibold dark:text-white-light">05 Mai 2024</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel mt-6 pl-40 pr-40">
+        <ng-container *ngIf="!showResults; else resultsTemplate">
+            <div class="mb-5">
+                <p class="text-white-dark">Question {{currentQuestionIndex + 1 }} sur {{questions.length}}</p>
+            </div>
+            <div class="mb-5 flex items-center justify-between">
+                <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.question }}</h5>
+            </div>
+         
+            <ng-container *ngFor="let option of currentQuestion.options">
+                <div [ngStyle]="{
+                        'background-color': currentQuestion.correctAnswers.includes(option) ? '#d4edda' : '#f8d7da',
+                        'border-color': currentQuestion.correctAnswers.includes(option) ? '#c3e6cb' : '#f5c6cb',
+                        'color': currentQuestion.correctAnswers.includes(option) ? '#155724' : '#721c24'
+                    }"
+                    class="flex flex-col rounded-md border mb-5 p-2">
+                    <div class="flex space-x-4 rtl:space-x-reverse border px-4 py-2.5">
+                        <!-- Create a unique ID for each checkbox by combining question index and option text -->
+                        <label [for]="'tack_checkbox' + currentQuestionIndex + option" class="mb-0 cursor-pointer flex-grow">
+                            {{ option }}
+                        </label>
+                        <!-- Bind the checkbox ID and checked property dynamically -->
+                        <input [id]="'tack_checkbox' + currentQuestionIndex + option"
+                               type="checkbox"
+                               class="form-checkbox"
+                               [checked]="currentQuestion.givenAnswers.includes(option)" />
+                    </div>
+                </div>
+            </ng-container>            
+            
+            <!--ng-container *ngFor="let option of currentQuestion.options">
+                <div [ngStyle]="getOptionStyles(option)"
+                     class="flex flex-col rounded-md border mb-5 p-2">
+                    <div class="flex space-x-4 rtl:space-x-reverse border px-4 py-2.5">
+                        <label [for]="'tack_checkbox' + currentQuestionIndex + option" class="mb-0 cursor-pointer flex-grow">
+                            {{ option }}
+                        </label>
+                       <input [id]="'tack_checkbox' + currentQuestionIndex + option"
+                               type="checkbox"
+                               class="form-checkbox"
+                               [checked]="currentQuestion.givenAnswers.includes(option)" />
+                    </div>
+                </div>
+            </ng-container>-->
+            
+            
+            
+            
+            
+            <!-- task -->
+            <!--div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
+                <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
+                    <label for="tack_checkbox1" class="mb-0 cursor-pointer flex-grow">
+                        List groups are a flexible and powerful component for displaying simple. List groups are a flexible and powerful component for displaying simple. List groups are a flexible and powerful component for displaying simple.
+                    </label>
+                    <input id="tack_checkbox1" type="checkbox" class="form-checkbox" />
+                </div>
+            </div>
+
+            <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
+                <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
+                    <label for="tack_checkbox2" class="mb-0 cursor-pointer flex-grow">
+                        List groups are a flexible and powerful component for displaying simple.
+                    </label>
+                    <input id="tack_checkbox2" type="checkbox" class="form-checkbox" />
+                </div>
+            </div>
+
+            <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
+                <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
+                    <label for="tack_checkbox3" class="mb-0 cursor-pointer flex-grow">
+                        List groups are a flexible and powerful component for displaying simple.
+                    </label>
+                    <input id="tack_checkbox3" type="checkbox" class="form-checkbox" />
+                </div>
+            </div-->
+
+            <hr class="mt-10 mb-5">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                <div class="lg:col-span-1 flex justify-end" >
+                    <button type="button" class="btn btn-outline-secondary" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+                        <icon-arrow-backward class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                        Précedent
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary ml-2" (click)="nextQuestion()">
+                        <icon-arrow-forward class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                        Suivant
+                    </button>
+                </div>
+            </div>
+
+        </ng-container>
+    
+        <ng-template #resultsTemplate>
+            <div class="mb-5 mt-10 flex flex-col items-center justify-center">
+                <p class="text-center text-lg">Vous avez obtenu un score de {{ score }}%</p>
+                <button type="button" class="btn btn-outline-secondary mt-5">
+                    <icon-eye class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                    Voir mes réponses
+                </button>
+            </div>
+        </ng-template>
+        
+    </div>
+</div>
