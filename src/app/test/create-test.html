@@ -35,34 +35,42 @@
             <h5 class="text-lg font-semibold dark:text-white-light">Informations sur le test</h5>
         </div>
         <div class="mb-5">
-            <form class="space-y-5" [formGroup]="form4" (ngSubmit)="submitForm4()" novalidate>
+            <form class="space-y-5" [formGroup]="formCreateTest" (ngSubmit)="submitForm()" novalidate>
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-                    <div [ngClass]="isSubmitForm4 ? form4.controls['firstName'].errors ? 'has-error' : 'has-success' : ''">
-                        <label for="customFname">Nom du test</label>
-                        <input id="customFname" type="text" placeholder="Enter First Name" class="form-input" formControlName="firstName" />
-                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['firstName'].errors">
+                    <div [ngClass]="isSubmitForm ? formCreateTest.controls['testName'].errors ? 'has-error' : 'has-success' : ''">
+                        <label for="customTestName">Nom du test</label>
+                        <input id="customTestName" type="text" placeholder="Nom du test" class="form-input" formControlName="testName" />
+                        <!--ng-container *ngIf="isSubmitForm && !formCreateTest.controls['testName'].errors">
                             <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
-                        </ng-container>
-                        <ng-container *ngIf="isSubmitForm4 && form4.controls['firstName'].errors">
-                            <p class="mt-1 text-danger">Please fill the first name</p>
+                        </ng-container-->
+                        <ng-container *ngIf="isSubmitForm && formCreateTest.controls['testName'].errors">
+                            <p class="mt-1 text-danger">Veuillez remplir le nom du test</p>
                         </ng-container>
                     </div>
-                    <div [ngClass]="isSubmitForm4 ? form4.controls['lastName'].errors ? 'has-error' : 'has-success' : ''">
+                    <div [ngClass]="isSubmitForm ? formCreateTest.controls['module'].errors ? 'has-error' : 'has-success' : ''">
                         <label>Module</label>
                         <!--input id="customLname" type="text" placeholder="Enter Last Name" class="form-input" formControlName="lastName" /-->
-                        <ng-select
+                        <!--ng-select
                             [items]="options"
                             [(ngModel)]="input1"
                             [searchable]="false"
                             [clearable]="false"
                             class="custom-multiselect"
+                            placeholder="Enter Module"
+                            formControlName="lastName"
                         >
-                        </ng-select>
-                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['lastName'].errors">
+                        </ng-select-->
+                        <select class="form-select text-white-dark" formControlName="module">
+                            <option value="">Select Module</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <!--ng-container *ngIf="isSubmitForm && !formCreateTest.controls['lastName'].errors">
                             <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
-                        </ng-container>
-                        <ng-container *ngIf="isSubmitForm4 && form4.controls['lastName'].errors">
-                            <p class="mt-1 text-danger">Please fill the last name</p>
+                        </ng-container-->
+                        <ng-container *ngIf="isSubmitForm && formCreateTest.controls['module'].errors">
+                            <p class="mt-1 text-danger">Veuillez remplir le module</p>
                         </ng-container>
                     </div>
                     <!--div [ngClass]="isSubmitForm4 ? form4.controls['userName'].errors ? 'has-error' : 'has-success' : ''">
@@ -90,52 +98,60 @@
                     </div-->
                 </div>
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-4">
-                    <div class="md:col-span-2" [ngClass]="isSubmitForm4 ? form4.controls['city'].errors ? 'has-error' : 'has-success' : ''">
+                    <div class="md:col-span-2" [ngClass]="isSubmitForm ? formCreateTest.controls['moduleClass'].errors ? 'has-error' : 'has-success' : ''">
                         <label>Classe</label>
                         <!--input id="customeCity" type="text" placeholder="Enter City" class="form-input" formControlName="city" /-->
-                        <ng-select
+                        <!--ng-select
                             [items]="options2"
                             [(ngModel)]="input2"
                             [searchable]="false"
                             [clearable]="false"
                             class="custom-multiselect"
+                            placeholder="Enter Classe"
+                            formControlName="city"
                         >
-                        </ng-select>
-                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['city'].errors">
+                        </ng-select-->
+                        <select class="form-select text-white-dark" formControlName="moduleClass">
+                            <option value="">Select Class</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <!--ng-container *ngIf="isSubmitForm && !formCreateTest.controls['city'].errors">
                             <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
-                        </ng-container>
-                        <ng-container *ngIf="isSubmitForm4 && form4.controls['city'].errors">
-                            <p class="mt-1 text-danger">Please provide a valid city</p>
+                        </ng-container-->
+                        <ng-container *ngIf="isSubmitForm && formCreateTest.controls['moduleClass'].errors">
+                            <p class="mt-1 text-danger">Veuillez remplir le Classe</p>
                         </ng-container>
                     </div>
-                    <div [ngClass]="isSubmitForm4 ? form4.controls['state'].errors ? 'has-error' : 'has-success' : ''">
+                    <div [ngClass]="isSubmitForm ? formCreateTest.controls['date1'].errors ? 'has-error' : 'has-success' : ''">
                         <label>Date début</label>
                         <!--input id="customeState" type="text" placeholder="Enter State" class="form-input" formControlName="state" /-->
                         <div class="mb-5">
-                            <form [formGroup]="form1">
+                            <!--form [formGroup]="form1"-->
                                 <ng2-flatpickr [config]="basic" formControlName="date1" addClass="form-input"></ng2-flatpickr>
-                            </form>
+                            <!--/form-->
                         </div>
-                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['state'].errors">
+                        <!--ng-container *ngIf="isSubmitForm && !formCreateTest.controls['date1'].errors">
                             <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
-                        </ng-container>
-                        <ng-container *ngIf="isSubmitForm4 && form4.controls['state'].errors">
-                            <p class="mt-1 text-danger">Please provide a valid state</p>
+                        </ng-container-->
+                        <ng-container *ngIf="isSubmitForm && formCreateTest.controls['date1'].errors">
+                            <p class="mt-1 text-danger">Veuillez indiquer une date valide</p>
                         </ng-container>
                     </div>
-                    <div [ngClass]="isSubmitForm4 ? form4.controls['zip'].errors ? 'has-error' : 'has-success' : ''">
+                    <div [ngClass]="isSubmitForm ? formCreateTest.controls['date2'].errors ? 'has-error' : 'has-success' : ''">
                         <label>Date fin</label>
                         <!--input id="customeZip" type="text" placeholder="Enter Zip" class="form-input" formControlName="zip" /-->
                         <div class="mb-5">
-                            <form [formGroup]="form1">
-                                <ng2-flatpickr [config]="basic" formControlName="date1" addClass="form-input"></ng2-flatpickr>
-                            </form>
+                            <!--form [formGroup]="form1"-->
+                                <ng2-flatpickr [config]="basic" formControlName="date2" addClass="form-input"></ng2-flatpickr>
+                            <!--/form-->
                         </div>
-                        <ng-container *ngIf="isSubmitForm4 && !form4.controls['zip'].errors">
+                        <!--ng-container *ngIf="isSubmitForm && !formCreateTest.controls['date2'].errors">
                             <p class="mt-1 text-[#1abc9c]">Looks Good!</p>
-                        </ng-container>
-                        <ng-container *ngIf="isSubmitForm4 && form4.controls['zip'].errors">
-                            <p class="mt-1 text-danger">Please provide a valid zip</p>
+                        </ng-container-->
+                        <ng-container *ngIf="isSubmitForm && formCreateTest.controls['date2'].errors">
+                            <p class="mt-1 text-danger">Veuillez indiquer une date valide</p>
                         </ng-container>
                     </div>
                 </div>
@@ -147,8 +163,8 @@
                     <ng-container *ngIf="isSubmitForm4 && form4.controls['isTerms'].errors">
                         <p class="mt-1 text-danger">You must agree before submitting.</p>
                     </ng-container>
-                </div>
-                <button type="submit" class="btn btn-primary !mt-6">Submit Form</button-->
+                </div-->
+                <!--button type="submit" class="btn btn-primary !mt-6">Submit Form</button-->
             </form>
         </div>
 
@@ -214,13 +230,20 @@
 
         <div class="mt-6 mb-5">
             <!--quill-editor [modules]="modules1" placeholder="" [(ngModel)]="content1"></quill-editor-->
-            <textarea
+            <!--textarea
                 id="description"
                 name="description"
                 rows="20"
                 class="form-textarea min-h-[130px]"
                 placeholder="Veuillez créer les questions du test."
                 formControlName="description"
+            ></textarea-->
+            <textarea
+                id="description"
+                name="description"
+                rows="20"
+                class="form-textarea min-h-[130px]"
+                placeholder="Veuillez créer les questions du test."
             ></textarea>
         </div>
 
