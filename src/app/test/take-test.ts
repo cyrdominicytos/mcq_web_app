@@ -8,10 +8,18 @@ import { takeWhile } from 'rxjs/operators';
 
 interface Question {
     question: string;
-    options: string[];
+    options: Option[];
     correctAnswers: string[];
     delayInSeconds?: number;
+    suggestedQuestion: string;
+    suggestedOptions: Option[];
 }
+
+interface Option {
+    id: number;
+    name: string;
+}
+
 @Component({
     moduleId: module.id,
     templateUrl: './take-test.html',
@@ -27,25 +35,33 @@ export class TakeTestComponent implements OnDestroy{
     questions: Question[] = [
         {
             question: 'What is the capital of France?',
-            options: ['Paris', 'London', 'Berlin', 'Madrid'],
-            correctAnswers: ['Paris']
+            options: [{id: 1, name: 'Paris'}, {id: 2, name: 'London'}, {id: 3, name: 'Berlin'}, {id: 4, name: 'Madrid'}],
+            correctAnswers: ['Paris'],
+            suggestedQuestion: 'What is the capital of France?',
+            suggestedOptions: [{id: 1, name: 'Paris'}, {id: 2, name: 'London'}, {id: 3, name: 'Berlin'}, {id: 4, name: 'Madrid'}],
         },
         {
             question: 'Which planet is known as the Red Planet?',
-            options: ['Earth', 'Mars', 'Jupiter', 'Saturn'],
+            options: [{id: 1, name: 'Earth'}, {id: 2, name: 'Mars'}, {id: 3, name: 'Jupiter'}, {id: 4, name: 'Saturn'}],
             correctAnswers: ['Mars'],
-            delayInSeconds: 10 // 10 seconds delay for this question
+            delayInSeconds: 10, // 10 seconds delay for this question
+            suggestedQuestion: 'Which planet is known as the Red Planet?',
+            suggestedOptions: [{id: 1, name: 'Earth'}, {id: 2, name: 'Mars'}, {id: 3, name: 'Jupiter'}, {id: 4, name: 'Saturn'}],
         },
         {
             question: 'What is the largest ocean on Earth?',
-            options: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
+            options: [{id: 1, name: 'Atlantic Ocean'}, {id: 2, name: 'Indian Ocean'}, {id: 3, name: 'Arctic Ocean'}, {id: 4, name: 'Pacific Ocean'}],
             correctAnswers: ['Pacific Ocean'],
-            delayInSeconds: 15 // 15 seconds delay for this question
+            delayInSeconds: 15, // 15 seconds delay for this question
+            suggestedQuestion: 'What is the largest ocean on Earth?',
+            suggestedOptions: [{id: 1, name: 'Atlantic Ocean'}, {id: 2, name: 'Indian Ocean'}, {id: 3, name: 'Arctic Ocean'}, {id: 4, name: 'Pacific Ocean'}],
         },
         {
             question: 'Which of the following are plays by William Shakespeare?',
-            options: ['Hamlet', 'Pride and Prejudice', 'Romeo and Juliet', 'Oliver Twist'],
-            correctAnswers: ['Hamlet', 'Romeo and Juliet']
+            options: [{id: 1, name: 'Hamlet'}, {id: 2, name: 'Pride and Prejudice'}, {id: 3, name: 'Romeo and Juliet'}, {id: 4, name: 'Oliver Twist'}],
+            correctAnswers: ['Hamlet', 'Romeo and Juliet'],
+            suggestedQuestion: 'Which of the following are plays by William Shakespeare?',
+            suggestedOptions: [{id: 1, name: 'Hamlet'}, {id: 2, name: 'Pride and Prejudice'}, {id: 3, name: 'Romeo and Juliet'}, {id: 4, name: 'Oliver Twist'}],
         }
     ];
 
@@ -59,6 +75,28 @@ export class TakeTestComponent implements OnDestroy{
     currentTime1: number = 0;
     currentTime2: number = 0;
     timeSpentPerQuestion: number[] = [];
+
+    isEditingQuestion: boolean = false;
+
+    toggleEditQuestion() {
+        this.isEditingQuestion = !this.isEditingQuestion;
+    }
+
+    updateQuestion(event: Event) {
+        const input = event.target as HTMLInputElement;
+        this.currentQuestion.suggestedQuestion = input.value;
+    }
+
+    myMethodToUpdateOption(event: Event, index: number): void {
+        const input = event.target as HTMLInputElement;
+        this.currentQuestion.suggestedOptions[index].name = input.value;
+    }
+
+    handleEnterKey(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+            this.toggleEditQuestion();
+        }
+    }
 
     /*get currentQuestion(): Question {
         return this.questions[this.currentQuestionIndex];
@@ -174,6 +212,7 @@ export class TakeTestComponent implements OnDestroy{
             this.calculateResults();
             this.showResults = true;
         }
+        this.isEditingQuestion = false;
     }
 
 
@@ -187,6 +226,7 @@ export class TakeTestComponent implements OnDestroy{
             this.currentTime1 = Date.now();
             this.startTimer(delay);
         }
+        this.isEditingQuestion = false;
     }
 
     selectAnswer(option: string): void {

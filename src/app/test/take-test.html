@@ -25,63 +25,56 @@
 
     <div class="panel mt-6 pl-40 pr-40">
         <ng-container *ngIf="!showResults; else resultsTemplate">
-            <div class="mb-5">
-                <p class="text-white-dark">Question {{currentQuestionIndex + 1 }} sur {{questions.length}}</p>
-            </div>
             <div class="mb-5 flex items-center justify-between">
-                <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.question }}</h5>
+                <p class="text-white-dark">Question {{currentQuestionIndex + 1 }} sur {{questions.length}}</p>
                 <div *ngIf="currentQuestion.delayInSeconds">
                     <p *ngIf="timeLeft > 0">Time left: {{ timeLeft }} seconds</p>
                     <p *ngIf="timeLeft === 0">Time's up!</p>
                 </div>
             </div>
-            <ng-container *ngFor="let option of currentQuestion.options">
+            <div class="mb-5 flex items-center justify-between">
+                <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
+                    <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.suggestedQuestion }}</h5>
+                </ng-container>
+                <ng-template #editQuestionTemplate>
+                    <input
+                        type="text"
+                        class="form-input"
+                        [value]="currentQuestion.suggestedQuestion"
+                        (input)="updateQuestion($event)"
+                    />
+                </ng-template>
+
+                <button type="button" ngxTippy="Suggestion" class="hover:text-primary ml-2 mr-2" (click)="toggleEditQuestion()">
+                    <icon-edit />
+                </button>
+            </div>
+            <ng-container *ngFor="let option of currentQuestion.suggestedOptions; let i = index">
                 <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
                     <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
-                        <!--label for="tack_checkbox1" class="mb-0 cursor-pointer flex-grow">
-                            {{ option }}
-                        </label>
-                        <input id="tack_checkbox1" type="checkbox" class="form-checkbox" /-->
-                        <label [for]="'tack_checkbox' + currentQuestionIndex + option" class="mb-0 cursor-pointer flex-grow">
-                            {{ option }}
-                        </label>
-                        <input [id]="'tack_checkbox' + currentQuestionIndex + option"
+                        <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
+                            <label [for]="'tack_checkbox' + currentQuestionIndex + option.name" class="mb-0 cursor-pointer flex-grow">
+                                {{ option.name }}
+                            </label>
+                        </ng-container>
+
+                        <ng-template #editQuestionTemplate>
+                            <input
+                                type="text"
+                                class="form-input"
+                                [value]="option.name"
+                                (input)="myMethodToUpdateOption($event, i)"
+                            />
+                        </ng-template>
+
+                        <input [id]="'tack_checkbox' + currentQuestionIndex + option.name"
                                type="checkbox"
                                class="form-checkbox"
-                               [checked]="isSelected(option)"
-                               (change)="selectAnswer(option)" />
+                               [checked]="isSelected(option.name)"
+                               (change)="selectAnswer(option.name)" />
                     </div>
                 </div>
             </ng-container>
-
-
-            <!-- task -->
-            <!--div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
-                <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
-                    <label for="tack_checkbox1" class="mb-0 cursor-pointer flex-grow">
-                        List groups are a flexible and powerful component for displaying simple. List groups are a flexible and powerful component for displaying simple. List groups are a flexible and powerful component for displaying simple.
-                    </label>
-                    <input id="tack_checkbox1" type="checkbox" class="form-checkbox" />
-                </div>
-            </div>
-
-            <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
-                <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
-                    <label for="tack_checkbox2" class="mb-0 cursor-pointer flex-grow">
-                        List groups are a flexible and powerful component for displaying simple.
-                    </label>
-                    <input id="tack_checkbox2" type="checkbox" class="form-checkbox" />
-                </div>
-            </div>
-
-            <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
-                <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
-                    <label for="tack_checkbox3" class="mb-0 cursor-pointer flex-grow">
-                        List groups are a flexible and powerful component for displaying simple.
-                    </label>
-                    <input id="tack_checkbox3" type="checkbox" class="form-checkbox" />
-                </div>
-            </div-->
 
             <hr class="mt-10 mb-5">
 
