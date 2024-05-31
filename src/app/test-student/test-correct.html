@@ -32,7 +32,7 @@
                 <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.question }}</h5>
             </div>
          
-            <ng-container *ngFor="let option of currentQuestion.options">
+            <!--<ng-container *ngFor="let option of currentQuestion.options">
                 <div [ngStyle]="{
                         'background-color': currentQuestion.correctAnswers.includes(option) ? '#d4edda' : '#f8d7da',
                         'border-color': currentQuestion.correctAnswers.includes(option) ? '#c3e6cb' : '#f5c6cb',
@@ -40,20 +40,21 @@
                     }"
                     class="flex flex-col rounded-md border mb-5 p-2">
                     <div class="flex space-x-4 rtl:space-x-reverse border px-4 py-2.5">
-                        <!-- Create a unique ID for each checkbox by combining question index and option text -->
+                       Create a unique ID for each checkbox by combining question index and option text 
                         <label [for]="'tack_checkbox' + currentQuestionIndex + option" class="mb-0 cursor-pointer flex-grow">
                             {{ option }}
                         </label>
-                        <!-- Bind the checkbox ID and checked property dynamically -->
+                        Bind the checkbox ID and checked property dynamically 
                         <input [id]="'tack_checkbox' + currentQuestionIndex + option"
                                type="checkbox"
                                class="form-checkbox"
                                [checked]="currentQuestion.givenAnswers.includes(option)" />
                     </div>
                 </div>
-            </ng-container>            
+            </ng-container>-->
+          
             
-            <!--ng-container *ngFor="let option of currentQuestion.options">
+            <ng-container *ngFor="let option of currentQuestion.options">
                 <div [ngStyle]="getOptionStyles(option)"
                      class="flex flex-col rounded-md border mb-5 p-2">
                     <div class="flex space-x-4 rtl:space-x-reverse border px-4 py-2.5">
@@ -66,7 +67,7 @@
                                [checked]="currentQuestion.givenAnswers.includes(option)" />
                     </div>
                 </div>
-            </ng-container>-->
+            </ng-container>
             
             
             
