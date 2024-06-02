@@ -78,11 +78,35 @@
 
             <hr class="mt-10 mb-5">
 
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2 mb-5" *ngIf="isVisibleSignalQuestionPanel">
+                <!--form (ngSubmit)="saveComment()" class="text-sm"-->
+                    <div class="grid gap-5">
+                        <div>
+                            <!--label for="comment">Commentaire</label-->
+                            <!--input id="title" [(ngModel)]="params.title" name="title" type="text" class="form-input mt-1" placeholder="Enter Name" /-->
+                            <textarea
+                                id="comment"
+                                #commentTextarea
+                                [(ngModel)]="params.comment"
+                                name="comment"
+                                rows="4"
+                                class="form-textarea w-full"
+                                placeholder="Commentaire"
+                            ></textarea>
+                        </div>
+                    </div>
+                <!--/form-->
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
                 <div class="lg:col-span-3" >
-                    <button type="button" class="btn btn-outline-danger" (click)="addComment()">
+                    <button type="button" class="btn btn-outline-danger" (click)="addComment()" *ngIf="!isVisibleSignalQuestionPanel">
                         <icon-bell class="shrink-0 ltr:mr-2 rtl:ml-2" />
                         Signaler une erreur
+                    </button>
+                    <button type="button" class="btn btn-outline-success" (click)="sendComment()" *ngIf="isVisibleSignalQuestionPanel">
+                        <icon-send class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                        Envoyer commentaire
                     </button>
                 </div>
                 <div class="lg:col-span-1 flex justify-end" >
@@ -112,7 +136,7 @@
     </div>
 
 
-    <modal #isAddCommentModal class="no-footer">
+    <!--modal #isAddCommentModal class="no-footer">
         <ng-template #modalHeader>
             <div class="!font-medium">Signaler une erreur</div>
         </ng-template>
@@ -121,7 +145,6 @@
                 <div class="grid gap-5">
                     <div>
                         <label for="comment">Commentaire</label>
-                        <!--input id="title" [(ngModel)]="params.title" name="title" type="text" class="form-input mt-1" placeholder="Enter Name" /-->
                         <textarea
                             id="comment"
                             [(ngModel)]="params.comment"
@@ -138,6 +161,6 @@
                 </div>
             </form>
         </ng-template>
-    </modal>
+    </modal-->
 
 </div>

@@ -17,7 +17,7 @@
                     <button type="button" class="btn btn-outline-primary">Exporter un test</button>
                 </div-->
                 <div>
-                    <button type="button" class="btn btn-outline-primary" (click)="editNote()">
+                    <button type="button" class="btn btn-outline-primary" (click)="openImportPanel()">
                         Importer un test
                     </button>
                 </div>
@@ -29,6 +29,68 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="panel mt-6 pb-0" *ngIf="isVisibleImportPanel">
+        <h5 class="mb-5 text-lg font-semibold dark:text-white-light">Importer un test</h5>
+        <form [formGroup]="params" (submit)="importer()" class="text-sm">
+            <div class="mb-5">
+                <label>Type</label>
+                <div class="grid mt-5 grid-cols-1 gap-5 md:grid-cols-2">
+                    <div>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="type" class="form-radio" formControlName="type" [value]="false" checked />
+                            <span class="text-primary">Nouvelle création</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="type" class="form-radio" formControlName="type" [value]="true"/>
+                            <span class="text-primary">Modification</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="grid mt-5 grid-cols-1 gap-5 md:grid-cols-2">
+                <div class="mb-5">
+                    <label for="name">Module</label>
+                    <select id="name" class="form-select" formControlName="user">
+                        <option value="">Select Module</option>
+                        <option value="Max Smith">Max Smith</option>
+                        <option value="John Doe">John Doe</option>
+                        <option value="Kia Jain">Kia Jain</option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label for="tag">Classe</label>
+                    <select id="tag" class="form-select" formControlName="tag">
+                        <option value="">Select Classe</option>
+                        <option value="personal">Personal</option>
+                        <option value="work">Work</option>
+                        <option value="social">Social</option>
+                        <option value="important">Important</option>
+                    </select>
+                </div>
+            </div>
+            <div *ngIf="params.get('type')?.value" class="mb-5">
+                <label for="qcm">QCM</label>
+                <select id="qcm" class="form-select" formControlName="tag">
+                    <option value="">Select QCM</option>
+                    <option value="personal">Personal</option>
+                    <option value="work">Work</option>
+                    <option value="social">Social</option>
+                    <option value="important">Important</option>
+                </select>
+            </div>
+            <div>
+                <label for="ctnFile">JSON File</label>
+                <input id="ctnFile" type="file" class="form-input file:py-2 file:px-4 file:border-0 file:font-semibold p-0 file:bg-primary/90 ltr:file:mr-5 rtl:file:ml-5 file:text-white file:hover:bg-primary" required />
+            </div>
+            <div class="mt-8 flex items-center justify-end">
+                <button type="button" class="btn btn-outline-danger gap-2 mb-5" (click)="closeImportPanel()">Cancel</button>
+                <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4 mb-5">Importer</button>
+            </div>
+        </form>
     </div>
 
     <div class="panel mt-6 pb-0">
@@ -67,16 +129,12 @@
         </div>
     </div>
 
-    <modal #isAddNoteModal class="no-footer">
+    <!--modal #isAddNoteModal class="no-footer">
         <ng-template #modalHeader>
             <div class="!font-medium">Importer un test</div>
         </ng-template>
         <ng-template #modalBody>
             <form [formGroup]="params" (submit)="importer()" class="text-sm">
-                <!--div class="mb-5">
-                    <label for="title">Title</label>
-                    <input id="title" type="text" placeholder="Enter Title" class="form-input" formControlName="title" />
-                </div-->
                 <div class="mb-5">
                     <label>Type</label>
                     <div class="grid mt-5 grid-cols-1 gap-5 md:grid-cols-2">
@@ -133,6 +191,6 @@
                 </div>
             </form>
         </ng-template>
-    </modal>
+    </modal-->
 
 </div>

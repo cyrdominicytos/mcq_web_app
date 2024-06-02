@@ -10,9 +10,10 @@ import Swal from "sweetalert2";
 export class ListTestComponent {
 
     //isTypeSelected: boolean = false;
+    isVisibleImportPanel: boolean = false;
     constructor(public fb: FormBuilder) {}
 
-    @ViewChild('isAddNoteModal') isAddNoteModal!: ModalComponent;
+    //@ViewChild('isAddNoteModal') isAddNoteModal!: ModalComponent;
 
     search = '';
 
@@ -137,9 +138,10 @@ export class ListTestComponent {
             type: [false],
         });
     }
-    editNote(note: any = null) {
+    openImportPanel(note: any = null) {
         //this.isShowNoteMenu = false;
-        this.isAddNoteModal.open();
+        //this.isAddNoteModal.open();
+        this.isVisibleImportPanel = true;
         this.initForm();
         if (note) {
             this.params.setValue({
@@ -151,6 +153,10 @@ export class ListTestComponent {
                 thumb: note.thumb,
             });
         }
+    }
+
+    closeImportPanel() {
+        this.isVisibleImportPanel = false;
     }
 
     importer() {
@@ -186,7 +192,8 @@ export class ListTestComponent {
         }*/
 
         this.showMessage('Import has been completed successfully.');
-        this.isAddNoteModal.close();
+        this.isVisibleImportPanel = false;
+        //this.isAddNoteModal.close();
         //this.searchNotes();
     }
 

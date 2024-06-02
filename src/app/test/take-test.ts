@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnDestroy} from '@angular/core';
+import {Component, ViewChild, OnDestroy, ElementRef} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
@@ -26,7 +26,9 @@ interface Option {
 })
 export class TakeTestComponent implements OnDestroy{
 
-    @ViewChild('isAddCommentModal') isAddCommentModal!: ModalComponent;
+    //@ViewChild('isAddCommentModal') isAddCommentModal!: ModalComponent;
+    isVisibleSignalQuestionPanel: boolean = false;
+    @ViewChild('commentTextarea') commentTextarea!: ElementRef;
 
     params = {
         comment: '',
@@ -213,6 +215,7 @@ export class TakeTestComponent implements OnDestroy{
             this.showResults = true;
         }
         this.isEditingQuestion = false;
+        this.isVisibleSignalQuestionPanel = false;
     }
 
 
@@ -227,6 +230,7 @@ export class TakeTestComponent implements OnDestroy{
             this.startTimer(delay);
         }
         this.isEditingQuestion = false;
+        this.isVisibleSignalQuestionPanel = false;
     }
 
     selectAnswer(option: string): void {
@@ -325,8 +329,15 @@ export class TakeTestComponent implements OnDestroy{
             this.params = {
                 comment: '',
             };
-            this.isAddCommentModal.open();
+            //this.isAddCommentModal.open();
+            this.isVisibleSignalQuestionPanel = true;
+            this.commentTextarea.nativeElement.focus();
         });
+    }
+
+    sendComment(){
+        this.showMessage('Comment sent successfully.');
+        this.isVisibleSignalQuestionPanel = false;
     }
 
     saveComment() {
@@ -354,7 +365,7 @@ export class TakeTestComponent implements OnDestroy{
         }*/
 
         this.showMessage('Project has been saved successfully.');
-        this.isAddCommentModal.close();
+        //this.isAddCommentModal.close();
     }
     showMessage(msg = '', type = 'success') {
         const toast: any = Swal.mixin({
