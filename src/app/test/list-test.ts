@@ -2,6 +2,8 @@ import {Component, ViewChild} from '@angular/core';
 import {ModalComponent} from "angular-custom-modal";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from "sweetalert2";
+import {TestService} from "../core/services/test.service";
+import {Qcm} from "../core/models/qcm.model";
 
 @Component({
     moduleId: module.id,
@@ -11,13 +13,13 @@ export class ListTestComponent {
 
     //isTypeSelected: boolean = false;
     isVisibleImportPanel: boolean = false;
-    constructor(public fb: FormBuilder) {}
+    constructor(public fb: FormBuilder, private testService: TestService) {}
 
     //@ViewChild('isAddNoteModal') isAddNoteModal!: ModalComponent;
 
     search = '';
 
-    cols = [
+    /*cols = [
         { field: 'id', title: 'ID', isUnique: true, filter: false },
         { field: 'quiz', title: 'Quiz' },
         { field: 'module', title: 'Module' },
@@ -25,9 +27,20 @@ export class ListTestComponent {
         { field: 'start', title: 'Lancé le', type: 'date' },
         { field: 'end', title: 'Date déchéance', type: 'date' },
         { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
+    ];*/
+
+    cols = [
+        { field: 'id', title: 'ID', isUnique: true, filter: false },
+        { field: 'title', title: 'Quiz' },
+        { field: 'module', title: 'Module' },
+        { field: 'totalQuestions', title: '# Questions', filter: false  },
+        { field: 'status', title: 'Status' , filter: false},
+        { field: 'openStartDate', title: 'Lancé le', type: 'date' },
+        { field: 'closeStartDate', title: 'Date déchéance', type: 'date' },
+        { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
     ];
 
-    rows = [
+    /*rows = [
         {
             id: 1,
             quiz: 'Bases des structures de données.',
@@ -124,7 +137,53 @@ export class ListTestComponent {
             start: '2024-05-05',
             end: '2024-07-07'
         }
-    ];
+    ];*/
+
+    ngOnInit() {
+        this.loadTests();
+    }
+
+    listOfTests: Qcm[] = [];
+    //listOfTests: any = [];
+    loadTests() {
+        console.log('Calling loadTests()...');
+        this.testService.getAllTests().subscribe(
+            (tests) => {
+                this.listOfTests = tests;
+                console.log(this.listOfTests);
+            },
+            (error) => {
+                console.error('Error while loading tests:', error);
+            }
+        );
+    }
+
+    getTotalQuestions(qcm: Qcm): number {
+        return qcm.questions.length;
+    }
+    getStatus(qcm: Qcm): string {
+        if (!qcm.active) {
+            return 'Inactive';
+        }
+
+        const now = new Date();
+        const openStartDate = new Date(qcm.openStartDate);
+        const closeStartDate = new Date(qcm.closeStartDate);
+
+        if(!closeStartDate){
+            if (now >= openStartDate && now <= closeStartDate) {
+                return 'En cours';
+            } else {
+                return 'Clôturé';
+            }
+        }else{
+            if (now >= openStartDate) {
+                return 'En cours';
+            } else {
+                return 'Clôturé';
+            }
+        }
+    }
 
     params!: FormGroup;
     initForm() {
