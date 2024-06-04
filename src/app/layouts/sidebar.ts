@@ -8,7 +8,7 @@ import { slideDownUp } from '../shared/animations';
 @Component({
     moduleId: module.id,
     selector: 'sidebar',
-    templateUrl: './sidebar.html',
+    templateUrl: './sidebar_new.html',
     animations: [slideDownUp],
 })
 export class SidebarComponent {
