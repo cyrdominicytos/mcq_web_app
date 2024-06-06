@@ -11,23 +11,13 @@ import {Qcm} from "../core/models/qcm.model";
 })
 export class ListTestComponent {
 
+    @ViewChild('isDeleteModal') isDeleteModal!: ModalComponent;
+    selectedQcmId: any = null;
     //isTypeSelected: boolean = false;
     isVisibleImportPanel: boolean = false;
     constructor(public fb: FormBuilder, private testService: TestService) {}
 
-    //@ViewChild('isAddNoteModal') isAddNoteModal!: ModalComponent;
-
     search = '';
-
-    /*cols = [
-        { field: 'id', title: 'ID', isUnique: true, filter: false },
-        { field: 'quiz', title: 'Quiz' },
-        { field: 'module', title: 'Module' },
-        { field: 'status', title: 'Status' , filter: false},
-        { field: 'start', title: 'Lancé le', type: 'date' },
-        { field: 'end', title: 'Date déchéance', type: 'date' },
-        { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
-    ];*/
 
     cols = [
         { field: 'id', title: 'ID', isUnique: true, filter: false },
@@ -39,105 +29,6 @@ export class ListTestComponent {
         { field: 'closeStartDate', title: 'Date déchéance', type: 'date' },
         { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
     ];
-
-    /*rows = [
-        {
-            id: 1,
-            quiz: 'Bases des structures de données.',
-            module: 'Intro aux structures des données',
-            status: 'Clôturé',
-            start: '2024-05-05',
-            end: '2024-06-05'
-        },
-        {
-            id: 2,
-            quiz: 'Analyse des algorithmes',
-            module: 'Algorithmes et complexité',
-            status: 'En cours',
-            start: '2024-06-07',
-            end: '2024-06-07'
-        },
-        {
-            id: 3,
-            quiz: 'Fondements de la conception de bases de données',
-            module: 'Introduction aux technologies web',
-            status: 'Clôturé',
-            start: '2024-05-05',
-            end: '2024-07-07'
-        },
-        {
-            id: 4,
-            quiz: 'Concepts des systèmes dexplotation',
-            module: 'Systèmes dexplotation',
-            status: 'En cours',
-            start: '2024-05-05',
-            end: '2024-07-07'
-        },
-        {
-            id: 5,
-            quiz: 'Bases des structures de données',
-            module: 'Intro aux structures des données',
-            status: 'Clôturé',
-            start: '2024-05-05',
-            end: '2024-06-05'
-        },
-        {
-            id: 6,
-            quiz: 'Analyse des algorithmes',
-            module: 'Algorithmes et complexité',
-            status: 'En cours',
-            start: '2024-06-07',
-            end: '2024-06-07'
-        },
-        {
-            id: 7,
-            quiz: 'Fondements de la conception de bases de données',
-            module: 'Introduction aux technologies web',
-            status: 'Clôturé',
-            start: '2024-05-05',
-            end: '2024-07-07'
-        },
-        {
-            id: 8,
-            quiz: 'Concepts des systèmes dexplotation',
-            module: 'Systèmes dexplotation',
-            status: 'En cours',
-            start: '2024-05-05',
-            end: '2024-07-07'
-        },
-        {
-            id: 9,
-            quiz: 'Bases des structures de données',
-            module: 'Intro aux structures des données',
-            status: 'Clôturé',
-            start: '2024-05-05',
-            end: '2024-06-05'
-        },
-        {
-            id: 10,
-            quiz: 'Analyse des algorithmes',
-            module: 'Algorithmes et complexité',
-            status: 'En cours',
-            start: '2024-06-07',
-            end: '2024-06-07'
-        },
-        {
-            id: 11,
-            quiz: 'Fondements de la conception de bases de données',
-            module: 'Introduction aux technologies web',
-            status: 'Clôturé',
-            start: '2024-05-05',
-            end: '2024-07-07'
-        },
-        {
-            id: 12,
-            quiz: 'Concepts des systèmes dexplotation',
-            module: 'Systèmes dexplotation',
-            status: 'En cours',
-            start: '2024-05-05',
-            end: '2024-07-07'
-        }
-    ];*/
 
     ngOnInit() {
         this.loadTests();
@@ -156,6 +47,53 @@ export class ListTestComponent {
                 console.error('Error while loading tests:', error);
             }
         );
+    }
+
+    exportQcm(id: number) {
+        this.testService.exportQcmAsJson(id).subscribe(
+            response => {
+                this.downloadFile(response, `qcm_${id}.json`);
+                console.log('QCM Exported Successfully', response);
+                this.showMessage('Export has been completed successfully.');
+            },
+            error => {
+                console.error('Error exporting QCM', error);
+            }
+        );
+    }
+
+    private downloadFile(data: Blob, filename: string) {
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    }
+
+    deleteRows() {
+        this.deleteQcm(this.selectedQcmId);
+        this.isDeleteModal.close();
+    }
+
+    deleteQcm(id: number) {
+        this.testService.deleteQcm(id).subscribe(
+            () => {
+                this.listOfTests = this.listOfTests.filter((d: any) => d.id != id);
+                this.showMessage('QCM with ID ' + id + ' deleted successfully.');
+                console.log(`QCM with ID ${id} deleted successfully.`);
+            },
+            error => {
+                console.error('Error deleting QCM', error);
+            }
+        );
+    }
+
+    exporter(){
+        this.showMessage('Export has been completed successfully.');
     }
 
     getTotalQuestions(qcm: Qcm): number {
@@ -188,41 +126,73 @@ export class ListTestComponent {
     params!: FormGroup;
     initForm() {
         this.params = this.fb.group({
-            id: [0],
-            title: ['', Validators.required],
-            description: [''],
-            tag: [''],
-            user: [''],
-            thumb: [''],
             type: [false],
+            module: ['',Validators.required],
+            field: ['',Validators.required],
+            qcm: [''],
         });
     }
-    openImportPanel(note: any = null) {
-        //this.isShowNoteMenu = false;
-        //this.isAddNoteModal.open();
+    openImportPanel() {
         this.isVisibleImportPanel = true;
         this.initForm();
-        if (note) {
-            this.params.setValue({
-                id: note.id,
-                title: note.title,
-                description: note.description,
-                tag: note.tag,
-                user: note.user,
-                thumb: note.thumb,
-            });
-        }
+        this.initAllLists();
+    }
+
+    // Extract listOfClasses and listOfFields
+    listOfClasses = new Set<string>();
+    listOfFields = new Set<string>();
+    listOfClassesArray : any =  [];
+    listOfFieldsArray : any =  [];
+    initAllLists() {
+        this.listOfTests.forEach(qcm => {
+            if (qcm.level) {
+                this.listOfClasses.add(qcm.level.classOfStudy);
+                this.listOfFields.add(qcm.level.fieldOfStudy);
+            }
+            this.listOfClassesArray = Array.from(this.listOfClasses);
+            this.listOfFieldsArray = Array.from(this.listOfFields);
+        });
+        console.log('List of Classes:', this.listOfClassesArray);
+        console.log('List of Fields:', this.listOfFieldsArray);
     }
 
     closeImportPanel() {
         this.isVisibleImportPanel = false;
     }
 
-    importer() {
-        /*if (this.params.controls['title'].errors) {
-            this.showMessage('Title is required.', 'error');
+    import() {
+        if (this.params.controls['module'].errors) {
+            this.showMessage('Module is required.', 'error');
             return;
-        }*/
+        }
+        if (this.params.controls['field'].errors) {
+            this.showMessage('Field is required.', 'error');
+            return;
+        }
+        const jsonFile = this.uploadedFile;
+        if (!jsonFile) {
+            this.showMessage('File is required.', 'error');
+            return;
+        }
+
+        if (this.params.get('type')?.value) {
+            // Modif
+        } else {
+            // New
+            this.testService.createQcmViaJson(jsonFile, 3, 1).subscribe(
+                response => {
+                    //respomse to QCM ? No, better to return QCM in the backend
+                    //this.listOfTests.unshift(response);
+                    console.log(this.listOfTests);
+                    this.showMessage('Import has been completed successfully.');
+                    console.log('QCM created successfully:', response);
+                },
+                error => {
+                    console.error('Error creating QCM:', error);
+                }
+            );
+        }
+
         /*if (this.params.value.id) {
             //update task
             let note: any = this.notesList.find((d: { id: any }) => d.id === this.params.value.id);
@@ -250,15 +220,32 @@ export class ListTestComponent {
             this.searchNotes();
         }*/
 
-        this.showMessage('Import has been completed successfully.');
+        //this.showMessage('Import has been completed successfully.');
         this.isVisibleImportPanel = false;
         //this.isAddNoteModal.close();
         //this.searchNotes();
     }
 
-    exporter(){
-        this.showMessage('Export has been completed successfully.');
+    uploadedFile: any = null;
+
+    onFileSelected() {
+        const fileInput = document.getElementById('jsonFile') as HTMLInputElement;
+        const files: FileList | null = fileInput.files;
+        if (files && files.length > 0) {
+            this.uploadedFile = files[0];
+            //const uploadedFile = files[0];
+            //console.log('Uploaded file:', uploadedFile);
+            // Do whatever you need with the file here
+        }
     }
+
+    deleteConfirmModal(id: any = null) {
+        this.selectedQcmId = id;
+        setTimeout(() => {
+            this.isDeleteModal.open();
+        }, 10);
+    }
+
 
     formatDate(date: any) {
         if (date) {
