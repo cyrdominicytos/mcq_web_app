@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './list-test-student.html',
+    templateUrl: './list-qcm-student.html',
 })
-export class ListTestStudComponent {
+export class ListQcmStudentComponent {
     constructor() {}
     search = '';
     cols = [
@@ -66,7 +66,8 @@ export class ListTestStudComponent {
             quiz: 'Analyse des algorithmes',
             module: 'Algorithmes et complexité',
             status: 'A faire',
-            end: '2024-06-07'
+            end: '2024-06-07',
+            score:12
         },
         {
             id: 7,

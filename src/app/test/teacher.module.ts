@@ -21,24 +21,22 @@ import { AngJson2excelBtnModule } from 'ang-json2excel-btn';
 // icon
 import { IconModule } from 'src/app/shared/icon/icon.module';
 
-import { ListTestComponent } from './list-test';
+import { ListQcmTeacherComponent } from './list-qcm-teacher';
 import { StatMacroComponent } from './statistiques-macro';
 import {CalendarComponent} from "../apps/calendar";
-import {CreateTestComponent} from "./create-test";
+import {CreateQcmComponent} from "./create-qcm";
 import {HighlightModule} from "ngx-highlightjs";
 import {Ng2FlatpickrModule} from "ng2-flatpickr";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {QuillEditorComponent} from "ngx-quill";
 import {ModalModule} from "angular-custom-modal";
 import {StatisticsComponent} from "./statistics";
-import { TakeTestComponent } from "./take-test";
 
 const routes: Routes = [
-    { path: 'list-test', component: ListTestComponent, title: 'List Test | MCQ App - List Test'},
-    { path: 'create-test', component: CreateTestComponent, title: 'Create Test | MCQ App - Create Test' },
-    { path: 'take-test', component: TakeTestComponent, title: 'Take Test | MCQ App - Take Test' },
-    { path: 'statistics', component: StatisticsComponent, title: 'Statistics Test | MCQ App - Statistics Test' },
-    { path: 'statistques-macro', component: StatMacroComponent, title: 'Statistics | MCQ App - Statistics' },
+    { path: 'list-qcm-teacher', component: ListQcmTeacherComponent, title: 'List Qcm Teacher | MCQ App - List Qcm Teacher'},
+    { path: 'create-qcm', component: CreateQcmComponent, title: 'Create Qcm Teacher | MCQ App - Create Qcm Teacher' },
+    { path: 'statistics', component: StatisticsComponent, title: 'Statistics Test Teacher | MCQ App - Statistics Test Teacher' },
+    { path: 'statistques-macro', component: StatMacroComponent, title: 'Statistics Teacher | MCQ App - Statistics Teacher' },
 ];
 @NgModule({
     imports: [
@@ -59,12 +57,11 @@ const routes: Routes = [
         ModalModule,
     ],
     declarations: [
-        ListTestComponent,
-        CreateTestComponent,
+        ListQcmTeacherComponent,
+        CreateQcmComponent,
         StatisticsComponent,
-        TakeTestComponent,
         StatMacroComponent,
     ],
     providers: [],
 })
-export class TestModule {}
+export class TeacherModule {}

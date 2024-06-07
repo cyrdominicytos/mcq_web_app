@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './create-test.html',
+    templateUrl: './create-qcm.html',
 })
-export class CreateTestComponent implements OnInit{
+export class CreateQcmComponent implements OnInit{
 
     //options = ['Orange', 'White', 'Purple'];
     //input1 = 'Orange';

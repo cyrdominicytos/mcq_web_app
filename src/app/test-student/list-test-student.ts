@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     moduleId: module.id,
     templateUrl: './list-test-student.html',
 })
-export class ListTestStudComponent {
+export class ListTestStudentComponent {
     constructor() {}
     search = '';
     cols = [
@@ -66,8 +66,7 @@ export class ListTestStudComponent {
             quiz: 'Analyse des algorithmes',
             module: 'Algorithmes et complexité',
             status: 'A faire',
-            end: '2024-06-07',
-            score:12
+            end: '2024-06-07'
         },
         {
             id: 7,

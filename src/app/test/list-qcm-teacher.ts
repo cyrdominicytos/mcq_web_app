@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './list-test.html',
+    templateUrl: './list-qcm-teacher.html',
 })
-export class ListTestComponent {
+export class ListQcmTeacherComponent {
 
     @ViewChild('isDeleteModal') isDeleteModal!: ModalComponent;
     selectedQcmId: any = null;
