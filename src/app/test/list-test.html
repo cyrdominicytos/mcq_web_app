@@ -33,7 +33,7 @@
 
     <div class="panel mt-6 pb-0" *ngIf="isVisibleImportPanel">
         <h5 class="mb-5 text-lg font-semibold dark:text-white-light">Importer un test</h5>
-        <form [formGroup]="params" (submit)="importer()" class="text-sm">
+        <form [formGroup]="params" (submit)="import()" class="text-sm">
             <div class="mb-5">
                 <label>Type</label>
                 <div class="grid mt-5 grid-cols-1 gap-5 md:grid-cols-2">
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="grid mt-5 grid-cols-1 gap-5 md:grid-cols-2">
-                <div class="mb-5">
+                <!--div class="mb-5">
                     <label for="name">Module</label>
                     <select id="name" class="form-select" formControlName="user">
                         <option value="">Select Module</option>
@@ -60,8 +60,17 @@
                         <option value="John Doe">John Doe</option>
                         <option value="Kia Jain">Kia Jain</option>
                     </select>
-                </div>
+                </div-->
                 <div class="mb-5">
+                    <label for="module">Module</label>
+                    <select id="module" class="form-select" formControlName="module">
+                        <option value="">Select Module</option>
+                        <ng-container *ngFor="let module of listOfClassesArray">
+                            <option value="{{ module }}">{{ module }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <!--div class="mb-5">
                     <label for="tag">Classe</label>
                     <select id="tag" class="form-select" formControlName="tag">
                         <option value="">Select Classe</option>
@@ -70,21 +79,41 @@
                         <option value="social">Social</option>
                         <option value="important">Important</option>
                     </select>
+                </div-->
+                <div class="mb-5">
+                    <label for="field">Classe</label>
+                    <select id="field" class="form-select" formControlName="field">
+                        <option value="">Select Classe</option>
+                        <ng-container *ngFor="let field of listOfFieldsArray">
+                            <option value="{{ field }}">{{ field }}</option>
+                        </ng-container>
+                    </select>
                 </div>
             </div>
             <div *ngIf="params.get('type')?.value" class="mb-5">
-                <label for="qcm">QCM</label>
+                <!--label for="qcm">QCM</label>
                 <select id="qcm" class="form-select" formControlName="tag">
                     <option value="">Select QCM</option>
                     <option value="personal">Personal</option>
                     <option value="work">Work</option>
                     <option value="social">Social</option>
                     <option value="important">Important</option>
+                </select-->
+                <label for="qcm">QCM</label>
+                <select id="qcm" class="form-select" formControlName="qcm">
+                    <option value="">Select QCM</option>
+                    <ng-container *ngFor="let qcm of listOfTests">
+                        <option value="{{ qcm.id }}">{{ qcm.title }}</option>
+                    </ng-container>
                 </select>
             </div>
             <div>
-                <label for="ctnFile">JSON File</label>
-                <input id="ctnFile" type="file" class="form-input file:py-2 file:px-4 file:border-0 file:font-semibold p-0 file:bg-primary/90 ltr:file:mr-5 rtl:file:ml-5 file:text-white file:hover:bg-primary" required />
+                <label for="jsonFile">JSON File</label>
+                <input id="jsonFile"
+                       type="file"
+                       class="form-input file:py-2 file:px-4 file:border-0 file:font-semibold p-0 file:bg-primary/90 ltr:file:mr-5 rtl:file:ml-5 file:text-white file:hover:bg-primary"
+                       (change)="onFileSelected()"
+                       required />
             </div>
             <div class="mt-8 flex items-center justify-end">
                 <button type="button" class="btn btn-outline-danger gap-2 mb-5" (click)="closeImportPanel()">Cancel</button>
@@ -139,8 +168,12 @@
 
                 <ng-template slot="actions" let-value="data">
                     <div class="flex items-center justify-center gap-4">
-                        <button type="button" class="btn btn-outline-secondary" (click)="exporter()">Exporter</button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="exportQcm(value.id)">Exporter</button>
                         <button type="button" class="btn btn-outline-secondary"  (click)="modifyTest(value.id)">Modifier</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="deleteConfirmModal(value.id)">
+                            <icon-trash />
+                        </button>
+
                     </div>
                 </ng-template>
 
@@ -211,5 +244,25 @@
             </form>
         </ng-template>
     </modal-->
+
+    <!-- delete event modal -->
+    <modal #isDeleteModal class="no-footer">
+        <ng-template #modalHeader>
+            <div class="!font-medium">Delete Qcm</div>
+        </ng-template>
+        <ng-template #modalBody>
+            <div class="text-center">
+                <div class="mx-auto w-fit rounded-full bg-danger p-4 text-white ring-4 ring-danger/30">
+                    <icon-trash-lines />
+                </div>
+                <div class="mx-auto mt-5 text-base sm:w-3/4">Are you sure that you want to delete this QCM ?</div>
+
+                <div class="mt-8 flex items-center justify-center">
+                    <button type="button" class="btn btn-outline-danger" (click)="isDeleteModal.close()">Cancel</button>
+                    <button type="button" class="btn btn-primary ltr:ml-4 rtl:mr-4" (click)="deleteRows()">Delete</button>
+                </div>
+            </div>
+        </ng-template>
+    </modal>
 
 </div>
