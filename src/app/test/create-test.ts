@@ -86,19 +86,15 @@ export class CreateTestComponent implements OnInit{
             date2: ['2022-07-05T00:00:00', Validators.required],
         });
 
-
     }
 
     submitForm() {
         if(this.testId===0)
         {
-            alert('update')
-            //this.updateTest();
+            this.createTest();
         }else
         {
-            alert('create')
-            //console.log("testId", this.testId)
-            //this.createTest();
+            this.updateTest();
         }
        /*
        this.isSubmitForm = true;

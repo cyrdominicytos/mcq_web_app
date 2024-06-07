@@ -10,7 +10,11 @@
     </div-->
 
     <div class="flex flex-wrap items-center justify-between gap-4">
-        <h2 class="text-xl">Créer un nouveau test</h2>
+        <h2 class="text-xl" *ngIf="testId==0; else edit">Créer un nouveau test</h2>
+        <ng-template #edit>
+            <h2 class="text-xl">Modification de QCM</h2>
+        </ng-template>
+        <ng-template #edit></ng-template>
         <div class="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
             <div class="flex gap-3">
                 <div>
