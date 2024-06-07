@@ -169,10 +169,11 @@
                 <ng-template slot="actions" let-value="data">
                     <div class="flex items-center justify-center gap-4">
                         <button type="button" class="btn btn-outline-secondary" (click)="exportQcm(value.id)">Exporter</button>
-                        <button type="button" class="btn btn-outline-secondary" [routerLink]="['/create-test']">Modifier</button>
+                        <button type="button" class="btn btn-outline-secondary"  (click)="modifyTest(value.id)">Modifier</button>
                         <button type="button" class="btn btn-outline-danger" (click)="deleteConfirmModal(value.id)">
                             <icon-trash />
                         </button>
+
                     </div>
                 </ng-template>
 
