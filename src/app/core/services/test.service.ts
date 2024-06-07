@@ -58,14 +58,16 @@ export class TestService {
         );
     }
 
-    createQcmViaJson(file: File, teacherId: number, levelId: number): Observable<any> {
+    createQcmViaJson(file: File, teacherId: number, levelId: number): Observable<Qcm> {
         const url = `${this.baseUrl}/createQcmFromJson/${teacherId}/${levelId}`;
         const formData: FormData = new FormData();
         formData.append('file', file);
 
-        return this.http.post(url, formData).pipe(
+        return this.http.post<Qcm>(url, formData).pipe(
             catchError(this.handleError)
         );
+
+        //return this.http.post<Qcm>(url, formData);
     }
 
     /*getTestById(id: number): Observable<Model> {

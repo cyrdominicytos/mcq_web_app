@@ -180,9 +180,11 @@ export class ListTestComponent {
         } else {
             // New
             this.testService.createQcmViaJson(jsonFile, 3, 1).subscribe(
-                response => {
+                (response: Qcm) => {
                     //respomse to QCM ? No, better to return QCM in the backend
-                    //this.listOfTests.unshift(response);
+                    this.listOfTests.unshift(response);
+                    this.listOfTests = [...this.listOfTests];
+                    console.log('New list....');
                     console.log(this.listOfTests);
                     this.showMessage('Import has been completed successfully.');
                     console.log('QCM created successfully:', response);

@@ -70,6 +70,7 @@ export class TakeTestComponent implements OnDestroy{
     currentQuestionIndex: number = 0;
     userAnswers: string[][] = this.questions.map(() => []);
     showResults: boolean = false;
+    showInstructions: boolean = true;
     score: number = 0;
     timeLeft: number = 0;
     timerSubscription: Subscription | undefined;
@@ -366,6 +367,10 @@ export class TakeTestComponent implements OnDestroy{
 
         this.showMessage('Project has been saved successfully.');
         //this.isAddCommentModal.close();
+    }
+
+    startTest(){
+        this.showInstructions = false;
     }
     showMessage(msg = '', type = 'success') {
         const toast: any = Swal.mixin({

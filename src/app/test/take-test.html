@@ -1,6 +1,5 @@
 <div>
 
-
     <div class="flex flex-wrap items-center justify-between gap-4">
         <h2 class="text-xl">Bases des structures de données</h2>
     </div>
@@ -24,104 +23,129 @@
     </div>
 
     <div class="panel mt-6 pl-40 pr-40">
-        <ng-container *ngIf="!showResults; else resultsTemplate">
-            <div class="mb-5 flex items-center justify-between">
-                <p class="text-white-dark">Question {{currentQuestionIndex + 1 }} sur {{questions.length}}</p>
-                <div *ngIf="currentQuestion.delayInSeconds">
-                    <p *ngIf="timeLeft > 0">Time left: {{ timeLeft }} seconds</p>
-                    <p *ngIf="timeLeft === 0">Time's up!</p>
+        <ng-container *ngIf="showInstructions; else mainContent">
+            <div class="mb-5 mt-10 flex flex-col items-center justify-center">
+                <div class="flex rounded-t-md bg-primary-light p-6">
+                    <div class="flex-1 ltr:mr-4 rtl:ml-4">
+                        <h4 class="font-semibold text-lg mb-2 text-primary">Liste des instructions à respecter</h4>
+                        <p class="media-text">
+                            1. Question à choix unique: Utilisez (x) pour la réponse correcte et () pour les réponses incorrectes (import direct du backend)
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-5 justify-center">
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="startTest()">
+                            Commencer
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-primary" [routerLink]="['/list-test-student']">
+                            Annuler
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="mb-5 flex items-center justify-between">
-                <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
-                    <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.suggestedQuestion }}</h5>
+        </ng-container>
+        <ng-template #mainContent>
+            <ng-container *ngIf="!showResults; else resultsTemplate">
+                <div class="mb-5 flex items-center justify-between">
+                    <p class="text-white-dark">Question {{currentQuestionIndex + 1 }} sur {{questions.length}}</p>
+                    <div *ngIf="currentQuestion.delayInSeconds">
+                        <p *ngIf="timeLeft > 0">Time left: {{ timeLeft }} seconds</p>
+                        <p *ngIf="timeLeft === 0">Time's up!</p>
+                    </div>
+                </div>
+                <div class="mb-5 flex items-center justify-between">
+                    <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
+                        <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.suggestedQuestion }}</h5>
+                    </ng-container>
+                    <ng-template #editQuestionTemplate>
+                        <input
+                            type="text"
+                            class="form-input"
+                            [value]="currentQuestion.suggestedQuestion"
+                            (input)="updateQuestion($event)"
+                        />
+                    </ng-template>
+
+                    <button type="button" ngxTippy="Suggestion" class="hover:text-primary ml-2 mr-2" (click)="toggleEditQuestion()">
+                        <icon-edit />
+                    </button>
+                </div>
+                <ng-container *ngFor="let option of currentQuestion.suggestedOptions; let i = index">
+                    <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
+                        <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
+                            <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
+                                <label [for]="'tack_checkbox' + currentQuestionIndex + option.name" class="mb-0 cursor-pointer flex-grow">
+                                    {{ option.name }}
+                                </label>
+                            </ng-container>
+
+                            <ng-template #editQuestionTemplate>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    [value]="option.name"
+                                    (input)="myMethodToUpdateOption($event, i)"
+                                />
+                            </ng-template>
+
+                            <input [id]="'tack_checkbox' + currentQuestionIndex + option.name"
+                                   type="checkbox"
+                                   class="form-checkbox"
+                                   [checked]="isSelected(option.name)"
+                                   (change)="selectAnswer(option.name)" />
+                        </div>
+                    </div>
                 </ng-container>
-                <ng-template #editQuestionTemplate>
-                    <input
-                        type="text"
-                        class="form-input"
-                        [value]="currentQuestion.suggestedQuestion"
-                        (input)="updateQuestion($event)"
-                    />
-                </ng-template>
 
-                <button type="button" ngxTippy="Suggestion" class="hover:text-primary ml-2 mr-2" (click)="toggleEditQuestion()">
-                    <icon-edit />
-                </button>
-            </div>
-            <ng-container *ngFor="let option of currentQuestion.suggestedOptions; let i = index">
-                <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
-                    <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
-                        <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
-                            <label [for]="'tack_checkbox' + currentQuestionIndex + option.name" class="mb-0 cursor-pointer flex-grow">
-                                {{ option.name }}
-                            </label>
-                        </ng-container>
+                <hr class="mt-10 mb-5">
 
-                        <ng-template #editQuestionTemplate>
-                            <input
-                                type="text"
-                                class="form-input"
-                                [value]="option.name"
-                                (input)="myMethodToUpdateOption($event, i)"
-                            />
-                        </ng-template>
+                <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2 mb-5" *ngIf="isVisibleSignalQuestionPanel">
+                    <!--form (ngSubmit)="saveComment()" class="text-sm"-->
+                        <div class="grid gap-5">
+                            <div>
+                                <!--label for="comment">Commentaire</label-->
+                                <!--input id="title" [(ngModel)]="params.title" name="title" type="text" class="form-input mt-1" placeholder="Enter Name" /-->
+                                <textarea
+                                    id="comment"
+                                    #commentTextarea
+                                    [(ngModel)]="params.comment"
+                                    name="comment"
+                                    rows="4"
+                                    class="form-textarea w-full"
+                                    placeholder="Commentaire"
+                                ></textarea>
+                            </div>
+                        </div>
+                    <!--/form-->
+                </div>
 
-                        <input [id]="'tack_checkbox' + currentQuestionIndex + option.name"
-                               type="checkbox"
-                               class="form-checkbox"
-                               [checked]="isSelected(option.name)"
-                               (change)="selectAnswer(option.name)" />
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                    <div class="lg:col-span-3" >
+                        <button type="button" class="btn btn-outline-danger" (click)="addComment()" *ngIf="!isVisibleSignalQuestionPanel">
+                            <icon-bell class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                            Signaler une erreur
+                        </button>
+                        <button type="button" class="btn btn-outline-success" (click)="sendComment()" *ngIf="isVisibleSignalQuestionPanel">
+                            <icon-send class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                            Envoyer commentaire
+                        </button>
+                    </div>
+                    <div class="lg:col-span-1 flex justify-end" >
+                        <button type="button" class="btn btn-outline-secondary" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+                            <icon-arrow-backward class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                            Précedent
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary ml-2" (click)="nextQuestion()">
+                            <icon-arrow-forward class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                            Suivant
+                        </button>
                     </div>
                 </div>
             </ng-container>
-
-            <hr class="mt-10 mb-5">
-
-            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2 mb-5" *ngIf="isVisibleSignalQuestionPanel">
-                <!--form (ngSubmit)="saveComment()" class="text-sm"-->
-                    <div class="grid gap-5">
-                        <div>
-                            <!--label for="comment">Commentaire</label-->
-                            <!--input id="title" [(ngModel)]="params.title" name="title" type="text" class="form-input mt-1" placeholder="Enter Name" /-->
-                            <textarea
-                                id="comment"
-                                #commentTextarea
-                                [(ngModel)]="params.comment"
-                                name="comment"
-                                rows="4"
-                                class="form-textarea w-full"
-                                placeholder="Commentaire"
-                            ></textarea>
-                        </div>
-                    </div>
-                <!--/form-->
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                <div class="lg:col-span-3" >
-                    <button type="button" class="btn btn-outline-danger" (click)="addComment()" *ngIf="!isVisibleSignalQuestionPanel">
-                        <icon-bell class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                        Signaler une erreur
-                    </button>
-                    <button type="button" class="btn btn-outline-success" (click)="sendComment()" *ngIf="isVisibleSignalQuestionPanel">
-                        <icon-send class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                        Envoyer commentaire
-                    </button>
-                </div>
-                <div class="lg:col-span-1 flex justify-end" >
-                    <button type="button" class="btn btn-outline-secondary" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
-                        <icon-arrow-backward class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                        Précedent
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary ml-2" (click)="nextQuestion()">
-                        <icon-arrow-forward class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                        Suivant
-                    </button>
-                </div>
-            </div>
-
-        </ng-container>
+        </ng-template>
 
         <ng-template #resultsTemplate>
             <div class="mb-5 mt-10 flex flex-col items-center justify-center">
@@ -132,7 +156,6 @@
                 </button>
             </div>
         </ng-template>
-
     </div>
 
 
