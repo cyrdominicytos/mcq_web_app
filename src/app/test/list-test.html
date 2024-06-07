@@ -140,7 +140,7 @@
                 <ng-template slot="actions" let-value="data">
                     <div class="flex items-center justify-center gap-4">
                         <button type="button" class="btn btn-outline-secondary" (click)="exporter()">Exporter</button>
-                        <button type="button" class="btn btn-outline-secondary" [routerLink]="['/create-test']">Modifier</button>
+                        <button type="button" class="btn btn-outline-secondary"  (click)="modifyTest(value.id)">Modifier</button>
                     </div>
                 </ng-template>
 

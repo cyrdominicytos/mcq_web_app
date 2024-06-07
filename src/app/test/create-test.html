@@ -20,7 +20,7 @@
                     </button>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary" (click)="createTest()">
+                    <button type="button" class="btn btn-primary" (click)="submitForm()">
                         <icon-save class="ltr:mr-2 rtl:ml-2" />
                         Enregistrer
                     </button>
@@ -31,6 +31,14 @@
 
     <!-- Custom Styles -->
     <div class="panel mt-6">
+        <div class="flex rounded-t-md bg-danger-light p-6" *ngIf="validationError.length>0">
+            <div class="flex-1 ltr:mr-4 rtl:ml-4">
+                <p class="media-text text-danger">
+                    {{validationError}}
+                </p>
+            </div>
+        </div>
+
         <div class="mb-5 flex items-center justify-between">
             <h5 class="text-lg font-semibold dark:text-white-light">Informations sur le test</h5>
         </div>
@@ -39,7 +47,7 @@
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-*">
                     <div [ngClass]="isSubmitForm ? formCreateTest.controls['testName'].errors ? 'has-error' : 'has-success' : ''">
                         <label for="customTestName">Nom du test <sup class="text-danger" >*</sup></label>
-                        <input id="customTestName" type="text" placeholder="Nom du test" class="form-input" formControlName="testName" />
+                        <input id="customTestName" type="text" placeholder="Nom du test" class="form-input" formControlName="testName" [value]="editQcm?.title"/>
                         <ng-container *ngIf="isSubmitForm && formCreateTest.controls['testName'].errors">
                             <p class="mt-1 text-danger">Veuillez remplir le nom du test</p>
                         </ng-container>
@@ -71,7 +79,7 @@
                         <!--input id="customeState" type="text" placeholder="Enter State" class="form-input" formControlName="state" /-->
                         <div class="mb-5">
                             <!--form [formGroup]="form1"-->
-                                <ng2-flatpickr [config]="basic" formControlName="date1" addClass="form-input"></ng2-flatpickr>
+                                <ng2-flatpickr [config]="basic" formControlName="date1" addClass="form-input" ></ng2-flatpickr>
                             <!--/form-->
                         </div>
                         <ng-container *ngIf="isSubmitForm && formCreateTest.controls['date1'].errors">
@@ -102,6 +110,7 @@
                         class="form-textarea min-h-[130px]"
                         placeholder="Veuillez créer les questions du test."
                         formControlName="details"
+                        [value]="editQcm?.details"
                     ></textarea>
                 </div>
                 <div class="mt-4 grid grid-cols-1">
@@ -123,7 +132,7 @@
             <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div class="mb-5 flex">
                     <div class="ltr:mr-4 rtl:ml-4">
-                        <input type="radio" class="form-radio mt-1.5" name="radio" [(ngModel)]="isRandomActive" value="false" *ngIf='!isRandomActive ? "checked" : ""' />
+                        <input type="radio" class="form-radio mt-1.5" name="radio" [(ngModel)]="isRandomActive" value="false" />
                     </div>
                     <div class="flex-1">
                         <h4 class="text-lg font-semibold text-primary">Comme saisi</h4>
@@ -134,7 +143,7 @@
                 </div>
                 <div class="flex">
                     <div class="ltr:mr-4 rtl:ml-4">
-                        <input type="radio" class="form-radio mt-1.5" name="radio"  [(ngModel)]="isRandomActive" value="true" *ngIf='isRandomActive ? "checked" : ""'/>
+                        <input type="radio" class="form-radio mt-1.5" name="radio"  [(ngModel)]="isRandomActive" value="true" />
                     </div>
                     <div class="flex-1">
                         <h4 class="text-lg font-semibold text-primary">Aléatoire</h4>
@@ -171,6 +180,13 @@
                     4. Ajoutez simplement (x pt) à la fin de chaque question pour indiquer le nombre de points associé à cette question
                 </p>
             </div>
+            <div class="flex rounded-t-md bg-danger-light p-6" *ngIf="validationError.length>0">
+                <div class="flex-1 ltr:mr-4 rtl:ml-4">
+                    <p class="media-text text-danger">
+                        {{validationError}}
+                    </p>
+                </div>
+            </div>
         </div>
 
         <div class="mt-6 mb-5">
@@ -182,6 +198,7 @@
                 class="form-textarea min-h-[130px]"
                 placeholder="Veuillez créer les questions du test."
                 [(ngModel)]="questions"
+                [value]="editQcm?.content"
             ></textarea>
         </div>
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, Observable} from 'rxjs';
 import { environment } from "../../../environments/environment";
-import {Qcm} from "../models/qcm.model";
+import { Qcm, QcmToEdit } from '../models/qcm.model';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +14,10 @@ export class TestService {
 
     getAllTests(): Observable<Qcm[]> {
         return this.http.get<Qcm[]>(this.baseUrl);
+    }
+    getTestToEdit(qcmId:number, teacherId:number): Observable<any> {
+        const url = "/getStringFormatOfQCM/"+qcmId+"/"+teacherId
+        return this.http.put<any>(this.baseUrl+url, null);
     }
 
     createTestWithFile(
@@ -43,15 +47,37 @@ export class TestService {
         formData.append('closeStartDate', closeStartDate);
 
         const url = "/createQCMFromString"
-        return this.http.post<any>(this.baseUrl+url, formData
-            /*,{
-            headers: new HttpHeaders({
-                // If your API requires a specific content-type, otherwise let it auto-detect
-                'Content-Type': 'multipart/form-data'
-            })
-        }*/
+        return this.http.post<any>(this.baseUrl+url, formData);
+    }
+updateTestWithFile(
+        qcmId: number,
+        file: File,
+        levelId: number,
+        teacherId: number,
+        limitQuestion: number,
+        delay: number,
+        title: string,
+        complexity: number,
+        isRandomActive: boolean,
+        isActive: boolean,
+        openStartDate: string,
+        closeStartDate: string
+    ): Observable<any> {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('levelId', levelId.toString());
+        formData.append('teacherId', teacherId.toString());
+        formData.append('limitQuestion', limitQuestion.toString());
+        formData.append('delay', delay.toString());
+        formData.append('title', title);
+        formData.append('complexity', complexity.toString());
+        formData.append('isRandomActive', isRandomActive.toString());
+        formData.append('isActive', isActive.toString());
+        formData.append('openStartDate', openStartDate);
+        formData.append('closeStartDate', closeStartDate);
 
-        );
+        const url = "/updateQCMFromString/"+qcmId
+        return this.http.put<any>(this.baseUrl+url, formData);
     }
 
     /*getTestById(id: number): Observable<Model> {

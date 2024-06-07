@@ -18,3 +18,23 @@ export interface Qcm {
     updatedDate: string;
 }
 
+export interface QcmToEdit {
+    id: number;
+    level: Level;
+    limitQuestion: number;
+    active: boolean;
+    delay: number;
+    teacherId: number;
+    title: string;
+    details: string;
+    complexity: number;
+    randomActive: boolean;
+    canShowResultToStudents: boolean;
+    openStartDate: string;
+    closeStartDate: string;
+    creationDate: string;
+    updatedDate: string;
+    testCount: number;
+    questionCount: number;
+    content: string;
+}
