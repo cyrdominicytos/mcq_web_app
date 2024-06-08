@@ -127,7 +127,7 @@
             >
                 <ng-template slot="title" let-value="data">
                   <span class="text-primary min-w-[400px]">
-                    <a [routerLink]="['/statistics']">{{ value.title }}</a>
+                    <a [routerLink]="['/statistics/qcm', value.id]">{{ value.title }}</a>
                   </span>
                 </ng-template>
 

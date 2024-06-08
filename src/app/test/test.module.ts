@@ -37,7 +37,7 @@ const routes: Routes = [
     { path: 'list-test', component: ListTestComponent, title: 'List Test | MCQ App - List Test'},
     { path: 'create-test', component: CreateTestComponent, title: 'Create Test | MCQ App - Create Test' },
     { path: 'take-test', component: TakeTestComponent, title: 'Take Test | MCQ App - Take Test' },
-    { path: 'statistics', component: StatisticsComponent, title: 'Statistics Test | MCQ App - Statistics Test' },
+    { path: 'statistics/qcm/:id', component: StatisticsComponent, title: 'Statistics Test | MCQ App - Statistics Test' },
     { path: 'statistques-macro', component: StatMacroComponent, title: 'Statistics | MCQ App - Statistics' },
 ];
 @NgModule({
