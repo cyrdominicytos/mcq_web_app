@@ -427,7 +427,10 @@ export class StatisticsComponent {
             switchMap((params: ParamMap) => {
               const id = params.get('id');
               if (id != null){
-                  return this.statisticService.getQcmStats(id);
+                  const stats = this.statisticService.getQcmStats(id);
+                  stats.subscribe(sub => {
+                      sub.ext
+                  })
               }
               return new Observable<any>();
             }),
@@ -438,6 +441,9 @@ export class StatisticsComponent {
             if (value != null){
                 this.stats = value;
             }
-        });
+        })
+        this.router.paramMap.pipe(
+
+        )
     }
 }
