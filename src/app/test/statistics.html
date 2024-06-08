@@ -11,21 +11,20 @@
     <div class="pt-5">
 
  <!-- Partie 1 -->
-
         <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-3">
             <div class="flex gap-4 lg:flex-row">
                 <div class="space-y-1 text-white-dark">
                     <div>Date début de test.</div>
-                    <div class="font-semibold text-black dark:text-white">05 Mai 2024</div>
+                    <div class="font-semibold text-black dark:text-white">{{stats?.qcm.openStartDate}}</div>
                     <div>Date fin de test</div>
-                    <div class="font-semibold text-black dark:text-white">05 Juin 2024</div>
+                    <div class="font-semibold text-black dark:text-white">{{stats?.qcm.closeStartDate}}</div>
                 </div>
                 <div class="flex-1">
                     <div class="space-y-1 text-white-dark">
                         <div>Module</div>
-                        <div class="font-semibold text-black dark:text-white">An Introduction to Statistical Learning: with Applications in R.</div>
+                        <div class="font-semibold text-black dark:text-white">{{stats?.qcm.title}}</div>
                         <div>Classe</div>
-                        <div class="font-semibold text-black dark:text-white">2 éme année</div>
+                        <div class="font-semibold text-black dark:text-white">{{stats?.qcm.level.classOfStudy}}</div>
                     </div>
                 </div>
             </div>
@@ -34,19 +33,19 @@
                     <div class="px-4 py-1">
                         Score moyen
                         <span class="mt-1.5 block text-lg text-black dark:text-white-light">
-                            {{stats?.averageScore ?? 0 }}%
+                            {{stats?.qcm.averageScore ?? 0 }}%
                         </span>
                     </div>
                     <div class="px-4 py-1">
                         Le score le plus élevé
                         <span class="mt-1.5 block text-lg text-black dark:text-white-light">
-                            {{stats?.highScore ?? 0 }}%
+                            {{stats?.qcm.highScore ?? 0 }}%
                         </span>
                     </div>
                     <div class="px-4 py-1">
                         Le score le plus bas
                         <span class="mt-1.5 block text-lg text-black dark:text-white-light">
-                            {{stats?.minScore ?? 0 }}%
+                            {{stats?.qcm.minScore ?? 0 }}%
                         </span>
                     </div>
                     <div class="px-4 py-1">
@@ -68,166 +67,31 @@
 
 <!-- Question 1 -->
 
-        <div class="mb-5 flex items-center font-bold">
-            <span class="text-lg ml-5">Question 1 (20 points)</span>
-        </div>
-
-
-        <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">
-            <div class="md:col-span-4">
-                <div class="flex items-start justify-between">
-                    <h5 class="text-lg font-semibold dark:text-white-light">MaxSoft is a software company ?</h5>
-                    <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: 90%</span>
-                </div>
+        <div *ngFor="let questionStat of stats.questionsStats; index as i;">
+            <div class="mb-5 flex items-center font-bold">
+                <span class="text-lg ml-5">Question {{i+1}}</span>
             </div>
-            <div class="md:col-span-2">
-                <div class="flex flex-col space-y-5">
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>True</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">65%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 65%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>False</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">40%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 40%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+
+            <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">
+                <div class="md:col-span-4">
+                    <div class="flex items-start justify-between">
+                        <h5 class="text-lg font-semibold dark:text-white-light">{{questionStat.question.title}}</h5>
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: 90%</span>
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-<!-- Question 2 -->
-
-        <div class="mb-5 flex items-center font-bold">
-            <span class="text-lg ml-5">Question 2 (20 points)</span>
-        </div>
-
-        <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">
-            <div class="md:col-span-4">
-                <div class="flex items-start justify-between">
-                    <h5 class="text-lg font-semibold dark:text-white-light">The domain of MaxSoft is test automation framework development ?</h5>
-                    <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: 80%</span>
-                </div>
-            </div>
-            <div class="md:col-span-2">
-                <div class="flex flex-col space-y-5">
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>True</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">45%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 45%">
-                                    </div>
+                <div class="md:col-span-2">
+                    <div class="flex flex-col space-y-5">
+                        <div class="flex items-center" *ngFor="let answerStat of questionStat.answerStats">
+                            <div class="w-full flex-initial px-3">
+                                <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
+                                    <h6>{{ answerStat.answer.title}}</h6>
+                                    <p class="text-xs ltr:ml-auto rtl:mr-auto">{{answerStat.answerStatDTO.percent}}%</p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>False</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">55%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 55%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-<!-- Question 3 -->
-
-        <div class="mb-5 flex items-center font-bold">
-            <span class="text-lg ml-5">Question 3 (20 points)</span>
-        </div>
-
-        <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">
-            <div class="md:col-span-4">
-                <div class="flex items-start justify-between">
-                    <h5 class="text-lg font-semibold dark:text-white-light">What are the test automation frameworks developed by MaxSoft ?</h5>
-                    <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: 100%</span>
-                </div>
-            </div>
-            <div class="md:col-span-2">
-                <div class="flex flex-col space-y-5">
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>IntelliAPI</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">25%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 25%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>WebBot</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">25%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 25%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>Gauge</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">35%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 35%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-full flex-initial px-3">
-                            <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
-                                <h6>Selenium</h6>
-                                <p class="text-xs ltr:ml-auto rtl:mr-auto">15%</p>
-                            </div>
-                            <div>
-                                <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
-                                    <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" style="width: 15%">
+                                <div>
+                                    <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">
+                                        <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" [ngStyle]="{'width': answerStat.answerStatDTO.percent+'%'}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

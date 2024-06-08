@@ -26,7 +26,7 @@ export class StatisticsComponent {
     referral: any;
     engagement: any;
     isLoading = true;
-    stats?: Stat|null = null;
+    stats: any;
     constructor(
         public storeData: Store<any>,
         private statisticService: StatisticService,
@@ -427,10 +427,7 @@ export class StatisticsComponent {
             switchMap((params: ParamMap) => {
               const id = params.get('id');
               if (id != null){
-                  const stats = this.statisticService.getQcmStats(id);
-                  stats.subscribe(sub => {
-                      sub.ext
-                  })
+                  return this.statisticService.getQcmStats(id);
               }
               return new Observable<any>();
             }),
@@ -441,9 +438,9 @@ export class StatisticsComponent {
             if (value != null){
                 this.stats = value;
             }
+            console.log({
+                value: this.stats
+            });
         })
-        this.router.paramMap.pipe(
-
-        )
     }
 }
