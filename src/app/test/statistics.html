@@ -33,15 +33,21 @@
                 <div class="grid grid-cols-4 divide-[#ebedf2] font-semibold text-white-dark rtl:divide-x-reverse dark:divide-[#253b5c] sm:grid-cols-4 sm:divide-x ltr:md:ml-auto rtl:md:mr-auto">
                     <div class="px-4 py-1">
                         Score moyen
-                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">62%</span>
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">
+                            {{stats?.averageScore ?? 0 }}%
+                        </span>
                     </div>
                     <div class="px-4 py-1">
                         Le score le plus élevé
-                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">100%</span>
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">
+                            {{stats?.highScore ?? 0 }}%
+                        </span>
                     </div>
                     <div class="px-4 py-1">
                         Le score le plus bas
-                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">30%</span>
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">
+                            {{stats?.minScore ?? 0 }}%
+                        </span>
                     </div>
                     <div class="px-4 py-1">
                         Taux d'exécution du Test
