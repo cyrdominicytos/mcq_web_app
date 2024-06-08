@@ -77,7 +77,7 @@
                 <div class="md:col-span-4">
                     <div class="flex items-start justify-between">
                         <h5 class="text-lg font-semibold dark:text-white-light">{{questionStat.question.title}}</h5>
-                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: 90%</span>
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: {{questionStat.unAnswerQuestionDTO.count * 100/questionStat.unAnswerQuestionDTO.totalTest}}%</span>
                     </div>
                 </div>
                 <div class="md:col-span-2">
