@@ -20,18 +20,22 @@ import { AngJson2excelBtnModule } from 'ang-json2excel-btn';
 
 // icon
 import { IconModule } from 'src/app/shared/icon/icon.module';
-import { ListTestStudComponent } from './list-test-student';
+import { ListQcmStudentComponent } from './list-qcm-student';
 
-import { TestCorrectComponent } from './test-correct';
+import { QcmAnswersComponent } from './qcm-answers';
 import {CalendarComponent} from "../apps/calendar";
 import {HighlightModule} from "ngx-highlightjs";
 import {Ng2FlatpickrModule} from "ng2-flatpickr";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {QuillEditorComponent} from "ngx-quill";
+import {TakeTestComponent} from "./take-test";
+import {ListTestStudentComponent} from "./list-test-student";
 
 const routes: Routes = [
-    { path: 'list-test-student', component: ListTestStudComponent, title: 'List Test Student| MCQ App - List Test Student' },
-    { path: 'test-correct', component: TestCorrectComponent, title: 'Corrected Test Student| MCQ App - Corrected Test Student' },
+    { path: 'list-qcm-student', component: ListQcmStudentComponent, title: 'List Qcm Student| MCQ App - List Qcm Student' },
+    { path: 'take-test', component: TakeTestComponent, title: 'Take Test Student | MCQ App - Take Test Student' },
+    { path: 'list-test', component: ListTestStudentComponent, title: 'List Test Student | MCQ App - List Test Student' },
+    { path: 'qcm-answers', component: QcmAnswersComponent, title: 'Qcm Answers Student| MCQ App - Qcm Answers Student' },
 ];
 @NgModule({
     imports: [
@@ -51,9 +55,11 @@ const routes: Routes = [
         QuillEditorComponent,
     ],
     declarations: [
-        ListTestStudComponent,
-        TestCorrectComponent,
+        ListQcmStudentComponent,
+        TakeTestComponent,
+        ListTestStudentComponent,
+        QcmAnswersComponent,
     ],
     providers: [],
 })
-export class TestStudModule {}
+export class StudentModule {}

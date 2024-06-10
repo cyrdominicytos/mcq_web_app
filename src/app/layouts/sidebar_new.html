@@ -57,28 +57,28 @@
 
                     <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                         <icon-minus class="hidden h-5 w-4 flex-none" />
-                        <span>{{ ('Test' | translate) || '&nbsp;' }}</span>
+                        <span>{{ ('Professeur' | translate) || '&nbsp;' }}</span>
                     </h2>
 
                     <li class="menu nav-item">
-                        <a routerLink="/list-test" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                        <a routerLink="/list-qcm-teacher" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
                             <div class="flex items-center">
-                                <icon-menu-tables class="shrink-0 group-hover:!text-primary" />
+                                <icon-menu-pages class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                                >{{ 'Mes tests' | translate }}</span
+                                >{{ 'Mes Qcm' | translate }}</span
                                 >
                             </div>
                         </a>
                     </li>
 
                     <li class="menu nav-item">
-                        <a routerLink="/create-test" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                        <a routerLink="/create-qcm" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
                             <div class="flex items-center">
-                                <icon-menu-tables class="shrink-0 group-hover:!text-primary" />
+                                <icon-notes-edit class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                                >{{ 'Créer un nouveau test' | translate }}</span
+                                >{{ 'Créer un nouveau Qcm' | translate }}</span
                                 >
                             </div>
                         </a>
@@ -86,7 +86,7 @@
                     <li class="menu nav-item">
                         <a routerLink="/statistques-macro" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
                             <div class="flex items-center">
-                                <icon-notes-edit class="shrink-0 group-hover:!text-primary" />
+                                <icon-menu-widgets class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
                                 >{{ 'Statistiques' | translate }}</span
@@ -101,7 +101,7 @@
                                 <icon-menu-tables class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                                >{{ 'Statistics du Test' | translate }}</span
+                                >{{ 'Statistics du Qcm [TO DEL]' | translate }}</span
                                 >
                             </div>
                         </a>
@@ -109,17 +109,17 @@
 
                     <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                         <icon-minus class="hidden h-5 w-4 flex-none" />
-                        <span>{{ ('Test etudiant' | translate) || '&nbsp;' }}</span>
+                        <span>{{ ('Étudiant' | translate) || '&nbsp;' }}</span>
                     </h2>
 
 
                     <li class="menu nav-item">
-                        <a routerLink="/list-test-student" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                        <a routerLink="/list-qcm-student" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
                             <div class="flex items-center">
-                                <icon-notes-edit class="shrink-0 group-hover:!text-primary" />
+                                <icon-play-circle class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                                >{{ 'Liste des tests pour etudiant' | translate }}</span
+                                >{{ 'Liste des Qcm' | translate }}</span
                                 >
                             </div>
                         </a>
@@ -131,23 +131,37 @@
                                 <icon-menu-tables class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                                >{{ 'Faire un Test' | translate }}</span
+                                >{{ 'Faire un Test [TO DEL]' | translate }}</span
                                 >
                             </div>
                         </a>
                     </li>
 
                     <li class="menu nav-item">
-                        <a routerLink="/test-correct" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                        <a routerLink="/list-test" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
                             <div class="flex items-center">
-                                <icon-notes-edit class="shrink-0 group-hover:!text-primary" />
+                                <icon-bookmark class="shrink-0 group-hover:!text-primary" />
 
                                 <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
-                                >{{ 'Récapitulatif du test' | translate }}</span
+                                >{{ 'Mes tests' | translate }}</span
                                 >
                             </div>
                         </a>
                     </li>
+
+                    <li class="menu nav-item">
+                        <a routerLink="/qcm-answers" class="nav-link group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                            <div class="flex items-center">
+                                <icon-menu-tables class="shrink-0 group-hover:!text-primary" />
+
+                                <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark"
+                                >{{ 'Récapitulatif du test [TO DEL]' | translate }}</span
+                                >
+                            </div>
+                        </a>
+                    </li>
+
+
 
 
 

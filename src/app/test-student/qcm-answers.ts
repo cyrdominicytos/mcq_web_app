@@ -14,9 +14,9 @@ interface Question {
 }
 @Component({
     moduleId: module.id,
-    templateUrl: './test-correct.html',
+    templateUrl: './qcm-answers.html',
 })
-export class TestCorrectComponent {
+export class QcmAnswersComponent {
 
     @ViewChild('isAddCommentModal') isAddCommentModal!: ModalComponent;
 
@@ -92,7 +92,7 @@ export class TestCorrectComponent {
     getOptionStyles(option: string): { [key: string]: string } {
         const isGivenAnswer = this.currentQuestion.givenAnswers.includes(option);
         const isCorrectAnswer = this.currentQuestion.correctAnswers.includes(option);
-    
+
         if (isGivenAnswer && isCorrectAnswer) {
             // Green for correct given answers
             return {
@@ -112,5 +112,5 @@ export class TestCorrectComponent {
             return {};
         }
     }
-    
+
 }

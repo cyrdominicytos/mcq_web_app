@@ -28,8 +28,8 @@ import { AuthLayout } from './layouts/auth-layout';
 // pages
 import { KnowledgeBaseComponent } from './pages/knowledge-base';
 import { FaqComponent } from './pages/faq';
-import {TestModule} from "./test/test.module";
-import {TestStudModule} from "./test-student/test-stud.module";
+import {TeacherModule} from "./test/teacher.module";
+import {StudentModule} from "./test-student/student.module";
 
 export const routes: Routes = [
     {
@@ -65,10 +65,10 @@ export const routes: Routes = [
             { path: '', loadChildren: () => import('./datatables/datatables.module').then((d) => d.DatatablesModule) },
 
             // test
-            { path: '', loadChildren: () => import('./test/test.module').then((d) => d.TestModule) },
+            { path: '', loadChildren: () => import('./test/teacher.module').then((d) => d.TeacherModule) },
 
             // test student
-            { path: '', loadChildren: () => import('./test-student/test-stud.module').then((d) => d.TestStudModule) },
+            { path: '', loadChildren: () => import('./test-student/student.module').then((d) => d.StudentModule) },
 
             // font-icons
             { path: 'font-icons', component: FontIconsComponent, title: 'Font Icons | VRISTO - Multipurpose Tailwind Dashboard Template' },

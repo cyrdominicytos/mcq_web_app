@@ -4,18 +4,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from "sweetalert2";
 import {TestService} from "../core/services/test.service";
 import {Qcm} from "../core/models/qcm.model";
+import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './list-test.html',
+    templateUrl: './list-qcm-teacher.html',
 })
-export class ListTestComponent {
+export class ListQcmTeacherComponent {
 
     @ViewChild('isDeleteModal') isDeleteModal!: ModalComponent;
     selectedQcmId: any = null;
     //isTypeSelected: boolean = false;
     isVisibleImportPanel: boolean = false;
-    constructor(public fb: FormBuilder, private testService: TestService) {}
+    constructor(public fb: FormBuilder, private testService: TestService, private router: Router) {}
 
     search = '';
 
@@ -272,5 +273,11 @@ export class ListTestComponent {
             title: msg,
             padding: '10px 20px',
         });
+    }
+
+
+    modifyTest(testId: number) {
+        console.log("Sending id ", testId);
+        this.router.navigate(['/create-test'], { state: { id: testId } });
     }
 }
