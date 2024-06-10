@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
     ],
 })
 export class HeaderComponent {
+    isStudent: boolean =  true
     store: any;
     search = false;
     notifications = [
@@ -143,5 +144,15 @@ export class HeaderComponent {
             this.storeData.dispatch({type: 'toggleRTL', payload: 'ltr'});
         }
         window.location.reload();
+    }
+
+
+    //Don't remove this
+    compteProf(){
+        this.isStudent = false;
+    }
+
+    compteEtudiant(){
+        this.isStudent = true;
     }
 }

@@ -20,49 +20,28 @@ export class TestService {
         return this.http.put<any>(this.baseUrl+url, null);
     }
 
-    createTestWithFile(
-        file: File,
-        levelId: number,
-        teacherId: number,
-        limitQuestion: number,
-        delay: number,
-        title: string,
-        complexity: number,
-        isRandomActive: boolean,
-        isActive: boolean,
-        openStartDate: string,
-        closeStartDate: string
-    ): Observable<any> {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('levelId', levelId.toString());
-        formData.append('teacherId', teacherId.toString());
-        formData.append('limitQuestion', limitQuestion.toString());
-        formData.append('delay', delay.toString());
-        formData.append('title', title);
-        formData.append('complexity', complexity.toString());
-        formData.append('isRandomActive', isRandomActive.toString());
-        formData.append('isActive', isActive.toString());
-        formData.append('openStartDate', openStartDate);
-        formData.append('closeStartDate', closeStartDate);
-
+    createTestWithFile(formData: FormData): Observable<any> {
         const url = "/createQCMFromString"
         return this.http.post<any>(this.baseUrl+url, formData);
     }
-updateTestWithFile(
-        qcmId: number,
-        file: File,
-        levelId: number,
-        teacherId: number,
-        limitQuestion: number,
-        delay: number,
-        title: string,
-        complexity: number,
-        isRandomActive: boolean,
-        isActive: boolean,
-        openStartDate: string,
-        closeStartDate: string
-    ): Observable<any> {
+updateTestWithFile(formData: FormData, qcmId: number): Observable<any> {
+       const url = "/updateQCMFromString/"+qcmId
+        return this.http.put<any>(this.baseUrl+url, formData);
+    }
+
+    formatObject( file: File,
+                  levelId: number,
+                  teacherId: number,
+                  limitQuestion: number,
+                  delay: number,
+                  title: string,
+                  details: string,
+                  complexity: number,
+                  isRandomActive: boolean,
+                  canShowResultToStudents: boolean,
+                  isActive: boolean,
+                  openStartDate: string,
+                  closeStartDate: string){
         const formData = new FormData();
         formData.append('file', file);
         formData.append('levelId', levelId.toString());
@@ -70,14 +49,14 @@ updateTestWithFile(
         formData.append('limitQuestion', limitQuestion.toString());
         formData.append('delay', delay.toString());
         formData.append('title', title);
+        formData.append('details', details);
         formData.append('complexity', complexity.toString());
         formData.append('isRandomActive', isRandomActive.toString());
+        formData.append('showResult', canShowResultToStudents.toString());
         formData.append('isActive', isActive.toString());
         formData.append('openStartDate', openStartDate);
         formData.append('closeStartDate', closeStartDate);
-
-        const url = "/updateQCMFromString/"+qcmId
-        return this.http.put<any>(this.baseUrl+url, formData);
+        return formData;
     }
 
     exportQcmAsJson(id: number): Observable<Blob> {

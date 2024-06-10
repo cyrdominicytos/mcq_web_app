@@ -20,7 +20,7 @@ export interface Qcm {
 
 export interface QcmToEdit {
     id: number;
-    level: Level;
+    levelId: number;
     limitQuestion: number;
     active: boolean;
     delay: number;

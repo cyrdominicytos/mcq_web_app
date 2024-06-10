@@ -278,6 +278,6 @@ export class ListQcmTeacherComponent {
 
     modifyTest(testId: number) {
         console.log("Sending id ", testId);
-        this.router.navigate(['/create-test'], { state: { id: testId } });
+        this.router.navigate(['/create-qcm'], { state: { id: testId } });
     }
 }

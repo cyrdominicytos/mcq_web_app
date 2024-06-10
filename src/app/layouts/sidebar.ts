@@ -16,6 +16,7 @@ export class SidebarComponent {
     store: any;
     activeDropdown: string[] = [];
     parentDropdown: string = '';
+    isStudent : boolean = true;
     constructor(public translate: TranslateService, public storeData: Store<any>, public router: Router) {
         this.initStore();
     }
