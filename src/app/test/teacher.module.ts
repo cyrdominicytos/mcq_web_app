@@ -31,12 +31,17 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {QuillEditorComponent} from "ngx-quill";
 import {ModalModule} from "angular-custom-modal";
 import {StatisticsComponent} from "./statistics";
+import { ListTestStudentComponent } from '../test-student/list-test-student';
+import { TakeTestComponent } from '../test-student/take-test';
 
 const routes: Routes = [
-    { path: 'list-qcm-teacher', component: ListQcmTeacherComponent, title: 'List Qcm Teacher | MCQ App - List Qcm Teacher'},
+    { path: 'list-test', component: ListTestStudentComponent, title: 'List Test | MCQ App - List Test'},
     { path: 'create-qcm', component: CreateQcmComponent, title: 'Create Qcm Teacher | MCQ App - Create Qcm Teacher' },
     { path: 'statistics', component: StatisticsComponent, title: 'Statistics Test Teacher | MCQ App - Statistics Test Teacher' },
     { path: 'statistques-macro', component: StatMacroComponent, title: 'Statistics Teacher | MCQ App - Statistics Teacher' },
+    { path: 'take-test', component: TakeTestComponent, title: 'Take Test | MCQ App - Take Test' },
+    { path: 'statistics/qcm/:id', component: StatisticsComponent, title: 'Statistics Test | MCQ App - Statistics Test' },
+    { path: 'list-qcm-teacher', component: ListQcmTeacherComponent, title: 'List Qcm Teacher | MCQ App - List Qcm Teacher'}
 ];
 @NgModule({
     imports: [

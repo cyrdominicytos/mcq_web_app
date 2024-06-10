@@ -19,7 +19,7 @@
             >
                 <ng-template slot="quiz" let-value="data">
                   <span class="text-primary min-w-[400px]">
-                    {{ value.quiz }}
+                    <a [routerLink]="['/statistics/qcm', value.id]">{{ value.quiz }}</a>
                   </span>
                 </ng-template>
 
@@ -32,7 +32,7 @@
                 </ng-template>
 
                 <ng-template slot="dob" let-value="data"> {{ formatDate(value.dob) }} </ng-template>
-                
+
                 <ng-template slot="score" let-value="data">{{ formatScore(value.score) }}</ng-template>
 
                 <ng-template slot="actions" let-value="data">
