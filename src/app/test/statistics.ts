@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { animate, style, transition, trigger } from '@angular/animations';
+import {StatisticService} from '../service/statistic.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { catchError, empty, Observable, of, throwError } from 'rxjs';
+import Stat from '../core/models/stat.model';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +26,12 @@ export class StatisticsComponent {
     referral: any;
     engagement: any;
     isLoading = true;
-    constructor(public storeData: Store<any>) {
+    stats: any;
+    constructor(
+        public storeData: Store<any>,
+        private statisticService: StatisticService,
+        private router:ActivatedRoute,
+    ) {
         this.initStore();
         this.isLoading = false;
     }
@@ -410,5 +420,27 @@ export class StatisticsComponent {
                 },
             ],
         };
+    }
+
+    ngOnInit(): void{
+        this.router.paramMap.pipe(
+            switchMap((params: ParamMap) => {
+              const id = params.get('id');
+              if (id != null){
+                  return this.statisticService.getQcmStats(id);
+              }
+              return new Observable<any>();
+            }),
+            catchError(error => {
+                return of(null);
+            })
+        ).subscribe((value?: any) => {
+            if (value != null){
+                this.stats = value;
+            }
+            console.log({
+                value: this.stats
+            });
+        })
     }
 }
