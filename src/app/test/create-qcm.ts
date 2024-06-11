@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {FlatpickrOptions} from "ng2-flatpickr";
@@ -11,19 +11,15 @@ import { TestService } from '../core/services/test.service';
 import { Qcm, QcmToEdit } from '../core/models/qcm.model';
 import { Router } from '@angular/router';
 import {authConfig} from '../../environments/environment';
+import { Backup } from '../core/models/backup.model';
+import { BackupService } from '../core/services/backup.service';
 
 
 @Component({
     moduleId: module.id,
     templateUrl: './create-qcm.html',
 })
-export class CreateQcmComponent implements OnInit, AfterViewInit{
-
-    //options = ['Orange', 'White', 'Purple'];
-    //input1 = 'Orange';
-    //options2 = ['Orange', 'White', 'Purple'];
-    //input2 = 'Orange';
-
+export class CreateQcmComponent implements OnInit, AfterViewInit, OnDestroy{
     //form1!: FormGroup;
     levels$: Observable<Level[]>;
     complexities: number[] = [];
@@ -37,8 +33,10 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
     validationError: string = "";
     errorMessage: string = "";
     successMessage: string = "";
+    successMessage2: string = "";
     errorMessage2: string = "";
     lineNumbers: number[] = [1];
+    private intervalId: any;
 
     teacherId: number = authConfig.teacherId;
     limitQuestion = 0;
@@ -49,6 +47,7 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
     isRandomActive: boolean = false;
     canShowResultToStudents: boolean = true;
     questions: String = "";
+    lastBackup: String = "";
 
     //edit variables
     editQcm: QcmToEdit = {
@@ -73,7 +72,7 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
     };
     testId: number = 0;
     @ViewChild('questions', { static: false }) textarea: ElementRef | undefined;
-    constructor(public storeData: Store<any>, public fb: FormBuilder, private levelService: LevelService, private  globalService: GlobalService, private testService: TestService, private  router: Router) {
+    constructor(public storeData: Store<any>, public fb: FormBuilder, private levelService: LevelService, private  globalService: GlobalService, private testService: TestService, private backupService: BackupService, private  router: Router) {
         this.initStore();
         //init for update QCM
         const navigation = this.router.getCurrentNavigation();
@@ -98,9 +97,11 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
     ngOnInit(){
         this.levelService.getAllLevels();
         this.complexities = this.globalService.generateFibonacciSequence(20);
+        this.startInterval();
     }
     ngAfterViewInit() {
-        this.updateLineNumbers();
+        if(this.testId != 0)
+            this.updateLineNumbers(this.editQcm?.content);
     }
     initForm() {
         this.formCreateTest = this.fb.group({
@@ -303,12 +304,15 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
         else
             this.errorMessage2 = ""
     }
-    closeSussessAlert(){
-        this.successMessage = ""
+    closeSussessAlert(i: number){
+        if (i == 1)
+            this.successMessage = ""
+        else
+            this.successMessage2 = ""
     }
 
-    updateLineNumbers() {
-        const lineCount = this.editQcm?.content.split('\n').length;
+    updateLineNumbers(content: String) {
+        const lineCount = content.split('\n').length;
         this.lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1);
     }
     syncScroll() {
@@ -320,6 +324,7 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
     }
 
 
+    //Full screen mamagment
     toggleFullscreen() {
         const textarea = this.textarea!.nativeElement;
         if (!document.fullscreenElement) {
@@ -358,6 +363,55 @@ export class CreateQcmComponent implements OnInit, AfterViewInit{
         const textarea = this.textarea!.nativeElement;
         textarea.classList.remove('fullscreen');
         document.removeEventListener('keydown', this.exitFullscreenOnEscape.bind(this));
+    }
+
+    //Backup management
+    getBackup(){
+        this.backupService.getTeacherBackup(this.teacherId).subscribe(
+            (backup) => {
+                if(backup){
+                    //this.questions = backup.content
+                    this.editQcm.content = backup.content
+                    this.updateLineNumbers(this.editQcm.content);
+                    console.log("Backup restore", backup)
+                    this.successMessage2 = "Données restaurées !"
+                }else this.successMessage2 = "Aucune données à restaurer !"
+
+            },
+            (error) => {
+                this.errorMessage = "Error while loading the MCQ ! Vérify your internet connection or contact the system admin."
+                console.error('Error while loading backup:', error);
+            }
+        );
+    }
+    saveBackup(){
+        let text = this.questions ? this.questions : this.editQcm.content;
+        if(text && text!= this.lastBackup){
+            this.backupService.saveBackup(this.teacherId, text.toString()).subscribe(response => {
+                this.successMessage2 = "Données sauvegardées !"
+                this.lastBackup = text.toString()
+            }, error => {
+                console.error('Backup error', error);
+            });
+        }else   console.log("Backup", "Nothing to save !")
+    }
+
+    //execution periodique pour savegarder
+    ngOnDestroy(): void {
+        this.clearInterval();
+    }
+
+    startInterval(): void {
+        const intervalTime = 10000; // Intervalle en millisecondes (10000 ms = 10 secondes)
+        this.intervalId = setInterval(() => {
+            this.saveBackup();
+        }, intervalTime);
+    }
+
+    clearInterval(): void {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+        }
     }
 
 }
