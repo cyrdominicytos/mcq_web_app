@@ -84,6 +84,7 @@ import { QcmDetailComponent } from './qcm-detail/qcm-detail.component';
 import { CommentContainerComponent } from './comment-container/comment-container.component';
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { CommentItemComponent } from './comment-item/comment-item.component';
+import { AnswerItemComponent } from './answer-item/answer-item.component';
 
 @NgModule({
     imports: [
@@ -139,6 +140,7 @@ import { CommentItemComponent } from './comment-item/comment-item.component';
         QcmDetailComponent,
         CommentContainerComponent,
         CommentItemComponent,
+        AnswerItemComponent,
     ],
 
     providers: [
