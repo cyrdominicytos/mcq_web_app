@@ -88,7 +88,13 @@
             <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">
                 <div class="md:col-span-4">
                     <div class="flex items-start justify-between">
-                        <h5 class="text-lg font-semibold dark:text-white-light">{{question.title}}</h5>
+                        <h5 class="text-xl font-bold dark:text-white-light flex flex-row justify-center">
+                            <span>{{question.title}}</span>
+                            <button class="ml-3 justify-center items-center flex flex-row hover:text-zinc-950 hover:font-bold hover:text-xs">
+                                <icon-chat-notification></icon-chat-notification>
+                                <span class="ml-1 font-normal">({{question?.comments?.length ?? 0}})</span>
+                            </button>
+                        </h5>
                     </div>
                 </div>
                 <div class="md:col-span-2">
