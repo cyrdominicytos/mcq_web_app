@@ -19,7 +19,6 @@ export class QcmDetailComponent {
         private qcmService: QcmService,
         private router:ActivatedRoute,
     ) {
-
     }
 
     ngOnInit(){
