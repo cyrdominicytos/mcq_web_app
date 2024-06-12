@@ -33,19 +33,19 @@
                     <div class="px-4 py-1">
                         Score moyen
                         <span class="mt-1.5 block text-lg text-black dark:text-white-light">
-                            {{stats?.qcm.averageScore ?? 0 }}%
+                            {{stats?.qcmStatDTO.averageScore.toFixed() ?? 0 }}%
                         </span>
                     </div>
                     <div class="px-4 py-1">
                         Le score le plus élevé
                         <span class="mt-1.5 block text-lg text-black dark:text-white-light">
-                            {{stats?.qcm.highScore ?? 0 }}%
+                            {{stats?.qcmStatDTO.highScore.toFixed() ?? 0 }}%
                         </span>
                     </div>
                     <div class="px-4 py-1">
                         Le score le plus bas
                         <span class="mt-1.5 block text-lg text-black dark:text-white-light">
-                            {{stats?.qcm.minScore ?? 0 }}%
+                            {{stats?.qcmStatDTO.minScore.toFixed() ?? 0 }}%
                         </span>
                     </div>
                     <div class="px-4 py-1">
@@ -77,7 +77,7 @@
                 <div class="md:col-span-4">
                     <div class="flex items-start justify-between">
                         <h5 class="text-lg font-semibold dark:text-white-light">{{questionStat.question.title}}</h5>
-                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: {{questionStat.unAnswerQuestionDTO.count * 100/questionStat.unAnswerQuestionDTO.totalTest}}%</span>
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: {{(questionStat.unAnswerQuestionDTO.count * 100/questionStat.unAnswerQuestionDTO.totalTest).toFixed()}}%</span>
                     </div>
                 </div>
                 <div class="md:col-span-2">
