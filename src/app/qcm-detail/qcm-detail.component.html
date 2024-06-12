@@ -1,0 +1,127 @@
+<div>
+    <ul class="flex space-x-2 rtl:space-x-reverse">
+        <li>
+            <a href="javascript:;" class="text-primary hover:underline">Test</a>
+        </li>
+        <li class="before:mr-2 before:content-['/'] rtl:before:ml-2">
+            <span>Statistics du Test</span>
+        </li>
+    </ul>
+
+    <div class="pt-5">
+
+        <!-- Partie 1 -->
+        <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-3">
+            <div class="flex gap-4 lg:flex-row">
+                <div class="space-y-1 text-white-dark">
+                    <div>Date début de test.</div>
+                    <div class="font-semibold text-black dark:text-white">
+                        <span>
+<!--                            {{-->
+<!--                                stats?.qcm.openStartDate.split('T')[0]-->
+<!--                                +" "+-->
+<!--                                stats?.qcm.openStartDate.split('T')[1]-->
+<!--                                    .split('.')[0]-->
+<!--                            }}-->
+                        </span>
+                    </div>
+                    <div>Date fin de test</div>
+                    <div class="font-semibold text-black dark:text-white">
+                        <span>
+<!--                            {{-->
+<!--                                stats?.qcm.closeStartDate.split('T')[0]-->
+<!--                                +" "+-->
+<!--                                stats?.qcm.closeStartDate.split('T')[1]-->
+<!--                                    .split('.')[0]-->
+<!--                            }}-->
+                        </span>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="space-y-1 text-white-dark">
+                        <div>Module</div>
+                        <div class="font-semibold text-black dark:text-white">
+<!--                            {{stats?.qcm.title}}-->
+                        </div>
+                        <div>Classe</div>
+                        <div class="font-semibold text-black dark:text-white">
+<!--                            {{stats?.qcm.level.classOfStudy}}-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 sm:w-full mt-5 md:col-span-2">
+                <div class="grid grid-cols-4 divide-[#ebedf2] font-semibold text-white-dark rtl:divide-x-reverse dark:divide-[#253b5c] sm:grid-cols-4 sm:divide-x ltr:md:ml-auto rtl:md:mr-auto">
+                    <div class="px-4 py-1">
+                        Score moyen
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">
+<!--                            {{stats?.qcmStatDTO.averageScore.toFixed() ?? 0 }}%-->
+                        </span>
+                    </div>
+                    <div class="px-4 py-1">
+                        Le score le plus élevé
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">
+<!--                            {{stats?.qcmStatDTO.highScore.toFixed() ?? 0 }}%-->
+                        </span>
+                    </div>
+                    <div class="px-4 py-1">
+                        Le score le plus bas
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">
+<!--                            {{stats?.qcmStatDTO.minScore.toFixed() ?? 0 }}%-->
+                        </span>
+                    </div>
+                    <div class="px-4 py-1">
+                        Taux d'exécution du Test
+                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">98%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Question posée -->
+        <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-1">
+            <h5 class="text-lg font-semibold dark:text-white-light">Liste des questions</h5>
+            <div>
+                <p>Veuillez créer les questions du test. Peu importe le nombre total des questions créées, vous pouvez attribuer un total de 100 points.</p>
+            </div>
+        </div>
+
+        <!-- Question 1 -->
+
+<!--        <div *ngFor="let questionStat of stats.questionsStats; index as i;">-->
+<!--            <div class="mb-5 flex items-center font-bold">-->
+<!--                <span class="text-lg ml-5">Question {{i+1}}</span>-->
+<!--            </div>-->
+
+
+<!--            <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">-->
+<!--                <div class="md:col-span-4">-->
+<!--                    <div class="flex items-start justify-between">-->
+<!--                        <h5 class="text-lg font-semibold dark:text-white-light">{{questionStat.question.title}}</h5>-->
+<!--                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: {{(questionStat.unAnswerQuestionDTO.count * 100/questionStat.unAnswerQuestionDTO.totalTest).toFixed()}}%</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="md:col-span-2">-->
+<!--                    <div class="flex flex-col space-y-5">-->
+<!--                        <div class="flex items-center" *ngFor="let answerStat of questionStat.answerStats">-->
+<!--                            <div class="w-full flex-initial px-3">-->
+<!--                                <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">-->
+<!--                                    <h6>{{ answerStat.answer.title}}</h6>-->
+<!--                                    <p class="text-xs ltr:ml-auto rtl:mr-auto">{{answerStat.answerStatDTO.percent}}%</p>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">-->
+<!--                                        <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" [ngStyle]="{'width': answerStat.answerStatDTO.percent+'%'}">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+    </div>
+</div>
