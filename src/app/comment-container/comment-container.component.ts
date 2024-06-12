@@ -16,11 +16,11 @@ export class CommentContainerComponent {
         });
     }
 
-    public onDeleteItem(comment: object){
+    public onDeleteItem(comment: any){
         console.log(comment);
     }
 
-    public onValidItem(comment: object){
+    public onValidItem(comment: any){
         console.log(comment);
     }
 }
