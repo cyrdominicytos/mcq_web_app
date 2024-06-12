@@ -83,6 +83,7 @@ import { IconModule } from './shared/icon/icon.module';
 import { QcmDetailComponent } from './qcm-detail/qcm-detail.component';
 import { CommentContainerComponent } from './comment-container/comment-container.component';
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+import { CommentItemComponent } from './comment-item/comment-item.component';
 
 @NgModule({
     imports: [
@@ -137,6 +138,7 @@ import { Ng2FlatpickrModule } from 'ng2-flatpickr';
         FaqComponent,
         QcmDetailComponent,
         CommentContainerComponent,
+        CommentItemComponent,
     ],
 
     providers: [
