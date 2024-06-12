@@ -17,4 +17,8 @@ export class AnswerItemComponent {
     updateTotal(total: number){
         this.total = total;
     }
+
+    updateSuggestion(suggestion: string){
+        this.answer.title = suggestion;
+    }
 }

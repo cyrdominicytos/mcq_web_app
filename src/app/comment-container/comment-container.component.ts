@@ -12,6 +12,7 @@ export class CommentContainerComponent {
     @Input() comments: any = [];
 
     @Output() updateTotal: EventEmitter<any> = new EventEmitter<any>();
+    @Output() updateSuggestion: EventEmitter<any> = new EventEmitter<any>();
     constructor(
         private commentService: CommentService
     ) {
@@ -48,8 +49,7 @@ export class CommentContainerComponent {
             response = this.commentService.validQuestionComment(comment)
         }
         response.subscribe((result) => {
-            alert("valiate !")
-            window.location.reload();
+            this.updateSuggestion.emit(comment.suggestion);
         });
     }
 
