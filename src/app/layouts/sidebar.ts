@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { slideDownUp } from '../shared/animations';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -12,12 +13,12 @@ import { slideDownUp } from '../shared/animations';
     animations: [slideDownUp],
 })
 export class SidebarComponent {
+
     active = false;
     store: any;
     activeDropdown: string[] = [];
     parentDropdown: string = '';
-    isStudent : boolean = true;
-    constructor(public translate: TranslateService, public storeData: Store<any>, public router: Router) {
+    constructor(public translate: TranslateService, public storeData: Store<any>, public router: Router, public authStatusService: AuthStatusService) {
         this.initStore();
     }
     async initStore() {

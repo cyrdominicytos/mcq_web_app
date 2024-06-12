@@ -5,6 +5,7 @@ import { AppService } from '../service/app.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -85,7 +86,8 @@ export class HeaderComponent {
         public storeData: Store<any>,
         public router: Router,
         private appSetting: AppService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        public authStatusService: AuthStatusService
     ) {
         this.initStore();
     }
@@ -149,10 +151,12 @@ export class HeaderComponent {
 
     //Don't remove this
     compteProf(){
-        this.isStudent = false;
+        this.authStatusService.isStudent = false;
+        //this.isStudent = false;
     }
 
     compteEtudiant(){
-        this.isStudent = true;
+        this.authStatusService.isStudent = true;
+       // this.isStudent = true;
     }
 }
