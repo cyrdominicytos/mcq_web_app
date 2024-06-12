@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { an, co } from '@fullcalendar/core/internal-common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommentService } from '../service/comment.service';
 import { Observable } from 'rxjs';
 
@@ -12,6 +11,7 @@ export class CommentContainerComponent {
 
     @Input() comments: any = [];
 
+    @Output() updateTotal: EventEmitter<any> = new EventEmitter<any>();
     constructor(
         private commentService: CommentService
     ) {
@@ -36,6 +36,7 @@ export class CommentContainerComponent {
             this.comments = this.comments.filter((s: any) => {
                 return s.id != comment.id
             })
+            this.updateCommentCount();
         });
     }
 
@@ -50,5 +51,10 @@ export class CommentContainerComponent {
             alert("valiate !")
             window.location.reload();
         });
+    }
+
+
+    updateCommentCount(){
+        this.updateTotal.emit(this.comments.length);
     }
 }

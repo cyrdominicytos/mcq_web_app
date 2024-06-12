@@ -8,4 +8,13 @@ import { Component, Input } from '@angular/core';
 export class AnswerItemComponent {
     @Input() answer: any = {}
     showComment = false;
+    total: number = 0;
+
+    ngOnInit(){
+        this.total = this.answer.comments.length;
+    }
+
+    updateTotal(total: number){
+        this.total = total;
+    }
 }
