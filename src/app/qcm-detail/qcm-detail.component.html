@@ -110,7 +110,10 @@
                                         </button>
                                     </div>
                                 </div>
-                                <app-comment-container [comments]="answer.comments" *ngIf="commentAnswerId == answer.id"></app-comment-container>
+                                <app-comment-container
+                                    [comments]="answer.comments"
+                                    *ngIf="commentAnswerId == answer.id"
+                                ></app-comment-container>
                             </div>
                         </div>
                     </div>

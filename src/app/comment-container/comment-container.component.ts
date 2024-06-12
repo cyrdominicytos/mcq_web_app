@@ -14,4 +14,12 @@ export class CommentContainerComponent {
             comments: this.comments
         });
     }
+
+    public onDeleteItem(id: number){
+        console.log({id});
+    }
+
+    public onValidItem(id: number){
+        console.log({id});
+    }
 }

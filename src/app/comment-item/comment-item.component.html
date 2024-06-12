@@ -4,7 +4,7 @@
         {{ "OODKEKKDKE" }}
     </span>
     <button type="button" class="ltr:ml-auto rtl:mr-auto hover:opacity-80 flex flex-row">
-        <icon-checks class="text-success mr-4"></icon-checks>
-        <icon-trash class="text-danger"></icon-trash>
+        <button (click)="valid()"><icon-checks class="text-success mr-4"></icon-checks></button>
+        <button (click)="delete()"><icon-trash class="text-danger"></icon-trash></button>
     </button>
 </div>
