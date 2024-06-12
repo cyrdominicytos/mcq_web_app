@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { co } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-comment-container',
@@ -15,11 +16,11 @@ export class CommentContainerComponent {
         });
     }
 
-    public onDeleteItem(id: number){
-        console.log({id});
+    public onDeleteItem(comment: object){
+        console.log(comment);
     }
 
-    public onValidItem(id: number){
-        console.log({id});
+    public onValidItem(comment: object){
+        console.log(comment);
     }
 }

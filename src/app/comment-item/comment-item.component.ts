@@ -12,11 +12,11 @@ export class CommentItemComponent {
     @Output() onValid: EventEmitter<number> = new EventEmitter<number>();
 
     valid(){
-        this.onValid.emit(this.comment.id)
+        this.onValid.emit(this.comment)
     }
 
     delete(){
-        this.onDelete.emit(this.comment.id)
+        this.onDelete.emit(this.comment)
     }
 
 
