@@ -81,6 +81,8 @@ import { SidebarComponent } from './layouts/sidebar';
 import { ThemeCustomizerComponent } from './layouts/theme-customizer';
 import { IconModule } from './shared/icon/icon.module';
 import { QcmDetailComponent } from './qcm-detail/qcm-detail.component';
+import { CommentContainerComponent } from './comment-container/comment-container.component';
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 
 @NgModule({
     imports: [
@@ -96,8 +98,8 @@ import { QcmDetailComponent } from './qcm-detail/qcm-detail.component';
             loader: {
                 provide: TranslateLoader,
                 useFactory: httpTranslateLoader,
-                deps: [HttpClient],
-            },
+                deps: [HttpClient]
+            }
         }),
         MenuModule,
         StoreModule.forRoot({ index: indexReducer }),
@@ -105,13 +107,14 @@ import { QcmDetailComponent } from './qcm-detail/qcm-detail.component';
         NgApexchartsModule,
         NgScrollbarModule.withConfig({
             visibility: 'hover',
-            appearance: 'standard',
+            appearance: 'standard'
         }),
         HighlightModule,
         SortablejsModule,
         ModalModule,
         QuillModule.forRoot(),
         IconModule,
+        Ng2FlatpickrModule
     ],
     declarations: [
         AppComponent,
@@ -133,6 +136,7 @@ import { QcmDetailComponent } from './qcm-detail/qcm-detail.component';
         KnowledgeBaseComponent,
         FaqComponent,
         QcmDetailComponent,
+        CommentContainerComponent,
     ],
 
     providers: [

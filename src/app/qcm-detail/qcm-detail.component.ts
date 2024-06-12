@@ -13,6 +13,8 @@ import { catchError, Observable, of } from 'rxjs';
 export class QcmDetailComponent {
     qcm: any = {};
 
+    commentAnswerId = 0;
+
     constructor(
         private qcmService: QcmService,
         private router:ActivatedRoute,
@@ -37,6 +39,15 @@ export class QcmDetailComponent {
                 this.qcm = value;
             }
         })
+    }
+
+
+    showComment(answerId: number){
+        if (answerId == this.commentAnswerId){
+            this.commentAnswerId = 0;
+        }else {
+            this.commentAnswerId = answerId;
+        }
     }
 
 }
