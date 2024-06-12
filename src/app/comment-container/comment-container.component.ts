@@ -40,6 +40,15 @@ export class CommentContainerComponent {
     }
 
     public onValidItem(comment: any){
-        console.log(comment);
+        let response: Observable<any> = new Observable<any>();
+        if (Object.hasOwn(comment, 'answerId')){
+            response = this.commentService.validAnswerComment(comment)
+        }else if (Object.hasOwn(comment, 'questionId')){
+            response = this.commentService.validQuestionComment(comment)
+        }
+        response.subscribe((result) => {
+            alert("valiate !")
+            window.location.reload();
+        });
     }
 }

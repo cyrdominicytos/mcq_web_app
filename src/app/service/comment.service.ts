@@ -14,14 +14,14 @@ export class CommentService {
   }
 
     validAnswerComment(comment: any){
-        return this.httpClient.put(this.url+"/comments/questions", {
+        return this.httpClient.put(this.url+`/comments/answers/update/${comment.id}`, {
             ...comment,
             valid: true,
         })
     }
 
     validQuestionComment(comment: any){
-      return this.httpClient.put(this.url+"/comments/answers", {
+      return this.httpClient.put(this.url+`/comments/questions/update/${comment.id}`, {
           ...comment,
           valid: true,
       })
