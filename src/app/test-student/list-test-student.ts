@@ -1,18 +1,29 @@
 import { Component } from '@angular/core';
-
+import { StudentTestService } from '../core/services/stduentTest.service';
+import { Router } from '@angular/router';
+import { QcmDto, StudentTest } from '../core/models/studentTest.model';
+import { GlobalService } from '../core/services/gobal.service';
+import {authConfig} from '../../environments/environment';
+import { Student } from '../core/models/user.model';
+import { Question } from '../core/models/question.model';
 @Component({
     moduleId: module.id,
     templateUrl: './list-test-student.html',
 })
 export class ListTestStudentComponent {
-    constructor() {}
+    constructor(private  studentTestService: StudentTestService, private router: Router) {
+        this.loadStudentTests();
+    }
+
+
+    studentTests : StudentTest[] = [];
     search = '';
     cols = [
-        { field: 'id', title: 'ID', isUnique: true, filter: false },
-        { field: 'quiz', title: 'Quiz' },
-        { field: 'module', title: 'Module' },
-        { field: 'status', title: 'Status'},
-        { field: 'end', title: 'Dernier délai', type: 'date' },
+        //{ field: 'id', title: 'ID', isUnique: true, filter: false },
+        { field: 'qcm', title: 'Module du QCM' },
+        { field: 'level', title: 'Classe - Filière' },
+        { field: 'startingDate', title: 'Date de début', type: 'date' },
+        { field: 'endDate', title: 'Dernier délai', type: 'date' },
         { field: 'start', title: 'Réalisé le', type: 'date' },
         //{ field: 'score', title: 'Note', type: 'number'},
         { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
@@ -118,4 +129,23 @@ export class ListTestStudentComponent {
     formatScore(score: number): string {
         return score.toFixed(2);  // Formater le score avec 2 chiffres après la virgule
     }
+
+    //Don't remove this
+    loadStudentTests() {
+        this.studentTestService.getStudentTestByStudentId(authConfig.studentId).subscribe(
+            (tests) => {
+                this.studentTests = tests;
+                console.log("StudentTest loaded !", this.studentTests)
+               // this.rows = this.studentTests
+            },
+            (error) => {
+                console.error('Error while loading StudentTest:', error);
+            });
+    }
+
+    checkResult(studentTestId : number){
+       // this.router.navigate("qcm-answers", )
+        this.router.navigate(['/qcm-answers'], { state: { id: studentTestId } });
+    }
+
 }

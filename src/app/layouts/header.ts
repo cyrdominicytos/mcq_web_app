@@ -5,6 +5,7 @@ import { AppService } from '../service/app.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -18,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
     ],
 })
 export class HeaderComponent {
+    isStudent: boolean =  true
     store: any;
     search = false;
     notifications = [
@@ -84,7 +86,8 @@ export class HeaderComponent {
         public storeData: Store<any>,
         public router: Router,
         private appSetting: AppService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        public authStatusService: AuthStatusService
     ) {
         this.initStore();
     }
@@ -143,5 +146,17 @@ export class HeaderComponent {
             this.storeData.dispatch({type: 'toggleRTL', payload: 'ltr'});
         }
         window.location.reload();
+    }
+
+
+    //Don't remove this
+    compteProf(){
+        this.authStatusService.isStudent = false;
+        //this.isStudent = false;
+    }
+
+    compteEtudiant(){
+        this.authStatusService.isStudent = true;
+       // this.isStudent = true;
     }
 }
