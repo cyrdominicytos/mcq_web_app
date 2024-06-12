@@ -17,23 +17,13 @@
                     <div>Date début de test.</div>
                     <div class="font-semibold text-black dark:text-white">
                         <span>
-<!--                            {{-->
-<!--                                stats?.qcm.openStartDate.split('T')[0]-->
-<!--                                +" "+-->
-<!--                                stats?.qcm.openStartDate.split('T')[1]-->
-<!--                                    .split('.')[0]-->
-<!--                            }}-->
+                            {{ qcm?.openStartDate }}
                         </span>
                     </div>
                     <div>Date fin de test</div>
                     <div class="font-semibold text-black dark:text-white">
                         <span>
-<!--                            {{-->
-<!--                                stats?.qcm.closeStartDate.split('T')[0]-->
-<!--                                +" "+-->
-<!--                                stats?.qcm.closeStartDate.split('T')[1]-->
-<!--                                    .split('.')[0]-->
-<!--                            }}-->
+                            {{ qcm?.closeStartDate }}
                         </span>
                     </div>
                 </div>
@@ -41,11 +31,11 @@
                     <div class="space-y-1 text-white-dark">
                         <div>Module</div>
                         <div class="font-semibold text-black dark:text-white">
-<!--                            {{stats?.qcm.title}}-->
+                            {{ qcm?.title }}
                         </div>
                         <div>Classe</div>
                         <div class="font-semibold text-black dark:text-white">
-<!--                            {{stats?.qcm.level.classOfStudy}}-->
+                            {{ qcm?.level?.classOfStudy }}
                         </div>
                     </div>
                 </div>
@@ -89,39 +79,37 @@
 
         <!-- Question 1 -->
 
-<!--        <div *ngFor="let questionStat of stats.questionsStats; index as i;">-->
-<!--            <div class="mb-5 flex items-center font-bold">-->
-<!--                <span class="text-lg ml-5">Question {{i+1}}</span>-->
-<!--            </div>-->
+        <div *ngFor="let question of qcm?.questions; index as i;">
+            <div class="mb-5 flex items-center font-bold">
+                <span class="text-lg ml-5">Question {{i+1}}</span>
+            </div>
 
 
-<!--            <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">-->
-<!--                <div class="md:col-span-4">-->
-<!--                    <div class="flex items-start justify-between">-->
-<!--                        <h5 class="text-lg font-semibold dark:text-white-light">{{questionStat.question.title}}</h5>-->
-<!--                        <span class="mt-1.5 block text-lg text-black dark:text-white-light">Taux de réponse: {{(questionStat.unAnswerQuestionDTO.count * 100/questionStat.unAnswerQuestionDTO.totalTest).toFixed()}}%</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="md:col-span-2">-->
-<!--                    <div class="flex flex-col space-y-5">-->
-<!--                        <div class="flex items-center" *ngFor="let answerStat of questionStat.answerStats">-->
-<!--                            <div class="w-full flex-initial px-3">-->
-<!--                                <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">-->
-<!--                                    <h6>{{ answerStat.answer.title}}</h6>-->
-<!--                                    <p class="text-xs ltr:ml-auto rtl:mr-auto">{{answerStat.answerStatDTO.percent}}%</p>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                    <div class="h-5 w-full overflow-hidden rounded-full bg-dark-light p-1 shadow-3xl dark:bg-dark-light/10 dark:shadow-none">-->
-<!--                                        <div class="relative h-full w-full rounded-full bg-[#722ED1] before:absolute before:inset-y-0 before:m-auto before:h-2 before:w-2 before:rounded-full before:bg-white ltr:before:right-0.5 rtl:before:left-0.5" [ngStyle]="{'width': answerStat.answerStatDTO.percent+'%'}">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+            <div class="mb-6 panel h-full grid grid-cols-1 gap-5 md:grid-cols-4">
+                <div class="md:col-span-4">
+                    <div class="flex items-start justify-between">
+                        <h5 class="text-lg font-semibold dark:text-white-light">{{question.title}}</h5>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <div class="flex flex-col space-y-5">
+                        <div class="flex items-center" *ngFor="let answer of question.answers">
+                            <div class="w-full flex-initial px-3 py-5 border">
+                                <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
+                                    <h6 class="font-bold">{{ answer.title }}</h6>
+                                    <div class="flex flex-row">
+                                        <button class="flex flex-row hover:text-zinc-950 hover:font-bold hover:text-xs">
+                                            <icon-chat-notification></icon-chat-notification>
+                                            <span class="ml-1">({{answer?.comments?.length ?? 0}})</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

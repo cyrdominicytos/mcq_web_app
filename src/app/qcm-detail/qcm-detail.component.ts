@@ -11,7 +11,7 @@ import { catchError, Observable, of } from 'rxjs';
   styleUrls: ['./qcm-detail.component.css']
 })
 export class QcmDetailComponent {
-    qcm?: Qcm|null = null;
+    qcm: any = {};
 
     constructor(
         private qcmService: QcmService,
