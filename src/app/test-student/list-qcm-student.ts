@@ -1,111 +1,75 @@
 import { Component } from '@angular/core';
+import {Qcm} from "../core/models/qcm.model";
+import {TestService} from "../core/services/test.service";
+import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
     templateUrl: './list-qcm-student.html',
 })
 export class ListQcmStudentComponent {
-    constructor() {}
-    search = '';
+    constructor(private testService: TestService, private router: Router) {}
+
     cols = [
         { field: 'id', title: 'ID', isUnique: true, filter: false },
-        { field: 'quiz', title: 'Quiz' },
+        { field: 'title', title: 'Quiz' },
         { field: 'module', title: 'Module' },
-        { field: 'status', title: 'Status'},
-        { field: 'end', title: 'Dernier délai', type: 'date' },
-        { field: 'start', title: 'Réalisé le', type: 'date' },
-        { field: 'score', title: 'Note', type: 'number'},
+        { field: 'totalQuestions', title: '# Questions', filter: false  },
+        { field: 'status', title: 'Status' , filter: false},
+        { field: 'openStartDate', title: 'Lancé le', type: 'date' },
+        { field: 'closeStartDate', title: 'Date déchéance', type: 'date' },
         { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
     ];
-    rows = [
-        {
-            id: 1,
-            quiz: 'Bases des structures de données.',
-            module: 'Intro aux structures des données',
-            status: 'Clôturé',
-            end: '2024-06-05',
-            start : '',
-            score:0
-        },
-        {
-            id: 2,
-            quiz: 'Analyse des algorithmes',
-            module: 'Algorithmes et complexité',
-            status: 'A faire',
-            end: '2024-06-07',
-            score:0
-        },
-        {
-            id: 3,
-            quiz: 'Fondements de la conception de bases de données',
-            module: 'Introduction aux technologies web',
-            status: 'Fait',
-            end: '2024-07-07',
-            start: '2024-05-05',
-            score:11.2
-        },
-        {
-            id: 4,
-            quiz: 'Concepts des systèmes dexplotation',
-            module: 'Systèmes dexplotation',
-            status: 'Fait',
-            end: '2024-07-07',
-            start: '2024-05-05',
-            score:5.5
-        },
-        {
-            id: 5,
-            quiz: 'Bases des structures de données',
-            module: 'Intro aux structures des données',
-            status: 'A faire',
-            end: '2024-06-05',
-            score:0
-        },
-        {
-            id: 6,
-            quiz: 'Analyse des algorithmes',
-            module: 'Algorithmes et complexité',
-            status: 'A faire',
-            end: '2024-06-07',
-            score:12
-        },
-        {
-            id: 7,
-            quiz: 'Fondements de la conception de bases de données',
-            module: 'Introduction aux technologies web',
-            status: 'A faire',
-            end: '2024-07-07',
-            start: '',
-            score:0
-        },
-        {
-            id: 8,
-            quiz: 'Concepts des systèmes dexplotation',
-            module: 'Systèmes dexplotation',
-            status: 'A faire',
-            start: '',
-            end: '2024-05-05',
-            score:0
-        },
-        {
-            id: 9,
-            quiz: 'Bases des structures de données',
-            module: 'Intro aux structures des données',
-            status: 'Clôturé',
-            end: '2024-06-05',
-            start: '',
-            score:0
-        },
-        {
-            id: 10,
-            quiz: 'Analyse des algorithmes',
-            module: 'Algorithmes et complexité',
-            status: 'Fait',
-            end: '2024-06-07',
-            start: '2024-06-02',
-            score:17
+
+    listOfQcm: Qcm[] = [];
+
+    //TODO implement from constants
+    studentId: number = 1;
+
+    ngOnInit() {
+        this.loadQCMs();
+    }
+
+    loadQCMs() {
+        console.log('Calling loadQCMs()...');
+        this.testService.getAllQcmByStudentId(this.studentId).subscribe(
+            (qcms) => {
+                this.listOfQcm = qcms;
+                console.log(this.listOfQcm);
+            },
+            (error) => {
+                console.error('Error while loading Qcm:', error);
+            }
+        );
+    }
+
+    getTotalQuestions(qcm: Qcm): number {
+        return qcm.questions.length;
+    }
+
+    getStatus(qcm: Qcm): string {
+        if (!qcm.active) {
+            return 'Inactive';
         }
-    ];
+
+        const now = new Date();
+        const openStartDate = new Date(qcm.openStartDate);
+        const closeStartDate = new Date(qcm.closeStartDate);
+
+        if(!closeStartDate){
+            if (now >= openStartDate && now <= closeStartDate) {
+                return 'À faire';
+            } else {
+                return 'Clôturé';
+            }
+        }else{
+            if (now >= openStartDate) {
+                return 'À faire';
+            } else {
+                return 'Clôturé';
+            }
+        }
+    }
 
     formatDate(date: any) {
         if (date) {
@@ -118,5 +82,10 @@ export class ListQcmStudentComponent {
     }
     formatScore(score: number): string {
         return score.toFixed(2);  // Formater le score avec 2 chiffres après la virgule
+    }
+
+    takeTest(qcmId: number) {
+        console.log("Sending id ", qcmId);
+        this.router.navigate(['/take-test'], { state: { id: qcmId } });
     }
 }

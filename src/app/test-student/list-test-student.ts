@@ -14,7 +14,7 @@ export class ListTestStudentComponent {
         { field: 'status', title: 'Status'},
         { field: 'end', title: 'Dernier délai', type: 'date' },
         { field: 'start', title: 'Réalisé le', type: 'date' },
-        { field: 'score', title: 'Note', type: 'number'},
+        //{ field: 'score', title: 'Note', type: 'number'},
         { field: 'actions', title: 'Action', filter: false, headerClass: 'justify-center' },
     ];
     rows = [
