@@ -15,9 +15,25 @@
             <div class="flex gap-4 lg:flex-row">
                 <div class="space-y-1 text-white-dark">
                     <div>Date début de test.</div>
-                    <div class="font-semibold text-black dark:text-white">{{stats?.qcm.openStartDate}}</div>
+                    <div class="font-semibold text-black dark:text-white">
+                        <span>{{
+                                stats?.qcm.openStartDate.split('T')[0]
+                                     +" "+
+                                stats?.qcm.openStartDate.split('T')[1]
+                                    .split('.')[0]
+                            }}
+                        </span>
+                    </div>
                     <div>Date fin de test</div>
-                    <div class="font-semibold text-black dark:text-white">{{stats?.qcm.closeStartDate}}</div>
+                    <div class="font-semibold text-black dark:text-white">
+                        <span>{{
+                                stats?.qcm.closeStartDate.split('T')[0]
+                                +" "+
+                                stats?.qcm.closeStartDate.split('T')[1]
+                                    .split('.')[0]
+                            }}
+                        </span>
+                    </div>
                 </div>
                 <div class="flex-1">
                     <div class="space-y-1 text-white-dark">
