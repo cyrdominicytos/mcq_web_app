@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Qcm } from '../core/models/qcm.model';
 import { QcmService } from '../service/qcm.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';

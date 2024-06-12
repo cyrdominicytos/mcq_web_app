@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-comment-container',
@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class CommentContainerComponent {
 
+    @Input() comments = [];
+
+    ngOnInit(){
+        console.log({
+            comments: this.comments
+        });
+    }
 }
