@@ -206,6 +206,23 @@ export class TakeTestComponent implements OnDestroy{
         });
     }
 
+    /*selectAnswer(option: Answer): void {
+        if (!this.userAnswers) {
+            console.error('User answers are not initialized.');
+            return;
+        }
+
+        const answers = this.userAnswers[this.currentQuestionIndex];
+        const index = answers.indexOf(option.title);
+        if (index > -1) {
+            answers.splice(index, 1);
+            this.removeAnswer(option);
+        } else {
+            answers.push(option.title);
+            this.addAnswer(option);
+        }
+    }*/
+
     selectAnswer(option: Answer): void {
         if (!this.userAnswers) {
             console.error('User answers are not initialized.');
@@ -236,11 +253,18 @@ export class TakeTestComponent implements OnDestroy{
         this.answerQcm.answers = this.answerQcm.answers.filter(answer => answer.answerId !== option.id)
     }
 
-    isSelected(option: string): boolean {
+    /*isSelected(option: string): boolean {
         if (!this.userAnswers) {
             return false;
         }
         return this.userAnswers[this.currentQuestionIndex].includes(option);
+    }*/
+
+    isSelected(optionId: number): boolean {
+        if (!this.userAnswers) {
+            return false;
+        }
+        return this.userAnswers[this.currentQuestionIndex].includes(optionId.toString());
     }
 
     initQuestionsComments(){

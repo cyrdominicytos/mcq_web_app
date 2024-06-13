@@ -91,11 +91,18 @@
                                 />
                             </ng-template>
 
-                            <input [id]="'tack_checkbox' + currentQuestionIndex + option.title"
+                            <!--input [id]="'tack_checkbox' + currentQuestionIndex + option.title"
                                    type="checkbox"
                                    class="form-checkbox"
                                    [checked]="isSelected(option.title)"
+                                   (change)="selectAnswer(option)" /-->
+
+                            <input [id]="'tack_checkbox' + currentQuestionIndex + option.id"
+                                   type="checkbox"
+                                   class="form-checkbox"
+                                   [checked]="isSelected(option.id)"
                                    (change)="selectAnswer(option)" />
+
                         </div>
                     </div>
                 </ng-container>
