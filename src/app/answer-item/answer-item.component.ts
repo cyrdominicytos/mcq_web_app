@@ -12,6 +12,7 @@ export class AnswerItemComponent {
     @Output() deleteAnswer: EventEmitter<any> = new EventEmitter<any>();
     showComment = false;
     total: number = 0;
+    edit: boolean = false;
 
 
     constructor(
@@ -38,5 +39,9 @@ export class AnswerItemComponent {
 
     onDelete(){
         this.deleteAnswer.emit(this.answer);
+    }
+
+    onChangeTitle() {
+        this.edit = false;
     }
 }

@@ -65,7 +65,7 @@ export class QcmDetailComponent {
                     return a.id != answer.id;
                 })
                 this.answerService.delete(answer.id).subscribe((res: any) => {
-                    this.toastService.showMessage("Proposition supprimée avec succès", "danger")
+                    this.toastService.showMessage("Proposition supprimée avec succès", "success")
                 })
             }
         }
