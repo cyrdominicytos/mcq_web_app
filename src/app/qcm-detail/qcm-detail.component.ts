@@ -4,6 +4,9 @@ import { QcmService } from '../service/qcm.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { catchError, Observable, of } from 'rxjs';
+import Swal from 'sweetalert2';
+import { AnswerService } from '../service/answer.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-qcm-detail',
@@ -17,6 +20,8 @@ export class QcmDetailComponent {
 
     constructor(
         private qcmService: QcmService,
+        private answerService: AnswerService,
+        private toastService: ToastService,
         private router:ActivatedRoute,
     ) {
     }
@@ -46,6 +51,23 @@ export class QcmDetailComponent {
             this.commentAnswerId = 0;
         }else {
             this.commentAnswerId = answerId;
+        }
+    }
+
+    onDeleteAnswer(answer: any){
+        const res = confirm("Souhaitez-vous effectuer cette opération ?")
+        if (res){
+            const questionId = answer.questionId;
+            const index = this.qcm.questions.findIndex((s: any) =>  s.id == questionId);
+            if (index != -1){
+                let question = this.qcm.questions[index];
+                question.answers = question.answers.filter((a: any) => {
+                    return a.id != answer.id;
+                })
+                this.answerService.delete(answer.id).subscribe((res: any) => {
+                    this.toastService.showMessage("Proposition supprimée avec succès", "success")
+                })
+            }
         }
     }
 
