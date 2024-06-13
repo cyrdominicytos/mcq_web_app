@@ -15,6 +15,22 @@ export class TestService {
     getAllTests(): Observable<Qcm[]> {
         return this.http.get<Qcm[]>(this.baseUrl);
     }
+
+    getById(qcmId: number): Observable<Qcm> {
+        const url = "/"+qcmId;
+        return this.http.get<Qcm>(this.baseUrl+url);
+    }
+
+    getAllQcmByStudentId(id: number): Observable<Qcm[]> {
+        const url = `${this.baseUrl}/student/${id}`;
+        return this.http.get<Qcm[]>(url);
+    }
+
+    getQcmById(id: number): Observable<Qcm> {
+        const url = `${this.baseUrl}/${id}`;
+        return this.http.get<Qcm>(url);
+    }
+
     getTestToEdit(qcmId:number, teacherId:number): Observable<any> {
         const url = "/getStringFormatOfQCM/"+qcmId+"/"+teacherId
         return this.http.put<any>(this.baseUrl+url, null);

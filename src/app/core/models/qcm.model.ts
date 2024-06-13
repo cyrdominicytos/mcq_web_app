@@ -3,7 +3,8 @@ import {Question} from "./question.model";
 
 export interface Qcm {
     id: number;
-    level: Level;
+    details: string;
+    level: Level | null;
     questions: Question[];
     limitQuestion: number;
     active: boolean;
@@ -16,6 +17,7 @@ export interface Qcm {
     closeStartDate: string;
     creationDate: string;
     updatedDate: string;
+    canShowResultToStudents: boolean;
 }
 
 export interface QcmToEdit {

@@ -152,7 +152,7 @@
                                 <div class="flex-none">
                                     <img class="h-10 w-10 rounded-md object-cover" src="/assets/images/user-profile.jpeg" alt="" />
                                 </div>
-                                <div class="truncate ltr:pl-4 rtl:pr-4" *ngIf="isStudent else prof">
+                                <div class="truncate ltr:pl-4 rtl:pr-4" *ngIf="authStatusService.isStudent else prof">
                                     <h4 class="text-base">
                                         Compte Etudiant<span class="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2"> :)</span>
                                     </h4>

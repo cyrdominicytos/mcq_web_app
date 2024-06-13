@@ -2,23 +2,16 @@ import {Component, ViewChild, OnDestroy, ElementRef} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
-import {ModalComponent} from "angular-custom-modal";
 import { interval, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-
-interface Question {
-    question: string;
-    options: Option[];
-    correctAnswers: string[];
-    delayInSeconds?: number;
-    suggestedQuestion: string;
-    suggestedOptions: Option[];
-}
-
-interface Option {
-    id: number;
-    name: string;
-}
+import { Router } from '@angular/router';
+import { TestService } from '../core/services/test.service';
+import {AnswerService} from "../core/services/answer.service";
+import {Qcm} from "../core/models/qcm.model";
+import {Question} from "../core/models/question.model";
+import {Answer} from "../core/models/answer.model";
+import {AnswerQcm} from "../core/models/answerQcm.model";
+import {AnswerStudent} from "../core/models/answerStudent.model";
 
 @Component({
     moduleId: module.id,
@@ -26,50 +19,22 @@ interface Option {
 })
 export class TakeTestComponent implements OnDestroy{
 
-    //@ViewChild('isAddCommentModal') isAddCommentModal!: ModalComponent;
     isVisibleSignalQuestionPanel: boolean = false;
     @ViewChild('commentTextarea') commentTextarea!: ElementRef;
 
-    params = {
-        comment: '',
-    };
+    currentComment: string | null = null;
 
-    questions: Question[] = [
-        {
-            question: 'What is the capital of France?',
-            options: [{id: 1, name: 'Paris'}, {id: 2, name: 'London'}, {id: 3, name: 'Berlin'}, {id: 4, name: 'Madrid'}],
-            correctAnswers: ['Paris'],
-            suggestedQuestion: 'What is the capital of France?',
-            suggestedOptions: [{id: 1, name: 'Paris'}, {id: 2, name: 'London'}, {id: 3, name: 'Berlin'}, {id: 4, name: 'Madrid'}],
-        },
-        {
-            question: 'Which planet is known as the Red Planet?',
-            options: [{id: 1, name: 'Earth'}, {id: 2, name: 'Mars'}, {id: 3, name: 'Jupiter'}, {id: 4, name: 'Saturn'}],
-            correctAnswers: ['Mars'],
-            delayInSeconds: 10, // 10 seconds delay for this question
-            suggestedQuestion: 'Which planet is known as the Red Planet?',
-            suggestedOptions: [{id: 1, name: 'Earth'}, {id: 2, name: 'Mars'}, {id: 3, name: 'Jupiter'}, {id: 4, name: 'Saturn'}],
-        },
-        {
-            question: 'What is the largest ocean on Earth?',
-            options: [{id: 1, name: 'Atlantic Ocean'}, {id: 2, name: 'Indian Ocean'}, {id: 3, name: 'Arctic Ocean'}, {id: 4, name: 'Pacific Ocean'}],
-            correctAnswers: ['Pacific Ocean'],
-            delayInSeconds: 15, // 15 seconds delay for this question
-            suggestedQuestion: 'What is the largest ocean on Earth?',
-            suggestedOptions: [{id: 1, name: 'Atlantic Ocean'}, {id: 2, name: 'Indian Ocean'}, {id: 3, name: 'Arctic Ocean'}, {id: 4, name: 'Pacific Ocean'}],
-        },
-        {
-            question: 'Which of the following are plays by William Shakespeare?',
-            options: [{id: 1, name: 'Hamlet'}, {id: 2, name: 'Pride and Prejudice'}, {id: 3, name: 'Romeo and Juliet'}, {id: 4, name: 'Oliver Twist'}],
-            correctAnswers: ['Hamlet', 'Romeo and Juliet'],
-            suggestedQuestion: 'Which of the following are plays by William Shakespeare?',
-            suggestedOptions: [{id: 1, name: 'Hamlet'}, {id: 2, name: 'Pride and Prejudice'}, {id: 3, name: 'Romeo and Juliet'}, {id: 4, name: 'Oliver Twist'}],
-        }
-    ];
+    questions: Question[] = [];
+    questionsInitialValues: Question[] = [];
 
-    currentQuestionIndex: number = 0;
-    userAnswers: string[][] = this.questions.map(() => []);
+    //TODO implement from constants
+    studentId: number = 1;
+
+    currentQuestionIndex: number = -1; // Because we start with Instructions.
+    userAnswers: string[][] | null = null;
+    //userAnswers: string[][] = this.questions.map(() => []);
     showResults: boolean = false;
+    lastQuestion: boolean = false;
     showInstructions: boolean = true;
     score: number = 0;
     timeLeft: number = 0;
@@ -87,12 +52,12 @@ export class TakeTestComponent implements OnDestroy{
 
     updateQuestion(event: Event) {
         const input = event.target as HTMLInputElement;
-        this.currentQuestion.suggestedQuestion = input.value;
+        this.currentQuestion.title = input.value;
     }
 
-    myMethodToUpdateOption(event: Event, index: number): void {
+    updateOption(event: Event, index: number): void {
         const input = event.target as HTMLInputElement;
-        this.currentQuestion.suggestedOptions[index].name = input.value;
+        this.currentQuestion.answers[index].title = input.value;
     }
 
     handleEnterKey(event: KeyboardEvent) {
@@ -101,80 +66,6 @@ export class TakeTestComponent implements OnDestroy{
         }
     }
 
-    /*get currentQuestion(): Question {
-        return this.questions[this.currentQuestionIndex];
-    }
-
-    startTimer(seconds: number): void {
-        this.timeLeft = seconds;
-        this.timerSubscription = interval(1000)
-            .pipe(
-                takeWhile(() => this.timeLeft > 0)
-            )
-            .subscribe(() => {
-                this.timeLeft--;
-                if (this.timeLeft === 0) {
-                    this.nextQuestion();
-                }
-            });
-    }
-
-    ngOnDestroy(): void {
-        if (this.timerSubscription) {
-            this.timerSubscription.unsubscribe();
-        }
-    }
-
-    nextQuestion(): void {
-        if (this.timerSubscription) {
-            this.timerSubscription.unsubscribe();
-        }
-        if (this.currentQuestionIndex < this.questions.length - 1) {
-            this.currentQuestionIndex++;
-            const delay = this.currentQuestion.delayInSeconds ?? 0;
-            this.startTimer(delay);
-        } else if (this.currentQuestionIndex === this.questions.length - 1) {
-            this.calculateResults();
-            this.showResults = true;
-        }
-    }
-
-    previousQuestion(): void {
-        if (this.timerSubscription) {
-            this.timerSubscription.unsubscribe();
-        }
-        if (this.currentQuestionIndex > 0) {
-            this.currentQuestionIndex--;
-            const delay = this.currentQuestion.delayInSeconds ?? 0;
-            this.startTimer(delay);
-        }
-    }
-
-    selectAnswer(option: string): void {
-        const answers = this.userAnswers[this.currentQuestionIndex];
-        const index = answers.indexOf(option);
-        if (index > -1) {
-            answers.splice(index, 1);
-        } else {
-            answers.push(option);
-        }
-    }
-
-    isSelected(option: string): boolean {
-        return this.userAnswers[this.currentQuestionIndex].includes(option);
-    }
-
-    calculateResults(): void {
-        let correctAnswersCount = 0;
-        this.questions.forEach((question, index) => {
-            const userAnswerSet = new Set(this.userAnswers[index]);
-            const correctAnswerSet = new Set(question.correctAnswers);
-            if (userAnswerSet.size === correctAnswerSet.size && [...userAnswerSet].every(answer => correctAnswerSet.has(answer))) {
-                correctAnswersCount++;
-            }
-        });
-        this.score = (correctAnswersCount / this.questions.length) * 100;
-    }*/
     get currentQuestion(): Question {
         return this.questions[this.currentQuestionIndex];
     }
@@ -200,6 +91,12 @@ export class TakeTestComponent implements OnDestroy{
     }
 
     nextQuestion(): void {
+        // Save the comment
+        if (this.currentQuestionIndex>=0 && this.currentQuestionIndex < this.questions.length) // Only calling when visualizing a question
+        {
+            this.saveComment();
+        }
+
         this.currentTime2 = Date.now();
         this.timeSpentPerQuestion[this.currentQuestionIndex] = (this.currentTime2 - this.currentTime1) / 1000;
 
@@ -208,52 +105,159 @@ export class TakeTestComponent implements OnDestroy{
         }
         if (this.currentQuestionIndex < this.questions.length - 1) {
             this.currentQuestionIndex++;
-            const delay = this.currentQuestion.delayInSeconds ?? 0;
+            const delay = this.currentQuestion.delay ?? 0;
             this.currentTime1 = Date.now();
             this.startTimer(delay);
+            // For next button
+            if (this.currentQuestionIndex === this.questions.length - 1) {
+                this.lastQuestion = true;
+            }
         } else if (this.currentQuestionIndex === this.questions.length - 1) {
             this.calculateResults();
+            this.saveSuggestions();
+            this.saveTimeSpent();
             this.showResults = true;
+            this.sendAnswers();
+            console.log(this.answerQcm);
         }
         this.isEditingQuestion = false;
-        this.isVisibleSignalQuestionPanel = false;
+        //this.isVisibleSignalQuestionPanel = false;
+        //if something to show, make visible
+        this.isVisibleSignalQuestionPanel = this.answerQcm.questionsComments[this.currentQuestionIndex].description !== null;
+
+        //init current comment
+        this.currentComment = this.answerQcm.questionsComments[this.currentQuestionIndex].description;
     }
 
 
     previousQuestion(): void {
+        // Save the comment
+        if (this.currentQuestionIndex>=0 && this.currentQuestionIndex < this.questions.length) // Only calling when visualizing a question
+        {
+            this.saveComment();
+        }
+
         if (this.timerSubscription) {
             this.timerSubscription.unsubscribe();
         }
         if (this.currentQuestionIndex > 0) {
             this.currentQuestionIndex--;
-            const delay = this.currentQuestion.delayInSeconds ?? 0;
+            const delay = this.currentQuestion.delay ?? 0;
             this.currentTime1 = Date.now();
             this.startTimer(delay);
         }
         this.isEditingQuestion = false;
-        this.isVisibleSignalQuestionPanel = false;
+        //if something to show, make visible
+        this.isVisibleSignalQuestionPanel = this.answerQcm.questionsComments[this.currentQuestionIndex].description !== null;
+        this.lastQuestion = false;
+        //init current comment
+        this.currentComment = this.answerQcm.questionsComments[this.currentQuestionIndex].description;
     }
 
-    selectAnswer(option: string): void {
+    saveSuggestions() {
+        this.questionsInitialValues.forEach((initialQuestion, index) => {
+            // Suggestions of a Question
+            let newQuestion : any = this.questions.find(q => q.id === initialQuestion.id);
+            if (newQuestion.title !== initialQuestion.title){
+                const questionComment = this.answerQcm.questionsComments.find(questionComment => questionComment.questionId === initialQuestion.id);
+                if (questionComment) questionComment.suggestion = newQuestion.title;
+            }
+            // Suggestions of the Options in a Question
+            const initialAnswers: Answer[] = initialQuestion.answers;
+            for (const initialAnswer of initialAnswers) {
+                let newAnswer: Answer = newQuestion.answers.find((a: Answer) => a.id === initialAnswer.id);
+                if (newAnswer.title !== initialAnswer.title){
+                    const answerComment = {
+                        answerId: initialAnswer.id,
+                        suggestion: newAnswer.title,
+                        description: newAnswer.title,
+                        accepted: true,
+                    };
+                    this.answerQcm.answersComments.push(answerComment);
+                }
+            }
+
+        });
+    }
+
+    saveTimeSpent() {
+        this.questions.forEach((question, index) => {
+            const timeSpent = this.timeSpentPerQuestion[index] ?? 0;
+
+            this.answerQcm.answers.forEach((answer) => {
+                if (answer.questionId === question.id) {
+                    answer.duration = timeSpent;
+                }
+            });
+        });
+    }
+
+    selectAnswer(option: Answer): void {
+        if (!this.userAnswers) {
+            console.error('User answers are not initialized.');
+            return;
+        }
+
         const answers = this.userAnswers[this.currentQuestionIndex];
-        const index = answers.indexOf(option);
+        const index = answers.indexOf(option.title);
         if (index > -1) {
             answers.splice(index, 1);
+            this.removeAnswer(option);
         } else {
-            answers.push(option);
+            answers.push(option.title);
+            this.addAnswer(option);
         }
     }
 
+    addAnswer(option: Answer) {
+        const currentAnswer: AnswerStudent = {
+            questionId: this.questions[this.currentQuestionIndex].id,
+            answerId: option.id,
+            duration: 0
+        };
+        this.answerQcm.answers.push(currentAnswer);
+    }
+
+    removeAnswer(option: Answer) {
+        this.answerQcm.answers = this.answerQcm.answers.filter(answer => answer.answerId !== option.id)
+    }
+
     isSelected(option: string): boolean {
+        if (!this.userAnswers) {
+            return false;
+        }
         return this.userAnswers[this.currentQuestionIndex].includes(option);
+    }
+
+    initQuestionsComments(){
+        this.questions.forEach((question, index) => {
+            const comment = {
+                questionId: question.id,
+                suggestion: '',
+                description: null,
+                accepted: true,
+            };
+            this.answerQcm.questionsComments.push(comment);
+        });
+    }
+
+    saveComment(): void {
+        if (this.currentComment !== null) {
+            this.answerQcm.questionsComments[this.currentQuestionIndex].description = this.currentComment;
+        }
     }
 
     calculateResults(): void {
         console.log('Questionnaire Results:');
         this.questions.forEach((question, index) => {
             const timeSpent = this.timeSpentPerQuestion[index] ?? 0;
-            console.log(`Question: ${question.question}`);
-            console.log(`Options Checked: ${this.userAnswers[index].join(', ')}`);
+            console.log(`Question: ${question.title}`);
+            //console.log(`Options Checked: ${this.userAnswers[index].join(', ')}`);
+            if (this.userAnswers && this.userAnswers[index]) {
+                console.log(`Options Checked: ${this.userAnswers[index].join(', ')}`);
+            } else {
+                console.log('User answers are not initialized or index is out of range.');
+            }
             console.log(`Displayed Time: ${new Date(this.currentTime1).toLocaleTimeString()}`);
             console.log(`Answered Time: ${new Date(this.currentTime2).toLocaleTimeString()}`);
             console.log(`Time Spent: ${timeSpent} seconds`);
@@ -261,58 +265,113 @@ export class TakeTestComponent implements OnDestroy{
         });
 
         let correctAnswersCount = 0;
-        this.questions.forEach((question, index) => {
+        /*this.questions.forEach((question, index) => {
             const userAnswerSet = new Set(this.userAnswers[index]);
             const correctAnswerSet = new Set(question.correctAnswers);
             if (userAnswerSet.size === correctAnswerSet.size && [...userAnswerSet].every(answer => correctAnswerSet.has(answer))) {
                 correctAnswersCount++;
             }
-        });
+        });*/
         this.score = (correctAnswersCount / this.questions.length) * 100;
     }
 
-    //options = ['Orange', 'White', 'Purple'];
-    //input1 = 'Orange';
-    //options2 = ['Orange', 'White', 'Purple'];
-    //input2 = 'Orange';
-    //form1!: FormGroup;
+    qcmId: number = 0;
 
-    constructor(public storeData: Store<any>, public fb: FormBuilder) {
+    constructor(public storeData: Store<any>, public fb: FormBuilder, private  router: Router, private testService: TestService, private answerService: AnswerService) {
         this.initStore();
-        /*this.form1 = this.fb.group({
-            date1: ['2022-07-05'],
-        });
-        this.initForm();
-        this.basic = {
-            defaultDate: '2022-07-05',
-            dateFormat: 'Y-m-d',
-            position: this.store.rtlClass === 'rtl' ? 'auto right' : 'auto left',
-        };*/
+        const navigation = this.router.getCurrentNavigation();
+        if (navigation?.extras.state) {
+            this.qcmId = navigation.extras.state['id'];
+            //this.loadQcm(this.qcmId);
+        }else console.log("Not comming from a legal place !", navigation?.extras.state)
     }
+
+    ngOnInit() {
+        this.loadQcm(this.qcmId);
+    }
+
+    currentQcm : Qcm = {
+        id: 0,
+        details: '',
+        level: null,
+        questions: [],
+        limitQuestion: 0,
+        active: false,
+        delay: 0,
+        teacherId: 0,
+        title: '',
+        complexity: 0,
+        randomActive: false,
+        openStartDate: '',
+        closeStartDate: '',
+        creationDate: '',
+        updatedDate: '',
+        canShowResultToStudents: false,
+    }
+    loadQcm(qcmId: number) {
+        this.testService.getQcmById(qcmId).subscribe(
+            (qcm) => {
+                this.currentQcm = qcm;
+                this.initializeQuestions(qcm);
+                this.initializeUserAnswers(qcm);
+                this.initQuestionsComments();
+                console.log('qcm: ====> ');
+                console.log(qcm);
+            },
+            (error) => {
+                console.error('Error while loading Qcm:', error);
+            }
+        );
+    }
+
+    answerQcm : AnswerQcm = {
+        studentId: 0,
+        answers: [],
+        questionsComments: [],
+        answersComments: [],
+    }
+
+    sendAnswers(){
+        this.answerQcm.studentId = this.studentId;
+        this.answerService.answerQcm(this.currentQcm.id,this.answerQcm).subscribe(
+            (qcm) => {
+                this.showMessage('Answer of the QCM has been sent successfully.');
+                console.log(qcm);
+            },
+            (error) => {
+                console.error('Error while loading Qcm:', error);
+            }
+        );
+    }
+
+    initializeQuestions(qcm: any): void {
+        // Filter questions to include only those with the active attribute set to true
+        //this.questions = qcm.questions.filter((question: any) => question.active);
+        this.questions = qcm.questions;
+        this.questionsInitialValues = this.deepCopy(qcm.questions);
+    }
+
+    initializeUserAnswers(qcm: any): void {
+        this.userAnswers = qcm.questions.map(() => []);
+    }
+
+     deepCopy<T>(obj: T): T {
+         if (obj === null || typeof obj !== 'object') {
+             return obj;
+         }
+         if (Array.isArray(obj)) {
+             const copy: any[] = [];
+             obj.forEach((_, i) => {
+                 copy[i] = this.deepCopy(obj[i]);
+             });
+             return copy as any;
+         }
+         const copy: { [key: string]: any } = {};
+         Object.keys(obj).forEach(key => {
+             copy[key] = this.deepCopy((obj as { [key: string]: any })[key]); }); return copy as T;
+     }
+
     search = '';
-    //basic: FlatpickrOptions;
-
-    /*initForm() {
-        this.form4 = this.fb.group({
-            firstName: ['Shaun', Validators.required],
-            lastName: ['Park', Validators.required],
-            userName: ['', Validators.required],
-            city: ['', Validators.required],
-            state: ['', Validators.required],
-            zip: ['', Validators.required],
-            isTerms: [false, Validators.requiredTrue],
-        });
-    }*/
-
-    /*form4!: FormGroup;
-    isSubmitForm4 = false;
-    submitForm4() {
-        this.isSubmitForm4 = true;
-        if (this.form4.valid) {
-            //form validated success
-            this.showMessage('Form submitted successfully.');
-        }
-    }*/
 
     store: any;
     async initStore() {
@@ -323,54 +382,18 @@ export class TakeTestComponent implements OnDestroy{
             });
     }
 
-
-
     addComment() {
-        setTimeout(() => {
-            this.params = {
-                comment: '',
-            };
-            //this.isAddCommentModal.open();
-            this.isVisibleSignalQuestionPanel = true;
-            this.commentTextarea.nativeElement.focus();
-        });
-    }
+        this.isVisibleSignalQuestionPanel = true;
 
-    sendComment(){
-        this.showMessage('Comment sent successfully.');
-        this.isVisibleSignalQuestionPanel = false;
-    }
-
-    saveComment() {
-        /*if (!this.params.title) {
-            this.showMessage('Title is required.', 'error');
-            return;
-        }*/
-
-        /*if (this.params.id) {
-            //update project
-            const project = this.projectList.find((d: any) => d.id === this.params.id);
-            project.title = this.params.title;
-        } else {
-            //add project
-            const lastId = this.projectList.length
-                ? this.projectList.reduce((max: number, obj: any) => (obj.id > max ? obj.id : max), this.projectList[0].id)
-                : 0;
-
-            const project = {
-                id: lastId + 1,
-                title: this.params.title,
-                tasks: [],
-            };
-            this.projectList.push(project);
-        }*/
-
-        this.showMessage('Project has been saved successfully.');
-        //this.isAddCommentModal.close();
+        if (this.answerQcm.questionsComments[this.currentQuestionIndex].description === null) {
+            this.answerQcm.questionsComments[this.currentQuestionIndex].description = '';
+        }
+        this.currentComment = this.answerQcm.questionsComments[this.currentQuestionIndex].description;
     }
 
     startTest(){
         this.showInstructions = false;
+        this.nextQuestion();
     }
     showMessage(msg = '', type = 'success') {
         const toast: any = Swal.mixin({

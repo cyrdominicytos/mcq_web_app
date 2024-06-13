@@ -1,23 +1,23 @@
 <div>
 
-    <div class="flex flex-wrap items-center justify-between gap-4">
+    <!--div class="flex flex-wrap items-center justify-between gap-4">
         <h2 class="text-xl">Bases des structures de données</h2>
-    </div>
+    </div-->
 
     <!-- Custom Styles -->
     <div class="panel mt-6">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2">
             <div class="mb-5 flex items-start justify-between flex-col">
                 <p class="text-white-dark">Nom du test</p>
-                <h5 class="text-lg font-semibold dark:text-white-light">Bases des structures de données</h5>
+                <h5 class="text-lg font-semibold dark:text-white-light"> {{ currentQcm.title }}</h5>
             </div>
             <div class="mb-5 flex items-start justify-between flex-col">
                 <p class="text-white-dark">Module</p>
-                <h5 class="text-lg font-semibold dark:text-white-light">Intro. aux structures de données</h5>
+                <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQcm.level ? (currentQcm.level.classOfStudy + ' ' + currentQcm.level.fieldOfStudy) : ''}}</h5>
             </div>
             <div class="mb-5 flex items-start justify-between flex-col">
                 <p class="text-white-dark">Deadline</p>
-                <h5 class="text-lg font-semibold dark:text-white-light">05 Mai 2024</h5>
+                <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQcm.closeStartDate | date:'dd MMM, yyyy HH:mm' }}</h5>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <div class="flex-1 ltr:mr-4 rtl:ml-4">
                         <h4 class="font-semibold text-lg mb-2 text-primary">Liste des instructions à respecter</h4>
                         <p class="media-text">
-                            1. Question à choix unique: Utilisez (x) pour la réponse correcte et () pour les réponses incorrectes (import direct du backend)
+                            {{ currentQcm.details ? currentQcm.details : 'Aucune instruction de la part du prof. Bon courage! :)' }}
                         </p>
                     </div>
                 </div>
@@ -51,20 +51,20 @@
             <ng-container *ngIf="!showResults; else resultsTemplate">
                 <div class="mb-5 flex items-center justify-between">
                     <p class="text-white-dark">Question {{currentQuestionIndex + 1 }} sur {{questions.length}}</p>
-                    <div *ngIf="currentQuestion.delayInSeconds">
+                    <div *ngIf="currentQuestion.delay">
                         <p *ngIf="timeLeft > 0">Time left: {{ timeLeft }} seconds</p>
                         <p *ngIf="timeLeft === 0">Time's up!</p>
                     </div>
                 </div>
                 <div class="mb-5 flex items-center justify-between">
                     <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
-                        <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.suggestedQuestion }}</h5>
+                        <h5 class="text-lg font-semibold dark:text-white-light">{{ currentQuestion.title }}</h5>
                     </ng-container>
                     <ng-template #editQuestionTemplate>
                         <input
                             type="text"
                             class="form-input"
-                            [value]="currentQuestion.suggestedQuestion"
+                            [value]="currentQuestion.title"
                             (input)="updateQuestion($event)"
                         />
                     </ng-template>
@@ -73,12 +73,12 @@
                         <icon-edit />
                     </button>
                 </div>
-                <ng-container *ngFor="let option of currentQuestion.suggestedOptions; let i = index">
+                <ng-container *ngFor="let option of currentQuestion.answers; let i = index">
                     <div class="flex flex-col rounded-md border border-[#e0e6ed] dark:border-[#1b2e4b] hover:bg-[#eee] dark:hover:bg-[#eee]/10 mb-5 p-2">
                         <div class="flex space-x-4 rtl:space-x-reverse border-[#e0e6ed] dark:border-[#1b2e4b] px-4 py-2.5 ">
                             <ng-container *ngIf="!isEditingQuestion; else editQuestionTemplate">
-                                <label [for]="'tack_checkbox' + currentQuestionIndex + option.name" class="mb-0 cursor-pointer flex-grow">
-                                    {{ option.name }}
+                                <label [for]="'tack_checkbox' + currentQuestionIndex + option.title" class="mb-0 cursor-pointer flex-grow">
+                                    {{ option.title }}
                                 </label>
                             </ng-container>
 
@@ -86,32 +86,33 @@
                                 <input
                                     type="text"
                                     class="form-input"
-                                    [value]="option.name"
-                                    (input)="myMethodToUpdateOption($event, i)"
+                                    [value]="option.title"
+                                    (input)="updateOption($event, i)"
                                 />
                             </ng-template>
 
-                            <input [id]="'tack_checkbox' + currentQuestionIndex + option.name"
+                            <input [id]="'tack_checkbox' + currentQuestionIndex + option.title"
                                    type="checkbox"
                                    class="form-checkbox"
-                                   [checked]="isSelected(option.name)"
-                                   (change)="selectAnswer(option.name)" />
+                                   [checked]="isSelected(option.title)"
+                                   (change)="selectAnswer(option)" />
                         </div>
                     </div>
                 </ng-container>
 
-                <hr class="mt-10 mb-5">
+                <!--hr class="mt-10 mb-5"-->
 
                 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2 mb-5" *ngIf="isVisibleSignalQuestionPanel">
                     <!--form (ngSubmit)="saveComment()" class="text-sm"-->
                         <div class="grid gap-5">
+                            <p class="text-white-dark">Ce commentaire sera envoyé avec vos réponses</p>
                             <div>
                                 <!--label for="comment">Commentaire</label-->
                                 <!--input id="title" [(ngModel)]="params.title" name="title" type="text" class="form-input mt-1" placeholder="Enter Name" /-->
                                 <textarea
                                     id="comment"
                                     #commentTextarea
-                                    [(ngModel)]="params.comment"
+                                    [(ngModel)]="currentComment"
                                     name="comment"
                                     rows="4"
                                     class="form-textarea w-full"
@@ -124,13 +125,9 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
                     <div class="lg:col-span-3" >
-                        <button type="button" class="btn btn-outline-danger" (click)="addComment()" *ngIf="!isVisibleSignalQuestionPanel">
+                        <button type="button" class="btn btn-outline-danger" (click)="addComment()" [disabled]="isVisibleSignalQuestionPanel">
                             <icon-bell class="shrink-0 ltr:mr-2 rtl:ml-2" />
                             Signaler une erreur
-                        </button>
-                        <button type="button" class="btn btn-outline-success" (click)="sendComment()" *ngIf="isVisibleSignalQuestionPanel">
-                            <icon-send class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                            Envoyer commentaire
                         </button>
                     </div>
                     <div class="lg:col-span-1 flex justify-end" >
@@ -140,7 +137,7 @@
                         </button>
                         <button type="button" class="btn btn-outline-secondary ml-2" (click)="nextQuestion()">
                             <icon-arrow-forward class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                            Suivant
+                             {{ lastQuestion ? 'Terminer' : 'Suivant' }}
                         </button>
                     </div>
                 </div>
@@ -150,7 +147,7 @@
         <ng-template #resultsTemplate>
             <div class="mb-5 mt-10 flex flex-col items-center justify-center">
                 <p class="text-center text-lg">Vos avez obtenu un score de {{ score }}%</p>
-                <button type="button" class="btn btn-outline-secondary mt-5">
+                <button type="button" class="btn btn-outline-secondary mt-5" [disabled]="!currentQcm.canShowResultToStudents">
                     <icon-eye class="shrink-0 ltr:mr-2 rtl:ml-2" />
                     Voir mes réponses
                 </button>
