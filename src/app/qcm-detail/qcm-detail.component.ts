@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { catchError, Observable, of } from 'rxjs';
 import Swal from 'sweetalert2';
+import { AnswerService } from '../service/answer.service';
 
 @Component({
   selector: 'app-qcm-detail',
@@ -18,6 +19,7 @@ export class QcmDetailComponent {
 
     constructor(
         private qcmService: QcmService,
+        private answerService: AnswerService,
         private router:ActivatedRoute,
     ) {
     }
@@ -60,18 +62,20 @@ export class QcmDetailComponent {
                 question.answers = question.answers.filter((a: any) => {
                     return a.id != answer.id;
                 })
-                const toast: any = Swal.mixin({
-                    toast: true,
-                    position: 'top-right',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    customClass: { container: 'toast' },
-                });
-                toast.fire({
-                    icon: "success",
-                    title: "Proposition supprimée avec succès",
-                    padding: '10px 20px',
-                });
+                this.answerService.delete(answer.id).subscribe((res: any) => {
+                    const toast: any = Swal.mixin({
+                        toast: true,
+                        position: 'top-right',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        customClass: { container: 'toast' },
+                    });
+                    toast.fire({
+                        icon: "success",
+                        title: "Proposition supprimée avec succès",
+                        padding: '10px 20px',
+                    });
+                })
             }
         }
     }
