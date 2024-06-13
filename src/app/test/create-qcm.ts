@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import {authConfig} from '../../environments/environment';
 import { Backup } from '../core/models/backup.model';
 import { BackupService } from '../core/services/backup.service';
+import { AuthStatusService } from '../core/services/auth.service';
 
 
 @Component({
@@ -72,7 +73,10 @@ export class CreateQcmComponent implements OnInit, AfterViewInit, OnDestroy{
     };
     testId: number = 0;
     @ViewChild('questions', { static: false }) textarea: ElementRef | undefined;
-    constructor(public storeData: Store<any>, public fb: FormBuilder, private levelService: LevelService, private  globalService: GlobalService, private testService: TestService, private backupService: BackupService, private  router: Router) {
+    constructor(public storeData: Store<any>, public fb: FormBuilder, private levelService: LevelService, private  globalService: GlobalService, private testService: TestService, private backupService: BackupService, private  router: Router, private authService: AuthStatusService) {
+        if(this.authService.isStudent){
+            this.router.navigate(['/list-qcm-student']);
+        }
         this.initStore();
         //init for update QCM
         const navigation = this.router.getCurrentNavigation();

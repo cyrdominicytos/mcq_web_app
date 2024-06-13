@@ -6,12 +6,16 @@ import { GlobalService } from '../core/services/gobal.service';
 import {authConfig} from '../../environments/environment';
 import { Student } from '../core/models/user.model';
 import { Question } from '../core/models/question.model';
+import { AuthStatusService } from '../core/services/auth.service';
 @Component({
     moduleId: module.id,
     templateUrl: './list-test-student.html',
 })
 export class ListTestStudentComponent {
-    constructor(private  studentTestService: StudentTestService, private router: Router) {
+    constructor(private  studentTestService: StudentTestService, private router: Router, private  authService: AuthStatusService) {
+        if(!this.authService.isStudent){
+            this.router.navigate(['/list-qcm-teacher']);
+        }
         this.loadStudentTests();
     }
 

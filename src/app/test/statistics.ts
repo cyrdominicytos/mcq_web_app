@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { catchError, empty, Observable, of, throwError } from 'rxjs';
 import Stat from '../core/models/stat.model';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -31,9 +32,14 @@ export class StatisticsComponent {
         public storeData: Store<any>,
         private statisticService: StatisticService,
         private router:ActivatedRoute,
+        private  authService: AuthStatusService,
+        private  routes: Router
     ) {
         this.initStore();
         this.isLoading = false;
+        if(this.authService.isStudent){
+            this.routes.navigate(['/list-qcm-student']);
+        }
     }
 
     async initStore() {

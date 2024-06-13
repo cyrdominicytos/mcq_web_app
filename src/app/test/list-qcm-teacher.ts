@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import {TestService} from "../core/services/test.service";
 import {Qcm} from "../core/models/qcm.model";
 import { Router } from '@angular/router';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -16,7 +17,11 @@ export class ListQcmTeacherComponent {
     selectedQcmId: any = null;
     //isTypeSelected: boolean = false;
     isVisibleImportPanel: boolean = false;
-    constructor(public fb: FormBuilder, private testService: TestService, private router: Router) {}
+    constructor(public fb: FormBuilder, private testService: TestService, private router: Router, private  authService: AuthStatusService) {
+        if(this.authService.isStudent){
+            this.router.navigate(['/list-qcm-student']);
+        }
+    }
 
     search = '';
 

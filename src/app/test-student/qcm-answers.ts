@@ -207,6 +207,7 @@ export class QcmAnswersComponent {
     }
 
 
+
     getStyles(num: number) : { [key: string]: string }{
         if(num==1){
             //bonne réponse cochée

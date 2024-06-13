@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { QcmService } from '../service/qcm.service';
+import { Router } from '@angular/router';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
@@ -10,8 +12,10 @@ export class StatMacroComponent {
     qcm: any;
 
     constructor(
-        private qcmService: QcmService
-    ) {
+        private qcmService: QcmService, private router: Router, private  authService: AuthStatusService) {
+        if(this.authService.isStudent){
+            this.router.navigate(['/list-qcm-student']);
+        }
     }
 
     search = '';
