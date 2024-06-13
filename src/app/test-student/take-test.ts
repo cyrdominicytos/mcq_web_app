@@ -36,7 +36,7 @@ export class TakeTestComponent implements OnDestroy{
     showResults: boolean = false;
     lastQuestion: boolean = false;
     showInstructions: boolean = true;
-    score: number = 0;
+    score: number = 0.0;
     timeLeft: number = 0;
     timerSubscription: Subscription | undefined;
 
@@ -286,7 +286,7 @@ export class TakeTestComponent implements OnDestroy{
                 correctAnswersCount++;
             }
         });*/
-        this.score = (correctAnswersCount / this.questions.length) * 100;
+        //this.score = (correctAnswersCount / this.questions.length) * 100;
     }
 
     qcmId: number = 0;
@@ -349,6 +349,7 @@ export class TakeTestComponent implements OnDestroy{
         this.answerQcm.studentId = this.studentId;
         this.answerService.answerQcm(this.currentQcm.id,this.answerQcm).subscribe(
             (score) => {
+                this.score = parseFloat(((score.totalValidQuestion / score.totalQuestion) * 100).toFixed(2));
                 this.showMessage('Answer of the QCM has been sent successfully.');
                 console.log(score);
             },
