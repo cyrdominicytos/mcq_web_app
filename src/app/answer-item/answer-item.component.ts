@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-answer-item',
@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AnswerItemComponent {
     @Input() answer: any = {}
+    @Output() deleteAnswer: EventEmitter<any> = new EventEmitter<any>();
     showComment = false;
     total: number = 0;
 
@@ -20,5 +21,9 @@ export class AnswerItemComponent {
 
     updateSuggestion(suggestion: string){
         this.answer.title = suggestion;
+    }
+
+    onDelete(){
+        this.deleteAnswer.emit(this.answer);
     }
 }

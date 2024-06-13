@@ -1,4 +1,4 @@
-<div class="flex items-center">
+<div class="flex items-start">
     <div class="w-full flex-initial px-3 py-5" style="border: 1px solid black;">
         <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
             <h6 class="font-bold">{{ answer.title }}</h6>
@@ -16,4 +16,5 @@
             (updateSuggestion)="updateSuggestion($event)"
         ></app-comment-container>
     </div>
+    <button class="btn btn-danger ml-2" (click)="onDelete()">Delete</button>
 </div>
