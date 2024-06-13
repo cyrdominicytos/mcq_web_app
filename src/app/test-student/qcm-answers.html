@@ -122,6 +122,43 @@
         <ng-template #resultsTemplate>
             <div class="mb-5 mt-10 flex flex-col items-center justify-center">
                 <p class="text-center text-lg">Vous avez obtenu un score de {{ score }}%</p>
+                <p class="text-center text-lg text-danger">Interprétation des résultats :)</p>
+                <div class="container flex flex-wrap justify-center gap-4">
+                    <div [ngStyle]="getStyles(1)" class="flex flex-col rounded-md border mb-5 p-2 w-1/2">
+                        <div class="flex space-x-4 rtl:space-x-reverse px-4 py-2.5">
+                            <label [for]="'tack_checkbox'" class="mb-0 cursor-pointer flex-grow">
+                                Une bonne réponse que vous avez bien fait de choisir
+                            </label>
+                            <input [id]="'tack_checkbox'" type="checkbox" class="form-checkbox" [attr.disabled]="true" [checked]="true" />
+                        </div>
+                    </div>
+                    <div [ngStyle]="getStyles(2)" class="flex flex-col rounded-md border mb-5 p-2 w-1/2">
+                        <div class="flex space-x-4 rtl:space-x-reverse px-4 py-2.5">
+                            <label [for]="'tack_checkbox'" class="mb-0 cursor-pointer flex-grow">
+                                Une bonne réponse que vous auriez dû choisir
+                            </label>
+                            <input [id]="'tack_checkbox'" type="checkbox" class="form-checkbox" [attr.disabled]="true" [checked]="false" />
+                        </div>
+                    </div>
+
+                    <div [ngStyle]="getStyles(3)" class="flex flex-col rounded-md border mb-5 p-2 w-1/2">
+                        <div class="flex space-x-4 rtl:space-x-reverse px-4 py-2.5">
+                            <label [for]="'tack_checkbox'" class="mb-0 cursor-pointer flex-grow">
+                                Une mauvaise réponse que vous n'auriez pas dû choisir
+                            </label>
+                            <input [id]="'tack_checkbox'" type="checkbox" class="form-checkbox" [attr.disabled]="true" [checked]="true" />
+                        </div>
+                    </div>
+
+                    <div [ngStyle]="getStyles(4)" class="flex flex-col rounded-md border mb-5 p-2 w-1/2">
+                        <div class="flex space-x-4 rtl:space-x-reverse px-4 py-2.5">
+                            <label [for]="'tack_checkbox'" class="mb-0 cursor-pointer flex-grow">
+                                Une mauvaise réponse que vous avez bien fait de ne pas choisir
+                            </label>
+                            <input [id]="'tack_checkbox'" type="checkbox" class="form-checkbox" [attr.disabled]="true" [checked]="false" />
+                        </div>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-outline-secondary mt-5" (click)="nextQuestion()">
                     <icon-eye class="shrink-0 ltr:mr-2 rtl:ml-2" />
                     Voir mes réponses

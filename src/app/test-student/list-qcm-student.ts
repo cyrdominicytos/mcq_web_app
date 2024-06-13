@@ -2,13 +2,18 @@ import { Component } from '@angular/core';
 import {Qcm} from "../core/models/qcm.model";
 import {TestService} from "../core/services/test.service";
 import { Router } from '@angular/router';
+import { AuthStatusService } from '../core/services/auth.service';
 
 @Component({
     moduleId: module.id,
     templateUrl: './list-qcm-student.html',
 })
 export class ListQcmStudentComponent {
-    constructor(private testService: TestService, private router: Router) {}
+    constructor(private testService: TestService, private router: Router, private  authService: AuthStatusService) {
+        if(!this.authService.isStudent){
+            this.router.navigate(['/list-qcm-teacher']);
+        }
+    }
 
     cols = [
         { field: 'id', title: 'ID', isUnique: true, filter: false },
