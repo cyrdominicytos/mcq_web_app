@@ -53,7 +53,7 @@ export class StatMacroComponent {
                         quiz: qcm.title,
                         module: qcm.level.fieldOfStudy,
                         status: 'Clôturé',
-                        end: '2024-06-05',
+                        end: '2024-06-05', //TODO
                         classe: qcm.level.classOfStudy,
                         start: qcm.creationDate.split('T')[0],
                         score: 0

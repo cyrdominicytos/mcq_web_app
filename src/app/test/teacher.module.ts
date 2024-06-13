@@ -33,6 +33,7 @@ import {ModalModule} from "angular-custom-modal";
 import {StatisticsComponent} from "./statistics";
 import { ListTestStudentComponent } from '../test-student/list-test-student';
 import { TakeTestComponent } from '../test-student/take-test';
+import { QcmDetailComponent } from '../qcm-detail/qcm-detail.component';
 
 const routes: Routes = [
     { path: 'list-test', component: ListTestStudentComponent, title: 'List Test | MCQ App - List Test'},
@@ -41,7 +42,8 @@ const routes: Routes = [
     { path: 'statistques-macro', component: StatMacroComponent, title: 'Statistics Teacher | MCQ App - Statistics Teacher' },
     { path: 'take-test', component: TakeTestComponent, title: 'Take Test | MCQ App - Take Test' },
     { path: 'statistics/qcm/:id', component: StatisticsComponent, title: 'Statistics Test | MCQ App - Statistics Test' },
-    { path: 'list-qcm-teacher', component: ListQcmTeacherComponent, title: 'List Qcm Teacher | MCQ App - List Qcm Teacher'}
+    { path: 'list-qcm-teacher', component: ListQcmTeacherComponent, title: 'List Qcm Teacher | MCQ App - List Qcm Teacher'},
+    { path: 'qcm/detail/:id', component: QcmDetailComponent, title: "Détail d'un QCM"}
 ];
 @NgModule({
     imports: [

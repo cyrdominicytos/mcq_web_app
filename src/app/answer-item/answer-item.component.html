@@ -1,0 +1,19 @@
+<div class="flex items-center">
+    <div class="w-full flex-initial px-3 py-5" style="border: 1px solid black;">
+        <div class="w-summary-info mb-1 flex justify-between font-semibold text-white-dark">
+            <h6 class="font-bold">{{ answer.title }}</h6>
+            <div class="flex flex-row">
+                <button class="flex flex-row hover:text-zinc-950 hover:font-bold hover:text-xs" (click)="showComment = !showComment">
+                    <icon-chat-notification></icon-chat-notification>
+                    <span class="ml-1">({{total}})</span>
+                </button>
+            </div>
+        </div>
+        <app-comment-container
+            [comments]="answer.comments"
+            *ngIf="showComment"
+            (updateTotal)="updateTotal($event)"
+            (updateSuggestion)="updateSuggestion($event)"
+        ></app-comment-container>
+    </div>
+</div>
