@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { catchError, Observable, of } from 'rxjs';
 import Swal from 'sweetalert2';
 import { AnswerService } from '../service/answer.service';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-qcm-detail',
@@ -20,6 +21,7 @@ export class QcmDetailComponent {
     constructor(
         private qcmService: QcmService,
         private answerService: AnswerService,
+        private toastService: ToastService,
         private router:ActivatedRoute,
     ) {
     }
@@ -63,18 +65,7 @@ export class QcmDetailComponent {
                     return a.id != answer.id;
                 })
                 this.answerService.delete(answer.id).subscribe((res: any) => {
-                    const toast: any = Swal.mixin({
-                        toast: true,
-                        position: 'top-right',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        customClass: { container: 'toast' },
-                    });
-                    toast.fire({
-                        icon: "success",
-                        title: "Proposition supprimée avec succès",
-                        padding: '10px 20px',
-                    });
+                    this.toastService.showMessage("Proposition supprimée avec succès", "danger")
                 })
             }
         }

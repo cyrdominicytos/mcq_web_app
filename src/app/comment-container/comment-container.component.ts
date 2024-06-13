@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommentService } from '../service/comment.service';
 import { Observable } from 'rxjs';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-comment-container',
@@ -14,7 +15,7 @@ export class CommentContainerComponent {
     @Output() updateTotal: EventEmitter<any> = new EventEmitter<any>();
     @Output() updateSuggestion: EventEmitter<any> = new EventEmitter<any>();
     constructor(
-        private commentService: CommentService
+        private commentService: CommentService,
     ) {
 
     }
