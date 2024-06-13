@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import { environment } from "../../../environments/environment";
+import { environment, authConfig } from "../../../environments/environment";
 import { Qcm, QcmToEdit } from '../models/qcm.model';
 
 @Injectable({
@@ -13,7 +13,8 @@ export class TestService {
     constructor(private http: HttpClient) { }
 
     getAllTests(): Observable<Qcm[]> {
-        return this.http.get<Qcm[]>(this.baseUrl);
+        const url = "/getQcmByTeacher/"+authConfig.teacherId;
+        return this.http.get<Qcm[]>(this.baseUrl+url);
     }
 
     getById(qcmId: number): Observable<Qcm> {

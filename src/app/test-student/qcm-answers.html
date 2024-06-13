@@ -121,7 +121,7 @@
 
         <ng-template #resultsTemplate>
             <div class="mb-5 mt-10 flex flex-col items-center justify-center">
-                <p class="text-center text-lg">Vous avez obtenu un score de {{ score }}%</p>
+                <p class="text-center text-lg">Vous avez obtenu un score de {{ transform(getScore()) }}%</p>
                 <p class="text-center text-lg text-danger">Interprétation des résultats :)</p>
                 <div class="container flex flex-wrap justify-center gap-4">
                     <div [ngStyle]="getStyles(1)" class="flex flex-col rounded-md border mb-5 p-2 w-1/2">
@@ -159,10 +159,16 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-outline-secondary mt-5" (click)="nextQuestion()">
-                    <icon-eye class="shrink-0 ltr:mr-2 rtl:ml-2" />
-                    Voir mes réponses
-                </button>
+                <div class="flex flex-row items-center justify-center gap-2">
+                    <button type="button" class="btn btn-primary  mt-5" (click)="goBack()">
+                        Quitter
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary mt-5" (click)="nextQuestion()">
+                        <icon-eye class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                        Voir mes réponses
+                    </button>
+                </div>
+
             </div>
         </ng-template>
 

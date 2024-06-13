@@ -95,7 +95,6 @@ export class CreateQcmComponent implements OnInit, AfterViewInit, OnDestroy{
         };
         this.levels$ = this.levelService.getLevelsObservable();
 
-
     }
 
     ngOnInit(){
@@ -252,7 +251,7 @@ export class CreateQcmComponent implements OnInit, AfterViewInit, OnDestroy{
             formValues.details ? formValues.details : this.editQcm.details,
             formValues.complexity ? formValues.complexity : this.editQcm.complexity,
             this.isRandomActive ,
-            this.canShowResultToStudents,
+            formValues.canShowResultToStudents,
             this.editQcm.active,
             '2022-07-05T00:00:00',
             '2022-07-05T00:00:00'
@@ -278,10 +277,12 @@ export class CreateQcmComponent implements OnInit, AfterViewInit, OnDestroy{
     }
 
     saveFile() {
-        console.log("questions", this.questions)
-        if(!this.questions)
-            this.questions = this.editQcm.content
-        const blob = new Blob([this.questions as BlobPart],{ type: 'text/plain;charset=utf-8' });
+        console.log("questions 1 ", this.questions)
+
+       /* if(!this.questions)
+            this.questions = this.editQcm.content*/
+        console.log("questions 2", this.editQcm.content)
+        const blob = new Blob([this.editQcm.content as BlobPart],{ type: 'text/plain;charset=utf-8' });
         this.file = new File([blob], "questionFiles.txt", { type: 'text/plain;charset=utf-8' });
         console.log("File", this.file)
     }
@@ -389,7 +390,8 @@ export class CreateQcmComponent implements OnInit, AfterViewInit, OnDestroy{
         );
     }
     saveBackup(){
-        let text = this.questions ? this.questions : this.editQcm.content;
+        //let text = this.questions ? this.questions : this.editQcm.content;
+        let text =  this.editQcm.content;
         if(text && text!= this.lastBackup){
             this.backupService.saveBackup(this.teacherId, text.toString()).subscribe(response => {
                 this.successMessage2 = "Données sauvegardées !"
