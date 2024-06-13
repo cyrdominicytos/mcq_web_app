@@ -37,16 +37,16 @@ export const routes: Routes = [
         component: AppLayout,
         children: [
             // dashboard
-            { path: '', component: IndexComponent, title: 'Sales Admin | VRISTO - Multipurpose Tailwind Dashboard Template' },
-            { path: 'analytics', component: AnalyticsComponent, title: 'Analytics Admin | VRISTO - Multipurpose Tailwind Dashboard Template' },
-            { path: 'finance', component: FinanceComponent, title: 'Finance Admin | VRISTO - Multipurpose Tailwind Dashboard Template' },
-            { path: 'crypto', component: CryptoComponent, title: 'Crypto Admin | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: '', component: IndexComponent, title: 'Sales Admin | MCQ App' },
+            { path: 'analytics', component: AnalyticsComponent, title: 'Analytics Admin | MCQ App' },
+            { path: 'finance', component: FinanceComponent, title: 'Finance Admin | MCQ App' },
+            { path: 'crypto', component: CryptoComponent, title: 'Crypto Admin | MCQ App' },
 
             //apps
             { path: '', loadChildren: () => import('./apps/apps.module').then((d) => d.AppsModule) },
 
             // widgets
-            { path: 'widgets', component: WidgetsComponent, title: 'Widgets | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: 'widgets', component: WidgetsComponent, title: 'Widgets | MCQ App' },
 
             // components
             { path: '', loadChildren: () => import('./components/components.module').then((d) => d.ComponentsModule) },
@@ -61,7 +61,7 @@ export const routes: Routes = [
             { path: '', loadChildren: () => import('./users/user.module').then((d) => d.UsersModule) },
 
             // tables
-            { path: 'tables', component: TablesComponent, title: 'Tables | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: 'tables', component: TablesComponent, title: 'Tables | MCQ App' },
             { path: '', loadChildren: () => import('./datatables/datatables.module').then((d) => d.DatatablesModule) },
 
             // test
@@ -71,17 +71,17 @@ export const routes: Routes = [
             { path: '', loadChildren: () => import('./test-student/student.module').then((d) => d.StudentModule) },
 
             // font-icons
-            { path: 'font-icons', component: FontIconsComponent, title: 'Font Icons | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: 'font-icons', component: FontIconsComponent, title: 'Font Icons | MCQ App' },
 
             // charts
-            { path: 'charts', component: ChartsComponent, title: 'Charts | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: 'charts', component: ChartsComponent, title: 'Charts | MCQ App' },
 
             // dragndrop
-            { path: 'dragndrop', component: DragndropComponent, title: 'Dragndrop | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: 'dragndrop', component: DragndropComponent, title: 'Dragndrop | MCQ App' },
 
             // pages
-            { path: 'pages/knowledge-base', component: KnowledgeBaseComponent, title: 'Knowledge Base | VRISTO - Multipurpose Tailwind Dashboard Template' },
-            { path: 'pages/faq', component: FaqComponent, title: 'FAQ | VRISTO - Multipurpose Tailwind Dashboard Template' },
+            { path: 'pages/knowledge-base', component: KnowledgeBaseComponent, title: 'Knowledge Base | MCQ App' },
+            { path: 'pages/faq', component: FaqComponent, title: 'FAQ | MCQ App' },
         ],
     },
 

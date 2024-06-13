@@ -37,20 +37,20 @@ import { PricingTableComponent } from './pricing-table';
 import { LightboxComponent } from './lightbox';
 
 const routes: Routes = [
-    { path: 'components/tabs', component: TabsComponent, title: 'Tabs | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/accordions', component: AccordionsComponent, title: 'Accordions | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/modals', component: ModalsComponent, title: 'Modals | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/cards', component: CardsComponent, title: 'Cards | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/carousel', component: CarouselComponent, title: 'Carousel | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/countdown', component: CountdownComponent, title: 'Countdown | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/counter', component: CounterComponent, title: 'Counter | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/sweetalert', component: SweetalertComponent, title: 'Sweetalert | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/timeline', component: TimelineComponent, title: 'Timeline | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/notifications', component: NotificationsComponent, title: 'Notifications | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/media-object', component: MediaObjectComponent, title: 'Media Object | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/list-group', component: ListGroupComponent, title: 'List Group | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/pricing-table', component: PricingTableComponent, title: 'Pricing Table | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'components/lightbox', component: LightboxComponent, title: 'Lightbox | VRISTO - Multipurpose Tailwind Dashboard Template' },
+    { path: 'components/tabs', component: TabsComponent, title: 'Tabs | MCQ App' },
+    { path: 'components/accordions', component: AccordionsComponent, title: 'Accordions | MCQ App' },
+    { path: 'components/modals', component: ModalsComponent, title: 'Modals | MCQ App' },
+    { path: 'components/cards', component: CardsComponent, title: 'Cards | MCQ App' },
+    { path: 'components/carousel', component: CarouselComponent, title: 'Carousel | MCQ App' },
+    { path: 'components/countdown', component: CountdownComponent, title: 'Countdown | MCQ App' },
+    { path: 'components/counter', component: CounterComponent, title: 'Counter | MCQ App' },
+    { path: 'components/sweetalert', component: SweetalertComponent, title: 'Sweetalert | MCQ App' },
+    { path: 'components/timeline', component: TimelineComponent, title: 'Timeline | MCQ App' },
+    { path: 'components/notifications', component: NotificationsComponent, title: 'Notifications | MCQ App' },
+    { path: 'components/media-object', component: MediaObjectComponent, title: 'Media Object | MCQ App' },
+    { path: 'components/list-group', component: ListGroupComponent, title: 'List Group | MCQ App' },
+    { path: 'components/pricing-table', component: PricingTableComponent, title: 'Pricing Table | MCQ App' },
+    { path: 'components/lightbox', component: LightboxComponent, title: 'Lightbox | MCQ App' },
 ];
 @NgModule({
     imports: [

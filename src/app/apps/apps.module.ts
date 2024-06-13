@@ -43,17 +43,17 @@ import { MailboxComponent } from './mailbox';
 import { InvoiceListComponent } from './invoice/list';
 
 const routes: Routes = [
-    { path: 'apps/chat', component: ChatComponent, title: 'Chat | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/mailbox', component: MailboxComponent, title: 'Mailbox | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/scrumboard', component: ScrumboardComponent, title: 'Scrumboard | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/contacts', component: ContactsComponent, title: 'Contacts | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/notes', component: NotesComponent, title: 'Notes | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/todolist', component: TodolistComponent, title: 'Todolist | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/invoice/list', component: InvoiceListComponent, title: 'Invoice List | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/invoice/preview', component: InvoicePreviewComponent, title: 'Invoice Preview | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/invoice/add', component: InvoiceAddComponent, title: 'Invoice Add | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/invoice/edit', component: InvoiceEditComponent, title: 'Invoice Edit | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'apps/calendar', component: CalendarComponent, title: 'Calendar | VRISTO - Multipurpose Tailwind Dashboard Template' },
+    { path: 'apps/chat', component: ChatComponent, title: 'Chat | MCQ App' },
+    { path: 'apps/mailbox', component: MailboxComponent, title: 'Mailbox | MCQ App' },
+    { path: 'apps/scrumboard', component: ScrumboardComponent, title: 'Scrumboard | MCQ App' },
+    { path: 'apps/contacts', component: ContactsComponent, title: 'Contacts | MCQ App' },
+    { path: 'apps/notes', component: NotesComponent, title: 'Notes | MCQ App' },
+    { path: 'apps/todolist', component: TodolistComponent, title: 'Todolist | MCQ App' },
+    { path: 'apps/invoice/list', component: InvoiceListComponent, title: 'Invoice List | MCQ App' },
+    { path: 'apps/invoice/preview', component: InvoicePreviewComponent, title: 'Invoice Preview | MCQ App' },
+    { path: 'apps/invoice/add', component: InvoiceAddComponent, title: 'Invoice Add | MCQ App' },
+    { path: 'apps/invoice/edit', component: InvoiceEditComponent, title: 'Invoice Edit | MCQ App' },
+    { path: 'apps/calendar', component: CalendarComponent, title: 'Calendar | MCQ App' },
 ];
 
 @NgModule({
