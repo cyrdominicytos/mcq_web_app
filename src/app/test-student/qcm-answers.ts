@@ -72,7 +72,8 @@ export class QcmAnswersComponent {
     studentAnswer: StudentTestAnswer | undefined ;
     currentQcm: Qcm | undefined;
     currentsQuestion: Question | undefined;
-    currentQuestionIndex: number = 0;
+    currentQuestionIndex: number = 0
+    succesCount = 0;
 
     constructor(public storeData: Store<any>, private  globalService: GlobalService, private studentTestAnswersService: StudentTestAnswersService, private testService: TestService, private  router: Router) {
         //get StudentTestId
@@ -172,8 +173,7 @@ export class QcmAnswersComponent {
             this.testService.getById(qcmId).subscribe(
                 (tests) => {
                     this.currentQcm = tests;
-                    //if(this.currentQcm.questions.length > 0)
-                        //this.currentsQuestion = this.currentQcm.questions[0];
+                    this.computeScore();
                     this.previousQuestion();
                 },
                 (error) => {
@@ -183,10 +183,58 @@ export class QcmAnswersComponent {
 
     }
 
+    goBack(){
+        this.router.navigate(['/list-test']); // Redirige vers la page spécifique
+    }
+
     filterdQuestionStudentAnswers(q: Question){
         return this.studentAnswers.filter(value => {
            return  value.answer.questionId == q.id
         })
+    }
+
+    getScore(){
+        this.computeScore();
+        if(this.currentQcm!=undefined){
+            return this.currentQcm.questions.length <= 0 ? 0 : (this.succesCount / this.currentQcm.questions.length *100);
+        }else return 0;
+
+    }
+
+    transform(value: number): string {
+        if (Number.isInteger(value)) {
+            return value.toString();
+        } else {
+            return value.toFixed(2);
+        }
+    }
+    computeScore(){
+        let totalCorrectAnswer = 0;
+       this.currentQcm?.questions.map((value)=>{
+           let countExpectedCorrectAnswer = 0;
+           let countSelectedCorrectAnswer = 0;
+           let countSelectedBadAnswer = 0;
+           value.answers.map(a =>{
+               if(a.valid){
+                   //bonne réponse
+                   countExpectedCorrectAnswer ++;
+                   countSelectedCorrectAnswer +=  this.isSelectedByStudent(a) ? 1 : 0;
+               }else{
+                   //mauvaise réponse
+                   countSelectedBadAnswer +=  this.isSelectedByStudent(a) ? 1 : 0;
+               }
+           })
+
+           if(countSelectedBadAnswer==0 && (countExpectedCorrectAnswer == countSelectedCorrectAnswer)){
+               totalCorrectAnswer += 1;
+               console.log("totalCorrectAnswer", totalCorrectAnswer)
+           }else console.log("countSelectedBadAnswer", countSelectedBadAnswer, "countExpectedCorrectAnswer", countExpectedCorrectAnswer, "countSelectedCorrectAnswer", countSelectedCorrectAnswer)
+           console.log("totalCorrectAnswerx ", totalCorrectAnswer)
+       })
+
+        console.log("totalCorrectAnswer", totalCorrectAnswer)
+        this.succesCount = totalCorrectAnswer;
+
     }
     isSelectedByStudent(a: Answer){
         //get all answers for this questions provide by student

@@ -85,6 +85,7 @@ import { CommentContainerComponent } from './comment-container/comment-container
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { CommentItemComponent } from './comment-item/comment-item.component';
 import { AnswerItemComponent } from './answer-item/answer-item.component';
+import { ScoreFormatPipe } from './core/pipes/ScoreFormatPipe';
 
 @NgModule({
     imports: [
@@ -141,6 +142,7 @@ import { AnswerItemComponent } from './answer-item/answer-item.component';
         CommentContainerComponent,
         CommentItemComponent,
         AnswerItemComponent,
+        ScoreFormatPipe
     ],
 
     providers: [
