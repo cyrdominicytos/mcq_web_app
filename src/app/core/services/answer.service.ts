@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {HttpClient, HttpHeaders } from '@angular/common/http';
+import {Observable} from 'rxjs';
 import { environment } from "../../../environments/environment";
-import { Qcm, QcmToEdit } from '../models/qcm.model';
 import {AnswerQcm} from "../models/answerQcm.model";
+import {Score} from "../models/score.model";
 
 @Injectable({
     providedIn: 'root'
@@ -13,13 +13,13 @@ export class AnswerService {
 
     constructor(private http: HttpClient) { }
 
-    answerQcm(idQcm: number, answerQcm: AnswerQcm): Observable<Qcm> {
+    answerQcm(idQcm: number, answerQcm: AnswerQcm): Observable<Score> {
         const url = `${this.baseUrl}/qcm/${idQcm}`;
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
 
-        return this.http.post<Qcm>(url, answerQcm, { headers });
+        return this.http.post<Score>(url, answerQcm, { headers });
     }
 
 }

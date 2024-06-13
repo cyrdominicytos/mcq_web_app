@@ -334,9 +334,9 @@ export class TakeTestComponent implements OnDestroy{
     sendAnswers(){
         this.answerQcm.studentId = this.studentId;
         this.answerService.answerQcm(this.currentQcm.id,this.answerQcm).subscribe(
-            (qcm) => {
+            (score) => {
                 this.showMessage('Answer of the QCM has been sent successfully.');
-                console.log(qcm);
+                console.log(score);
             },
             (error) => {
                 console.error('Error while loading Qcm:', error);
