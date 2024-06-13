@@ -36,7 +36,7 @@ export class TakeTestComponent implements OnDestroy{
     showResults: boolean = false;
     lastQuestion: boolean = false;
     showInstructions: boolean = true;
-    score: number = 0;
+    score: number = 0.0;
     timeLeft: number = 0;
     timerSubscription: Subscription | undefined;
 
@@ -45,6 +45,8 @@ export class TakeTestComponent implements OnDestroy{
     timeSpentPerQuestion: number[] = [];
 
     isEditingQuestion: boolean = false;
+
+    currentQuestionOrPreviousWithDelay: boolean = false;
 
     toggleEditQuestion() {
         this.isEditingQuestion = !this.isEditingQuestion;
@@ -90,6 +92,16 @@ export class TakeTestComponent implements OnDestroy{
         }
     }
 
+    checkDelayInQuestions() {
+        if (this.currentQuestionIndex >= 1 ){
+            if (this.questions[this.currentQuestionIndex].delay > 0 || this.questions[this.currentQuestionIndex - 1].delay > 0){
+                this.currentQuestionOrPreviousWithDelay = true;
+            }else {
+                this.currentQuestionOrPreviousWithDelay = false;
+            }
+        }
+    }
+
     nextQuestion(): void {
         // Save the comment
         if (this.currentQuestionIndex>=0 && this.currentQuestionIndex < this.questions.length) // Only calling when visualizing a question
@@ -127,6 +139,8 @@ export class TakeTestComponent implements OnDestroy{
 
         //init current comment
         this.currentComment = this.answerQcm.questionsComments[this.currentQuestionIndex].description;
+
+        this.checkDelayInQuestions();
     }
 
 
@@ -192,6 +206,23 @@ export class TakeTestComponent implements OnDestroy{
         });
     }
 
+    /*selectAnswer(option: Answer): void {
+        if (!this.userAnswers) {
+            console.error('User answers are not initialized.');
+            return;
+        }
+
+        const answers = this.userAnswers[this.currentQuestionIndex];
+        const index = answers.indexOf(option.title);
+        if (index > -1) {
+            answers.splice(index, 1);
+            this.removeAnswer(option);
+        } else {
+            answers.push(option.title);
+            this.addAnswer(option);
+        }
+    }*/
+
     selectAnswer(option: Answer): void {
         if (!this.userAnswers) {
             console.error('User answers are not initialized.');
@@ -222,11 +253,18 @@ export class TakeTestComponent implements OnDestroy{
         this.answerQcm.answers = this.answerQcm.answers.filter(answer => answer.answerId !== option.id)
     }
 
-    isSelected(option: string): boolean {
+    /*isSelected(option: string): boolean {
         if (!this.userAnswers) {
             return false;
         }
         return this.userAnswers[this.currentQuestionIndex].includes(option);
+    }*/
+
+    isSelected(optionId: number): boolean {
+        if (!this.userAnswers) {
+            return false;
+        }
+        return this.userAnswers[this.currentQuestionIndex].includes(optionId.toString());
     }
 
     initQuestionsComments(){
@@ -272,7 +310,7 @@ export class TakeTestComponent implements OnDestroy{
                 correctAnswersCount++;
             }
         });*/
-        this.score = (correctAnswersCount / this.questions.length) * 100;
+        //this.score = (correctAnswersCount / this.questions.length) * 100;
     }
 
     qcmId: number = 0;
@@ -334,9 +372,10 @@ export class TakeTestComponent implements OnDestroy{
     sendAnswers(){
         this.answerQcm.studentId = this.studentId;
         this.answerService.answerQcm(this.currentQcm.id,this.answerQcm).subscribe(
-            (qcm) => {
+            (score) => {
+                this.score = parseFloat(((score.totalValidQuestion / score.totalQuestion) * 100).toFixed(2));
                 this.showMessage('Answer of the QCM has been sent successfully.');
-                console.log(qcm);
+                console.log(score);
             },
             (error) => {
                 console.error('Error while loading Qcm:', error);

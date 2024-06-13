@@ -54,21 +54,21 @@ import { DatePickerComponent } from './date-picker';
 import { ClipboardComponent } from './clipboard';
 
 const routes: Routes = [
-    { path: 'forms/basic', component: BasicComponent, title: 'Forms | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/input-group', component: InputGroupComponent, title: 'Input Group | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/layouts', component: LayoutsComponent, title: 'Form Layouts | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/validation', component: ValidationComponent, title: 'Form Validation | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/input-mask', component: InputMaskComponent, title: 'Input Mask | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/select2', component: Select2Component, title: 'Select2 | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/touchspin', component: TouchspinComponent, title: 'Touchspin | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/checkbox-radio', component: CheckboxRadioComponent, title: 'Checkbox & Radio | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/switches', component: SwitchesComponent, title: 'Switches | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/wizards', component: WizardsComponent, title: 'Wizards | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/file-upload', component: FileUploadComponent, title: 'File Upload | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/quill-editor', component: QuillEditorComponent, title: 'Quill Editor | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/markdown-editor', component: MarkdownEditorComponent, title: 'Markdown Editor | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/date-picker', component: DatePickerComponent, title: 'Date & Range Picker | VRISTO - Multipurpose Tailwind Dashboard Template' },
-    { path: 'forms/clipboard', component: ClipboardComponent, title: 'Clipboard | VRISTO - Multipurpose Tailwind Dashboard Template' },
+    { path: 'forms/basic', component: BasicComponent, title: 'Forms | MCQ App' },
+    { path: 'forms/input-group', component: InputGroupComponent, title: 'Input Group | MCQ App' },
+    { path: 'forms/layouts', component: LayoutsComponent, title: 'Form Layouts | MCQ App' },
+    { path: 'forms/validation', component: ValidationComponent, title: 'Form Validation | MCQ App' },
+    { path: 'forms/input-mask', component: InputMaskComponent, title: 'Input Mask | MCQ App' },
+    { path: 'forms/select2', component: Select2Component, title: 'Select2 | MCQ App' },
+    { path: 'forms/touchspin', component: TouchspinComponent, title: 'Touchspin | MCQ App' },
+    { path: 'forms/checkbox-radio', component: CheckboxRadioComponent, title: 'Checkbox & Radio | MCQ App' },
+    { path: 'forms/switches', component: SwitchesComponent, title: 'Switches | MCQ App' },
+    { path: 'forms/wizards', component: WizardsComponent, title: 'Wizards | MCQ App' },
+    { path: 'forms/file-upload', component: FileUploadComponent, title: 'File Upload | MCQ App' },
+    { path: 'forms/quill-editor', component: QuillEditorComponent, title: 'Quill Editor | MCQ App' },
+    { path: 'forms/markdown-editor', component: MarkdownEditorComponent, title: 'Markdown Editor | MCQ App' },
+    { path: 'forms/date-picker', component: DatePickerComponent, title: 'Date & Range Picker | MCQ App' },
+    { path: 'forms/clipboard', component: ClipboardComponent, title: 'Clipboard | MCQ App' },
 ];
 @NgModule({
     imports: [

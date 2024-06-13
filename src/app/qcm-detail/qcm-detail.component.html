@@ -99,7 +99,10 @@
                 </div>
                 <div class="md:col-span-2">
                     <div class="flex flex-col space-y-5">
-                        <app-answer-item *ngFor="let answer of question.answers" [answer]="answer"></app-answer-item>
+                        <app-answer-item (deleteAnswer)="onDeleteAnswer($event)"
+                                         *ngFor="let answer of question.answers"
+                                         [answer]="answer">
+                        </app-answer-item>
                     </div>
                 </div>
             </div>
