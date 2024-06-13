@@ -131,7 +131,7 @@
                         </button>
                     </div>
                     <div class="lg:col-span-1 flex justify-end" >
-                        <button type="button" class="btn btn-outline-secondary" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+                        <button type="button" class="btn btn-outline-secondary" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0 || currentQuestionOrPreviousWithDelay">
                             <icon-arrow-backward class="shrink-0 ltr:mr-2 rtl:ml-2" />
                             Précedent
                         </button>

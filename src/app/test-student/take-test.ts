@@ -46,6 +46,8 @@ export class TakeTestComponent implements OnDestroy{
 
     isEditingQuestion: boolean = false;
 
+    currentQuestionOrPreviousWithDelay: boolean = false;
+
     toggleEditQuestion() {
         this.isEditingQuestion = !this.isEditingQuestion;
     }
@@ -90,6 +92,16 @@ export class TakeTestComponent implements OnDestroy{
         }
     }
 
+    checkDelayInQuestions() {
+        if (this.currentQuestionIndex >= 1 ){
+            if (this.questions[this.currentQuestionIndex].delay > 0 || this.questions[this.currentQuestionIndex - 1].delay > 0){
+                this.currentQuestionOrPreviousWithDelay = true;
+            }else {
+                this.currentQuestionOrPreviousWithDelay = false;
+            }
+        }
+    }
+
     nextQuestion(): void {
         // Save the comment
         if (this.currentQuestionIndex>=0 && this.currentQuestionIndex < this.questions.length) // Only calling when visualizing a question
@@ -127,6 +139,8 @@ export class TakeTestComponent implements OnDestroy{
 
         //init current comment
         this.currentComment = this.answerQcm.questionsComments[this.currentQuestionIndex].description;
+
+        this.checkDelayInQuestions();
     }
 
 
