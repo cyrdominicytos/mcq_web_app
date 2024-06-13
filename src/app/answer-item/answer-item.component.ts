@@ -13,6 +13,7 @@ export class AnswerItemComponent {
     showComment = false;
     total: number = 0;
     edit: boolean = false;
+    message: string = "";
 
 
     constructor(
@@ -32,16 +33,22 @@ export class AnswerItemComponent {
 
     updateSuggestion(suggestion: string){
         this.answer.title = suggestion;
-        this.answerService.update(this.answer).subscribe((res: any) => {
-            this.toastService.showMessage("Suggestion acceptée", "success")
-        })
+        this.message = "Suggestion acceptée";
+        this.updateAnswer();
     }
-
     onDelete(){
         this.deleteAnswer.emit(this.answer);
     }
 
     onChangeTitle() {
         this.edit = false;
+        this.message = "proposition modifiée avec succès";
+        this.updateAnswer();
+    }
+
+    updateAnswer(){
+        this.answerService.update(this.answer).subscribe((res: any) => {
+            this.toastService.showMessage(this.message, "success")
+        })
     }
 }
