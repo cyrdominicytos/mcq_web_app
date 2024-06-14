@@ -46,26 +46,6 @@ import { SortablejsModule } from '@dustfoundation/ngx-sortablejs';
 // quill editor
 import { QuillModule } from 'ngx-quill';
 
-// dashboard
-import { IndexComponent } from './index';
-import { AnalyticsComponent } from './analytics';
-import { FinanceComponent } from './finance';
-import { CryptoComponent } from './crypto';
-
-// widgets
-import { WidgetsComponent } from './widgets';
-
-// tables
-import { TablesComponent } from './tables';
-
-// font-icons
-import { FontIconsComponent } from './font-icons';
-
-// charts
-import { ChartsComponent } from './charts';
-
-// dragndrop
-import { DragndropComponent } from './dragndrop';
 
 // pages
 import { KnowledgeBaseComponent } from './pages/knowledge-base';
@@ -125,15 +105,6 @@ import { ScoreFormatPipe } from './core/pipes/ScoreFormatPipe';
         FooterComponent,
         SidebarComponent,
         ThemeCustomizerComponent,
-        TablesComponent,
-        FontIconsComponent,
-        ChartsComponent,
-        IndexComponent,
-        AnalyticsComponent,
-        FinanceComponent,
-        CryptoComponent,
-        WidgetsComponent,
-        DragndropComponent,
         AppLayout,
         AuthLayout,
         KnowledgeBaseComponent,
